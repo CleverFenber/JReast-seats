@@ -1,0 +1,26 @@
+{
+  "version": "1.0",
+  "updated": "2026-05-09",
+  "regions": [
+    {
+      "id": "jr_east",
+      "name": "JR 동일본",
+      "name_ja": "JR東日本",
+      "trains": [
+        {
+          "id": "nex",
+          "name": "나리타 익스프레스",
+          "name_ja": "成田エクスプレス",
+          "name_en": "Narita Express",
+          "series": "E259系",
+          "category": "limited_express",
+          "operator": "jr_east",
+          "data_file": "seats/nex.json",
+          "thumbnail": "nex",
+          "routes": ["나리타공항 ↔ 도쿄·신주쿠·요코하마"],
+          "notes": "전석 지정석. 도쿄역에서 신주쿠방면/요코하마방면으로 분리"
+        }
+      ]
+    }
+  ]
+}

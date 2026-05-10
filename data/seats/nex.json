@@ -1,0 +1,240 @@
+{
+  "id": "nex",
+  "series": "E259系",
+  "name_ja": "成田エクスプレス",
+  "name_ko": "나리타 익스프레스",
+  "name_en": "Narita Express",
+  "operator": "jr_east",
+  "category": "limited_express",
+  "formation": {
+    "standard_cars": 6,
+    "max_cars": 12,
+    "note": "통상 6량. 도쿄역에서 6+6 = 12량 병결 운행 가능"
+  },
+  "direction": {
+    "car_1_toward": "도쿄·신주쿠·요코하마",
+    "last_car_toward": "나리타공항"
+  },
+  "seat_classes": [
+    {
+      "id": "ordinary",
+      "name_ko": "보통차",
+      "name_ja": "普通車",
+      "pitch_mm": 1030,
+      "layout": "2+2",
+      "features": ["전좌석 콘센트", "무료 Wi-Fi", "잠금식 짐칸", "리클라이닝"]
+    },
+    {
+      "id": "green",
+      "name_ko": "그린차",
+      "name_ja": "グリーン車",
+      "pitch_mm": 1160,
+      "layout": "2+2",
+      "features": ["전좌석 콘센트", "무료 Wi-Fi", "잠금식 짐칸", "리클라이닝", "가죽시트", "풋레스트"]
+    }
+  ],
+  "cars": [
+    {
+      "number": 1,
+      "number_ja": "1号車",
+      "class": "ordinary",
+      "seat_rows": 13,
+      "seat_columns": ["A", "B", "C", "D"],
+      "capacity": 40,
+      "facilities": {
+        "toilet": true,
+        "multi_purpose_room": false,
+        "luggage_area": "front"
+      },
+      "seat_notes": [
+        {
+          "rows": [1, 2],
+          "cols": ["A", "B", "C", "D"],
+          "type": "priority",
+          "note_ko": "우선석 (노약자·임산부 배려)",
+          "note_ja": "優先席"
+        },
+        {
+          "rows": [13],
+          "cols": ["A", "B", "C", "D"],
+          "type": "avoid",
+          "note_ko": "출입구·화장실 바로 앞. 통행 많고 소음 있음",
+          "note_ja": "出入口・トイレ直前"
+        },
+        {
+          "rows": [3, 4, 5, 6, 7, 8, 9, 10],
+          "cols": ["A", "D"],
+          "type": "recommend",
+          "note_ko": "창측 추천석. 전망 양호",
+          "note_ja": "窓側おすすめ"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "number_ja": "2号車",
+      "class": "ordinary",
+      "seat_rows": 13,
+      "seat_columns": ["A", "B", "C", "D"],
+      "capacity": 56,
+      "facilities": {
+        "toilet": false,
+        "multi_purpose_room": false,
+        "luggage_area": "both"
+      },
+      "seat_notes": [
+        {
+          "rows": [1, 2],
+          "cols": ["A", "B", "C", "D"],
+          "type": "priority",
+          "note_ko": "우선석",
+          "note_ja": "優先席"
+        },
+        {
+          "rows": [3, 4, 5, 6, 7, 8, 9, 10],
+          "cols": ["A", "D"],
+          "type": "recommend",
+          "note_ko": "창측 추천석",
+          "note_ja": "窓側おすすめ"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "number_ja": "3号車",
+      "class": "ordinary",
+      "seat_rows": 13,
+      "seat_columns": ["A", "B", "C", "D"],
+      "capacity": 56,
+      "facilities": {
+        "toilet": true,
+        "multi_purpose_room": false,
+        "luggage_area": "both"
+      },
+      "seat_notes": [
+        {
+          "rows": [1, 2],
+          "cols": ["A", "B", "C", "D"],
+          "type": "priority",
+          "note_ko": "우선석",
+          "note_ja": "優先席"
+        },
+        {
+          "rows": [3, 4, 5, 6, 7, 8, 9, 10],
+          "cols": ["A", "D"],
+          "type": "recommend",
+          "note_ko": "창측 추천석",
+          "note_ja": "窓側おすすめ"
+        },
+        {
+          "rows": [13],
+          "cols": ["A", "B", "C", "D"],
+          "type": "avoid",
+          "note_ko": "화장실 인접. 통행 많음",
+          "note_ja": "トイレ近接"
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "number_ja": "4号車",
+      "class": "ordinary",
+      "seat_rows": 13,
+      "seat_columns": ["A", "B", "C", "D"],
+      "capacity": 56,
+      "facilities": {
+        "toilet": false,
+        "multi_purpose_room": false,
+        "luggage_area": "both"
+      },
+      "seat_notes": [
+        {
+          "rows": [1, 2],
+          "cols": ["A", "B", "C", "D"],
+          "type": "priority",
+          "note_ko": "우선석",
+          "note_ja": "優先席"
+        },
+        {
+          "rows": [3, 4, 5, 6, 7, 8, 9, 10],
+          "cols": ["A", "D"],
+          "type": "recommend",
+          "note_ko": "창측 추천석",
+          "note_ja": "窓側おすすめ"
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "number_ja": "5号車",
+      "class": "ordinary",
+      "seat_rows": 13,
+      "seat_columns": ["A", "B", "C", "D"],
+      "capacity": 54,
+      "facilities": {
+        "toilet": true,
+        "multi_purpose_room": false,
+        "luggage_area": "both"
+      },
+      "seat_notes": [
+        {
+          "rows": [1, 2],
+          "cols": ["A", "B", "C", "D"],
+          "type": "priority",
+          "note_ko": "우선석",
+          "note_ja": "優先席"
+        },
+        {
+          "rows": [3, 4, 5, 6, 7, 8, 9, 10],
+          "cols": ["A", "D"],
+          "type": "recommend",
+          "note_ko": "창측 추천석",
+          "note_ja": "窓側おすすめ"
+        },
+        {
+          "rows": [13],
+          "cols": ["A", "B", "C", "D"],
+          "type": "avoid",
+          "note_ko": "화장실 인접",
+          "note_ja": "トイレ近接"
+        },
+        {
+          "rows": [1],
+          "cols": ["C"],
+          "type": "special",
+          "note_ko": "차량 내 휠체어 대응 좌석",
+          "note_ja": "車椅子対応座席"
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "number_ja": "6号車",
+      "class": "green",
+      "seat_rows": 7,
+      "seat_columns": ["A", "B", "C", "D"],
+      "capacity": 28,
+      "facilities": {
+        "toilet": true,
+        "multi_purpose_room": true,
+        "luggage_area": "front"
+      },
+      "seat_notes": [
+        {
+          "rows": [1],
+          "cols": ["A", "B", "C", "D"],
+          "type": "avoid",
+          "note_ko": "짐칸·출입구 바로 옆. 통행 있음",
+          "note_ja": "荷物置場・出入口直近"
+        },
+        {
+          "rows": [2, 3, 4, 5, 6],
+          "cols": ["A", "D"],
+          "type": "recommend",
+          "note_ko": "그린차 창측 추천석. 넓은 피치와 전망",
+          "note_ja": "グリーン車窓側おすすめ"
+        }
+      ]
+    }
+  ]
+}

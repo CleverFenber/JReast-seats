@@ -1,0 +1,52 @@
+{
+  "id": "열차_고유_id",
+  "series": "차량 계열 (예: E259系)",
+  "name_ja": "일본어 정식명칭",
+  "name_ko": "한국어 명칭",
+  "name_en": "영어 명칭",
+  "operator": "운영사 id (jr_east / jr_central / jr_west / jr_kyushu / jr_hokkaido / jr_shikoku)",
+  "category": "열차 종류 (shinkansen / limited_express / express)",
+  "formation": {
+    "standard_cars": 0,
+    "max_cars": 0,
+    "note": "편성 특이사항"
+  },
+  "direction": {
+    "car_1_toward": "1호차 방향",
+    "last_car_toward": "마지막 호차 방향"
+  },
+  "seat_classes": [
+    {
+      "id": "클래스_id",
+      "name_ko": "한국어",
+      "name_ja": "日本語",
+      "pitch_mm": 0,
+      "layout": "2+2 또는 2+3 또는 1+2 등",
+      "features": ["편의 기능 목록"]
+    }
+  ],
+  "cars": [
+    {
+      "number": 1,
+      "number_ja": "1号車",
+      "class": "위의 seat_classes id 중 하나",
+      "seat_rows": 0,
+      "seat_columns": ["A", "B", "C", "D"],
+      "capacity": 0,
+      "facilities": {
+        "toilet": false,
+        "multi_purpose_room": false,
+        "luggage_area": "none / front / rear / both"
+      },
+      "seat_notes": [
+        {
+          "rows": [1, 2],
+          "cols": ["A", "B", "C", "D"],
+          "type": "recommend / avoid / priority / special",
+          "note_ko": "한국어 설명",
+          "note_ja": "日本語説明"
+        }
+      ]
+    }
+  ]
+}

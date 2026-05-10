@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JR 좌석 가이드</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f5f5f5; color: #1a1a1a; }
+
+    header { background: #fff; border-bottom: 1px solid #e0e0e0; padding: 16px 24px; display: flex; align-items: center; gap: 12px; }
+    header h1 { font-size: 18px; font-weight: 600; }
+    header span { font-size: 13px; color: #888; }
+
+    .search-bar { background: #fff; padding: 20px 24px; border-bottom: 1px solid #e0e0e0; }
+    .search-bar input { width: 100%; max-width: 480px; padding: 10px 14px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; outline: none; }
+    .search-bar input:focus { border-color: #185FA5; }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+
+    .region-title { font-size: 13px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 12px; margin-top: 28px; }
+    .region-title:first-child { margin-top: 0; }
+
+    .train-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+
+    .train-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 10px; padding: 16px; cursor: pointer; transition: border-color .15s, box-shadow .15s; text-decoration: none; color: inherit; display: block; }
+    .train-card:hover { border-color: #185FA5; box-shadow: 0 2px 8px rgba(24,95,165,.1); }
+
+    .card-series { font-size: 11px; color: #888; margin-bottom: 4px; }
+    .card-name { font-size: 15px; font-weight: 500; margin-bottom: 2px; }
+    .card-name-ja { font-size: 12px; color: #888; margin-bottom: 10px; }
+    .card-meta { display: flex; gap: 6px; flex-wrap: wrap; }
+    .pill { font-size: 11px; padding: 2px 8px; border-radius: 10px; }
+    .pill-shinkansen { background: #E6F1FB; color: #0C447C; }
+    .pill-limited_express { background: #FFF3E0; color: #7A4000; }
+    .pill-express { background: #F3E8FF; color: #4A1D8C; }
+    .pill-operator { background: #F0F0F0; color: #555; }
+
+    .no-result { text-align: center; padding: 60px 0; color: #888; font-size: 14px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🚄 JR 좌석 가이드</h1>
+  <span>좌석 배치도 & 추천 좌석 안내</span>
+</header>
+
+<div class="search-bar">
+  <input type="text" id="searchInput" placeholder="열차 이름으로 검색 (예: 나리타, 신칸센, はやぶさ)" oninput="filterTrains()">
+</div>
+
+<div class="container" id="container">
+  <div style="text-align:center;padding:40px;color:#888">불러오는 중...</div>
+</div>
+
+<script>
+let allTrains = [];
+
+async function loadData() {
+  const res = await fetch('data/trains.json');
+  const data = await res.json();
+
+  allTrains = [];
+  data.regions.forEach(region => {
+    region.trains.forEach(train => {
+      allTrains.push({ ...train, regionName: region.name, regionId: region.id });
+    });
+  });
+
+  renderTrains(allTrains, data.regions);
+}
+
+function filterTrains() {
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  if (!q) { loadData(); return; }
+
+  const filtered = allTrains.filter(t =>
+    t.name.toLowerCase().includes(q) ||
+    t.name_ja.includes(q) ||
+    t.name_en.toLowerCase().includes(q) ||
+    t.series.includes(q)
+  );
+
+  renderFiltered(filtered);
+}
+
+function renderFiltered(trains) {
+  const container = document.getElementById('container');
+  if (trains.length === 0) {
+    container.innerHTML = '<div class="no-result">검색 결과가 없어요</div>';
+    return;
+  }
+  container.innerHTML = trains.map(t => cardHTML(t)).join('');
+}
+
+function renderTrains(trains, regions) {
+  const container = document.getElementById('container');
+  let html = '';
+
+  regions.forEach(region => {
+    const regionTrains = trains.filter(t => t.regionId === region.id);
+    if (regionTrains.length === 0) return;
+    html += `<div class="region-title">${region.name}</div>`;
+    html += `<div class="train-grid">`;
+    regionTrains.forEach(t => { html += cardHTML(t); });
+    html += `</div>`;
+  });
+
+  container.innerHTML = html;
+}
+
+function cardHTML(t) {
+  const categoryLabel = { shinkansen: '신칸센', limited_express: '특급', express: '급행' };
+  const operatorLabel = { jr_east: 'JR 동일본', jr_central: 'JR 도카이', jr_west: 'JR 서일본', jr_kyushu: 'JR 규슈', jr_hokkaido: 'JR 홋카이도', jr_shikoku: 'JR 시코쿠' };
+  return `
+    <a class="train-card" href="seat.html?id=${t.id}">
+      <div class="card-series">${t.series}</div>
+      <div class="card-name">${t.name}</div>
+      <div class="card-name-ja">${t.name_ja}</div>
+      <div class="card-meta">
+        <span class="pill pill-${t.category}">${categoryLabel[t.category] || t.category}</span>
+        <span class="pill pill-operator">${operatorLabel[t.operator] || t.operator}</span>
+      </div>
+    </a>`;
+}
+
+loadData();
+</script>
+</body>
+</html>
