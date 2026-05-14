@@ -4,25 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>탑승 기록 지도 — JR 좌석 가이드</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
-
     header { background: #fff; border-bottom: 1px solid #e0e0e0; padding: 14px 24px; display: flex; align-items: center; gap: 12px; }
     .back-btn { font-size: 13px; color: #185FA5; text-decoration: none; }
     .back-btn:hover { text-decoration: underline; }
     header h1 { font-size: 16px; font-weight: 600; }
-
     .page { display: flex; height: calc(100vh - 53px); }
-
-    /* 사이드바 */
     .sidebar { width: 240px; flex-shrink: 0; background: #fff; border-right: 1px solid #e0e0e0; display: flex; flex-direction: column; overflow: hidden; }
     .sidebar-header { padding: 14px 16px; border-bottom: 1px solid #e0e0e0; }
     .sidebar-title { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
     .sidebar-sub { font-size: 11px; color: #888; }
-    .stats-row { display: flex; gap: 0; margin-top: 10px; }
+    .stats-row { display: flex; margin-top: 10px; }
     .stat { flex: 1; text-align: center; padding: 6px 0; border-right: 1px solid #e0e0e0; }
     .stat:last-child { border-right: none; }
     .stat-num { font-size: 16px; font-weight: 600; }
@@ -37,22 +33,16 @@
     .r-name { font-size: 12px; font-weight: 500; }
     .r-meta { font-size: 10px; color: #888; margin-top: 1px; }
     .divider { height: 1px; background: #e0e0e0; margin: 6px 8px; }
-
-    /* 지도 영역 */
     .map-wrap { flex: 1; position: relative; }
     #map { width: 100%; height: 100%; }
-
-    /* 팝업 */
-    .popup-box { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 1000; background: #fff; border: 1px solid #ddd; border-radius: 12px; padding: 14px 16px; min-width: 300px; max-width: 420px; box-shadow: 0 4px 20px rgba(0,0,0,.12); display: none; }
-    .popup-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 6px; }
+    .popup-box { position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 1000; background: #fff; border: 1px solid #e0e0e0; border-radius: 12px; padding: 14px 16px; min-width: 300px; max-width: 420px; box-shadow: 0 4px 24px rgba(0,0,0,.12); display: none; }
+    .popup-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 4px; }
     .popup-name { font-size: 15px; font-weight: 600; }
     .popup-close { cursor: pointer; color: #aaa; font-size: 20px; line-height: 1; background: none; border: none; padding: 0; }
     .popup-badge { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 8px; margin-bottom: 6px; }
     .popup-route { font-size: 12px; color: #555; margin-bottom: 4px; }
     .popup-note { font-size: 12px; color: #888; }
-
-    /* 범례 */
-    .legend-box { position: absolute; bottom: 20px; right: 16px; z-index: 1000; background: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 10px 12px; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+    .legend-box { position: absolute; bottom: 24px; right: 16px; z-index: 1000; background: #fff; border: 1px solid #e0e0e0; border-radius: 10px; padding: 10px 12px; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
     .leg { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #555; margin-bottom: 4px; }
     .leg:last-child { margin-bottom: 0; }
     .leg-line { width: 20px; height: 3px; border-radius: 1px; flex-shrink: 0; }
@@ -66,7 +56,6 @@
 </header>
 
 <div class="page">
-  <!-- 사이드바 -->
   <div class="sidebar">
     <div class="sidebar-header">
       <div class="sidebar-title">내 탑승 기록</div>
@@ -80,7 +69,6 @@
     <div class="route-list" id="routeList"></div>
   </div>
 
-  <!-- 지도 -->
   <div class="map-wrap">
     <div id="map"></div>
     <div class="popup-box" id="popupBox">
@@ -99,56 +87,94 @@
       <div class="leg"><div class="leg-line" style="background:#E24B4A"></div>신칸센 (도호쿠·홋카이도)</div>
       <div class="leg"><div class="leg-line" style="background:#BA7517"></div>신칸센 (조에쓰·호쿠리쿠)</div>
       <div class="leg"><div class="leg-line" style="background:#3B6D11"></div>특급</div>
-      <div class="leg"><div class="leg-line" style="background:#bbb;border-top:2px dashed #bbb;height:0"></div>미탑승</div>
+      <div class="leg"><div class="leg-line" style="background:#bbb"></div>미탑승</div>
     </div>
   </div>
 </div>
 
 <script>
+// ★ 여기에 본인 Mapbox 토큰 붙여넣기 ★
+mapboxgl.accessToken = 'pk.eyJ1IjoiY2xldmVyZmVuYmVyIiwiYSI6ImNtcDM3b2VnNTBvZXIycm9vNXU4Zmhwd2EifQ.-YB8j8f_f1jIH1Pg6jRMlA';
+
 const ROUTES = [
-  { id:'tokaido', name:'도카이도 신칸센', nameJa:'東海道新幹線', category:'shinkansen', color:'#185FA5', km:552, ridden:true, note:'노조미 탑승. 도쿄~신오사카 전 구간.', coords:[[35.6812,139.7671],[35.4437,136.7064],[34.7326,135.7325]], stations:['도쿄','나고야','신오사카'] },
-  { id:'sanyo', name:'산요 신칸센', nameJa:'山陽新幹線', category:'shinkansen', color:'#185FA5', km:623, ridden:true, note:'노조미 탑승. 신오사카~하카타.', coords:[[34.7326,135.7325],[34.4010,132.4595],[33.5902,130.4203]], stations:['신오사카','히로시마','하카타'] },
-  { id:'tohoku', name:'도호쿠 신칸센', nameJa:'東北新幹線', category:'shinkansen', color:'#E24B4A', km:676, ridden:true, note:'하야부사 탑승. E5계 그린차 경험.', coords:[[35.6812,139.7671],[37.9026,140.8225],[40.9695,140.7733]], stations:['도쿄','센다이','신아오모리'] },
-  { id:'hokkaido', name:'홋카이도 신칸센', nameJa:'北海道新幹線', category:'shinkansen', color:'#E24B4A', km:149, ridden:true, note:'H5계 탑승. 신아오모리~신하코다테호쿠토.', coords:[[40.9695,140.7733],[41.9025,140.6880]], stations:['신아오모리','신하코다테호쿠토'] },
-  { id:'joetsu', name:'조에쓰 신칸센', nameJa:'上越新幹線', category:'shinkansen', color:'#BA7517', km:270, ridden:true, note:'도키 탑승. E7계.', coords:[[35.6812,139.7671],[36.3912,139.0603],[37.9161,139.0364]], stations:['도쿄','오미야','니가타'] },
-  { id:'hokuriku', name:'호쿠리쿠 신칸센', nameJa:'北陸新幹線', category:'shinkansen', color:'#BA7517', km:450, ridden:false, note:'미탑승.', coords:[[35.6812,139.7671],[36.5440,138.1817],[36.5613,136.6562],[35.9210,136.1879]], stations:['도쿄','나가노','가나자와','쓰루가'] },
-  { id:'nex', name:'나리타 익스프레스', nameJa:'成田エクスプレス', category:'limited_express', color:'#3B6D11', km:80, ridden:true, note:'E259계 탑승. 공항 이동.', coords:[[35.6812,139.7671],[35.7640,140.3863]], stations:['도쿄','나리타공항'] },
-  { id:'odoriko', name:'오도리코', nameJa:'踊り子', category:'limited_express', color:'#3B6D11', km:104, ridden:true, note:'E257계 탑승. 도쿄~이즈.', coords:[[35.6812,139.7671],[34.9767,138.9312]], stations:['도쿄','이즈큐시모다'] },
-  { id:'hokuto', name:'호쿠토', nameJa:'北斗', category:'limited_express', color:'#3B6D11', km:319, ridden:true, note:'키하261계 탑승. 하코다테~삿포로.', coords:[[41.9025,140.6880],[43.0621,141.3544]], stations:['하코다테','삿포로'] },
-  { id:'sonic', name:'소닉', nameJa:'ソニック', category:'limited_express', color:'#3B6D11', km:132, ridden:true, note:'885계 탑승. 하카타~오이타.', coords:[[33.5902,130.4203],[33.2383,131.6061]], stations:['하카타','오이타'] },
-  { id:'azusa', name:'아즈사', nameJa:'あずさ', category:'limited_express', color:'#3B6D11', km:227, ridden:true, note:'E353계 탑승. 신주쿠~마쓰모토.', coords:[[35.6895,139.6917],[36.2380,137.9720]], stations:['신주쿠','마쓰모토'] },
-  { id:'shirasagi', name:'시라사기', nameJa:'しらさぎ', category:'limited_express', color:'#3B6D11', km:177, ridden:false, note:'미탑승.', coords:[[35.1706,136.8816],[36.5613,136.6562]], stations:['나고야','가나자와'] }
+  { id:'tokaido', name:'도카이도 신칸센', nameJa:'東海道新幹線', category:'shinkansen', color:'#185FA5', km:552, ridden:true, note:'노조미 탑승. 도쿄~신오사카 전 구간.', dataFile:'data/geojson/shin-tokaido.json', stations:['도쿄','나고야','신오사카'] },
+  { id:'sanyo', name:'산요 신칸센', nameJa:'山陽新幹線', category:'shinkansen', color:'#185FA5', km:623, ridden:true, note:'노조미 탑승. 신오사카~하카타.', coords:[[135.7325,34.7326],[132.4595,34.4010],[130.4203,33.5902]], stations:['신오사카','히로시마','하카타'] },
+  { id:'tohoku', name:'도호쿠 신칸센', nameJa:'東北新幹線', category:'shinkansen', color:'#E24B4A', km:676, ridden:true, note:'하야부사 탑승. E5계 그린차 경험.', coords:[[139.7671,35.6812],[140.8225,37.9026],[140.7733,40.9695]], stations:['도쿄','센다이','신아오모리'] },
+  { id:'hokkaido', name:'홋카이도 신칸센', nameJa:'北海道新幹線', category:'shinkansen', color:'#E24B4A', km:149, ridden:true, note:'H5계 탑승. 신아오모리~신하코다테호쿠토.', coords:[[140.7733,40.9695],[140.6880,41.9025]], stations:['신아오모리','신하코다테호쿠토'] },
+  { id:'joetsu', name:'조에쓰 신칸센', nameJa:'上越新幹線', category:'shinkansen', color:'#BA7517', km:270, ridden:true, note:'도키 탑승. E7계.', coords:[[139.7671,35.6812],[139.0603,36.3912],[139.0364,37.9161]], stations:['도쿄','오미야','니가타'] },
+  { id:'hokuriku', name:'호쿠리쿠 신칸센', nameJa:'北陸新幹線', category:'shinkansen', color:'#BA7517', km:450, ridden:false, note:'미탑승.', coords:[[139.7671,35.6812],[138.1817,36.5440],[136.6562,36.5613],[136.1879,35.9210]], stations:['도쿄','나가노','가나자와','쓰루가'] },
+  { id:'nex', name:'나리타 익스프레스', nameJa:'成田エクスプレス', category:'limited_express', color:'#3B6D11', km:80, ridden:true, note:'E259계 탑승. 공항 이동.', coords:[[139.7671,35.6812],[140.3863,35.7640]], stations:['도쿄','나리타공항'] },
+  { id:'odoriko', name:'오도리코', nameJa:'踊り子', category:'limited_express', color:'#3B6D11', km:104, ridden:true, note:'E257계 탑승. 도쿄~이즈.', coords:[[139.7671,35.6812],[138.9312,34.9767]], stations:['도쿄','이즈큐시모다'] },
+  { id:'hokuto', name:'호쿠토', nameJa:'北斗', category:'limited_express', color:'#3B6D11', km:319, ridden:true, note:'키하261계 탑승. 하코다테~삿포로.', coords:[[140.6880,41.9025],[141.3544,43.0621]], stations:['하코다테','삿포로'] },
+  { id:'sonic', name:'소닉', nameJa:'ソニック', category:'limited_express', color:'#3B6D11', km:132, ridden:true, note:'885계 탑승. 하카타~오이타.', coords:[[130.4203,33.5902],[131.6061,33.2383]], stations:['하카타','오이타'] },
+  { id:'azusa', name:'아즈사', nameJa:'あずさ', category:'limited_express', color:'#3B6D11', km:227, ridden:true, note:'E353계 탑승. 신주쿠~마쓰모토.', coords:[[139.6917,35.6895],[137.9720,36.2380]], stations:['신주쿠','마쓰모토'] },
+  { id:'shirasagi', name:'시라사기', nameJa:'しらさぎ', category:'limited_express', color:'#3B6D11', km:177, ridden:false, note:'미탑승.', coords:[[136.8816,35.1706],[136.6562,36.5613]], stations:['나고야','가나자와'] }
 ];
 
-let map, layers = {}, activeId = null;
+let map, activeId = null;
 
 function init() {
-  map = L.map('map', { center: [37.0, 137.0], zoom: 5 });
+  map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/light-v11',
+    center: [137.0, 37.0],
+    zoom: 5
+  });
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; <a href="https://carto.com/">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    subdomains: 'abcd', maxZoom: 18
-  }).addTo(map);
+  map.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
-  ROUTES.forEach(r => {
-    const weight = r.ridden ? 4 : 2;
-    const dashArray = r.ridden ? null : '7,5';
-    const opacity = r.ridden ? 0.85 : 0.35;
+  map.on('load', async () => {
+    for (const r of ROUTES) {
+      const sourceId = 'src-' + r.id;
+      const layerId  = 'lyr-' + r.id;
 
-    const line = L.polyline(r.coords, { color: r.color, weight, dashArray, opacity, lineCap: 'round', lineJoin: 'round' }).addTo(map);
-    line.on('click', () => showPopup(r));
-    line.on('mouseover', function () { if (activeId !== r.id) this.setStyle({ weight: weight + 2, opacity: 1 }); });
-    line.on('mouseout', function () { if (activeId !== r.id) this.setStyle({ weight, opacity }); });
+      let geojsonData;
+      if (r.dataFile) {
+        const res = await fetch(r.dataFile);
+        geojsonData = await res.json(); // 이 한 줄만
+      }
+      else {
+        geojsonData = {
+          type: 'Feature',
+          geometry: { type: 'LineString', coordinates: r.coords }
+        };
+      }
 
-    if (r.ridden) {
-      r.coords.forEach((c, i) => {
-        if (i === 0 || i === r.coords.length - 1) {
-          L.circleMarker(c, { radius: 4, color: r.color, fillColor: '#fff', fillOpacity: 1, weight: 2 }).addTo(map).on('click', () => showPopup(r));
+      map.addSource(sourceId, { type: 'geojson', data: geojsonData });
+
+      map.addLayer({
+        id: layerId,
+        type: 'line',
+        source: sourceId,
+        layout: { 'line-cap': 'round', 'line-join': 'round' },
+        paint: {
+          'line-color': r.color,
+          'line-width': r.ridden ? 4 : 2,
+          'line-opacity': r.ridden ? 0.85 : 0.35,
+          'line-dasharray': r.ridden ? [1] : [2, 2]
         }
       });
-    }
 
-    layers[r.id] = { line, weight, opacity };
+      map.on('mouseenter', layerId, () => {
+        map.getCanvas().style.cursor = 'pointer';
+        if (activeId !== r.id) map.setPaintProperty(layerId, 'line-width', r.ridden ? 7 : 4);
+      });
+      map.on('mouseleave', layerId, () => {
+        map.getCanvas().style.cursor = '';
+        if (activeId !== r.id) map.setPaintProperty(layerId, 'line-width', r.ridden ? 4 : 2);
+      });
+      map.on('click', layerId, () => showPopup(r));
+
+      // 출발·도착 역 마커 (coords 있는 노선만)
+      if (r.ridden && r.coords) {
+        [r.coords[0], r.coords[r.coords.length - 1]].forEach(coord => {
+          const el = document.createElement('div');
+          el.style.cssText = `width:8px;height:8px;border-radius:50%;background:#fff;border:2px solid ${r.color};cursor:pointer`;
+          el.addEventListener('click', () => showPopup(r));
+          new mapboxgl.Marker({ element: el }).setLngLat(coord).addTo(map);
+        });
+      }
+    }
   });
 
   buildSidebar();
@@ -156,18 +182,16 @@ function init() {
 }
 
 function buildSidebar() {
-  const ridden = ROUTES.filter(r => r.ridden);
+  const ridden   = ROUTES.filter(r =>  r.ridden);
   const unridden = ROUTES.filter(r => !r.ridden);
-  const catLabel = { shinkansen: '신칸센', limited_express: '특급' };
-
   let html = '<div class="sidebar-section">탑승 완료</div>';
-  ridden.forEach(r => { html += routeItemHTML(r, catLabel); });
+  ridden.forEach(r   => { html += itemHTML(r); });
   html += '<div class="divider"></div><div class="sidebar-section">미탑승</div>';
-  unridden.forEach(r => { html += routeItemHTML(r, catLabel); });
+  unridden.forEach(r => { html += itemHTML(r); });
   document.getElementById('routeList').innerHTML = html;
 }
 
-function routeItemHTML(r, catLabel) {
+function itemHTML(r) {
   return `<div class="route-item${r.ridden ? '' : ' unridden'}" id="ri-${r.id}" onclick='showPopup(${JSON.stringify(r)})'>
     <div class="r-dot" style="background:${r.color}"></div>
     <div>
@@ -185,34 +209,37 @@ function updateStats() {
 }
 
 function showPopup(r) {
-  if (activeId && layers[activeId]) {
-    const p = layers[activeId];
-    p.line.setStyle({ weight: p.weight, opacity: p.opacity });
+  if (activeId) {
+    const prev = ROUTES.find(x => x.id === activeId);
+    if (prev) map.setPaintProperty('lyr-' + activeId, 'line-width', prev.ridden ? 4 : 2);
   }
   activeId = r.id;
-  layers[r.id].line.setStyle({ weight: layers[r.id].weight + 3, opacity: 1 });
-  map.fitBounds(layers[r.id].line.getBounds(), { padding: [80, 80] });
+  map.setPaintProperty('lyr-' + r.id, 'line-width', r.ridden ? 7 : 4);
+
+  if (r.coords) {
+    const bounds = r.coords.reduce((b, c) => b.extend(c), new mapboxgl.LngLatBounds(r.coords[0], r.coords[0]));
+    map.fitBounds(bounds, { padding: 100, duration: 800 });
+  }
 
   document.querySelectorAll('.route-item').forEach(el => el.classList.remove('active'));
   const ri = document.getElementById('ri-' + r.id);
   if (ri) { ri.classList.add('active'); ri.scrollIntoView({ block: 'nearest' }); }
 
-  const catLabel = { shinkansen: '신칸센', limited_express: '특급' };
-  const badgeBg = { shinkansen: '#E6F1FB', limited_express: '#EAF3DE' };
+  const catLabel   = { shinkansen: '신칸센', limited_express: '특급' };
+  const badgeBg    = { shinkansen: '#E6F1FB', limited_express: '#EAF3DE' };
   const badgeColor = { shinkansen: '#0C447C', limited_express: '#27500A' };
-
-  document.getElementById('popupName').textContent = r.name + '  ' + r.nameJa;
+  document.getElementById('popupName').textContent  = r.name + '  ' + r.nameJa;
   document.getElementById('popupBadge').textContent = catLabel[r.category];
   document.getElementById('popupBadge').style.cssText = `background:${badgeBg[r.category]};color:${badgeColor[r.category]}`;
   document.getElementById('popupRoute').textContent = r.stations.join(' → ') + ' · ' + r.km + 'km';
-  document.getElementById('popupNote').textContent = r.note;
+  document.getElementById('popupNote').textContent  = r.note;
   document.getElementById('popupBox').style.display = 'block';
 }
 
 function closePopup() {
-  if (activeId && layers[activeId]) {
-    const l = layers[activeId];
-    l.line.setStyle({ weight: l.weight, opacity: l.opacity });
+  if (activeId) {
+    const prev = ROUTES.find(x => x.id === activeId);
+    if (prev) map.setPaintProperty('lyr-' + activeId, 'line-width', prev.ridden ? 4 : 2);
   }
   activeId = null;
   document.getElementById('popupBox').style.display = 'none';
