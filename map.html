@@ -98,18 +98,18 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiY2xldmVyZmVuYmVyIiwiYSI6ImNtcDM3b2VnNTBvZXIyc
 
 
 const ROUTES = [
-  { id:'tokaido', name:'도카이도 신칸센', nameJa:'東海道新幹線', category:'shinkansen', color:'#185FA5', km:552, ridden:true, note:'노조미 탑승. 도쿄~신오사카 전 구간.', dataFile:'data/geojson/shinkansen/shin-tokaido.json', stations:['도쿄','나고야','신오사카'] },
-  { id:'sanyo', name:'산요 신칸센', nameJa:'山陽新幹線', category:'shinkansen', color:'#185FA5', km:623, ridden:true, note:'노조미 탑승. 신오사카~하카타.', dataFile:'data/geojson/shinkansen/shin-sanyo.json', stations:['신오사카','히로시마','하카타'] },
-  { id:'shin-tohoku', name:'도호쿠 신칸센', nameJa:'東北新幹線', category:'shinkansen', color:'#3B6D11', km:676, ridden:true, note:'하야부사 탑승. E5계 그린차 경험.', dataFile:'data/geojson/shinkansen/shin-tohoku.json', stations:['도쿄','센다이','신아오모리'] },
-  { id:'shin-hokkaido', name:'홋카이도 신칸센', nameJa:'北海道新幹線', category:'shinkansen', color:'#3B6D11', km:149, ridden:true, note:'H5계 탑승. 신아오모리~신하코다테호쿠토.', dataFile:'data/geojson/shinkansen/shin-hokkaido.json', stations:['신아오모리','신하코다테호쿠토'] },
-  { id:'shin-joetsu', name:'조에쓰 신칸센', nameJa:'上越新幹線', category:'shinkansen', color:'#BA7517', km:270, ridden:true, note:'도키 탑승. E7계.', dataFile:'data/geojson/shinkansen/shin-joetu.json', stations:['도쿄','오미야','니가타'] },
-  { id:'shin-hokuriku', name:'호쿠리쿠 신칸센', nameJa:'北陸新幹線', category:'shinkansen', color:'#BA7517', km:450, ridden:false, note:'미탑승.', dataFile:'data/geojson/shinkansen/shin-hokuriku.json', stations:['도쿄','나가노','가나자와','쓰루가'] },
-  { id:'shin-akita', name:'아키타 신칸센', nameJa:'秋田新幹線', category:'shinkansen', color:'#E24B4A', km:999, ridden:true, note:'코마치 탑승.', dataFile:'data/geojson/shinkansen/shin-akita-full.json', stations:['도쿄','센다이','모리오카','아키타'] },
-  { id:'odoriko', name:'오도리코', nameJa:'踊り子', category:'limited_express', color:'#3B6D11', km:104, ridden:true, note:'E257계 탑승. 도쿄~이즈.', coords:[[139.7671,35.6812],[138.9312,34.9767]], stations:['도쿄','이즈큐시모다'] },
-  { id:'hokuto', name:'호쿠토', nameJa:'北斗', category:'limited_express', color:'#3B6D11', km:319, ridden:true, note:'키하261계 탑승. 하코다테~삿포로.', coords:[[140.6880,41.9025],[141.3544,43.0621]], stations:['하코다테','삿포로'] },
-  { id:'sonic', name:'소닉', nameJa:'ソニック', category:'limited_express', color:'#3B6D11', km:132, ridden:true, note:'885계 탑승. 하카타~오이타.', coords:[[130.4203,33.5902],[131.6061,33.2383]], stations:['하카타','오이타'] },
-  { id:'azusa', name:'아즈사', nameJa:'あずさ', category:'limited_express', color:'#3B6D11', km:227, ridden:true, note:'E353계 탑승. 신주쿠~마쓰모토.', coords:[[139.6917,35.6895],[137.9720,36.2380]], stations:['신주쿠','마쓰모토'] },
-  { id:'shirasagi', name:'시라사기', nameJa:'しらさぎ', category:'limited_express', color:'#3B6D11', km:177, ridden:false, note:'미탑승.', coords:[[136.8816,35.1706],[136.6562,36.5613]], stations:['나고야','가나자와'] }
+  { id:'tokaido', name:'도카이도 신칸센', name_ja:'東海道新幹線', category:'shinkansen', color:'#185FA5', km:552, ridden:true, note:'노조미 탑승. 도쿄~신오사카 전 구간.', dataFile:'data/geojson/shinkansen/shin-tokaido.json', stations:['도쿄','나고야','신오사카'] },
+  { id:'sanyo', name:'산요 신칸센', name_ja:'山陽新幹線', category:'shinkansen', color:'#185FA5', km:623, ridden:true, note:'노조미 탑승. 신오사카~하카타.', dataFile:'data/geojson/shinkansen/shin-sanyo.json', stations:['신오사카','히로시마','하카타'] },
+  { id:'shin-tohoku', name:'도호쿠 신칸센', name_ja:'東北新幹線', category:'shinkansen', color:'#3B6D11', km:676, ridden:true, note:'하야부사 탑승. E5계 그린차 경험.', dataFile:'data/geojson/shinkansen/shin-tohoku.json', stations:['도쿄','센다이','신아오모리'] },
+  { id:'shin-hokkaido', name:'홋카이도 신칸센', name_ja:'北海道新幹線', category:'shinkansen', color:'#3B6D11', km:149, ridden:true, note:'H5계 탑승. 신아오모리~신하코다테호쿠토.', dataFile:'data/geojson/shinkansen/shin-hokkaido.json', stations:['신아오모리','신하코다테호쿠토'] },
+  { id:'shin-joetsu', name:'조에쓰 신칸센', name_ja:'上越新幹線', category:'shinkansen', color:'#BA7517', km:270, ridden:true, note:'도키 탑승. E7계.', dataFile:'data/geojson/shinkansen/shin-joetu.json', stations:['도쿄','오미야','니가타'] },
+  { id:'shin-hokuriku', name:'호쿠리쿠 신칸센', name_ja:'北陸新幹線', category:'shinkansen', color:'#BA7517', km:450, ridden:false, note:'미탑승.', dataFile:'data/geojson/shinkansen/shin-hokuriku.json', stations:['도쿄','나가노','가나자와','쓰루가'] },
+  { id:'shin-akita', name:'아키타 신칸센', name_ja:'秋田新幹線', category:'shinkansen', color:'#E24B4A', km:999, ridden:true, note:'코마치 탑승.', dataFile:'data/geojson/shinkansen/shin-akita-full.json', stations:['도쿄','센다이','모리오카','아키타'] },
+  { id:'odoriko', name:'오도리코', name_ja:'踊り子', category:'limited_express', color:'#3B6D11', km:104, ridden:true, note:'E257계 탑승. 도쿄~이즈.', coords:[[139.7671,35.6812],[138.9312,34.9767]], stations:['도쿄','이즈큐시모다'] },
+  { id:'hokuto', name:'호쿠토', name_ja:'北斗', category:'limited_express', color:'#3B6D11', km:319, ridden:true, note:'키하261계 탑승. 하코다테~삿포로.', coords:[[140.6880,41.9025],[141.3544,43.0621]], stations:['하코다테','삿포로'] },
+  { id:'sonic', name:'소닉', name_ja:'ソニック', category:'limited_express', color:'#3B6D11', km:132, ridden:true, note:'885계 탑승. 하카타~오이타.', coords:[[130.4203,33.5902],[131.6061,33.2383]], stations:['하카타','오이타'] },
+  { id:'azusa', name:'아즈사', name_ja:'あずさ', category:'limited_express', color:'#3B6D11', km:227, ridden:true, note:'E353계 탑승. 신주쿠~마쓰모토.', coords:[[139.6917,35.6895],[137.9720,36.2380]], stations:['신주쿠','마쓰모토'] },
+  { id:'shirasagi', name:'시라사기', name_ja:'しらさぎ', category:'limited_express', color:'#3B6D11', km:177, ridden:false, note:'미탑승.', coords:[[136.8816,35.1706],[136.6562,36.5613]], stations:['나고야','가나자와'] }
 ];
 
 let map, activeId = null;
@@ -253,7 +253,7 @@ function showPopup(r) {
   const catLabel   = { shinkansen: '신칸센', limited_express: '특급' };
   const badgeBg    = { shinkansen: '#E6F1FB', limited_express: '#EAF3DE' };
   const badgeColor = { shinkansen: '#0C447C', limited_express: '#27500A' };
-  document.getElementById('popupName').textContent  = r.name + '  ' + r.nameJa;
+  document.getElementById('popupName').textContent  = r.name + '  ' + r.name_ja;
   document.getElementById('popupBadge').textContent = catLabel[r.category];
   document.getElementById('popupBadge').style.cssText = `background:${badgeBg[r.category]};color:${badgeColor[r.category]}`;
   document.getElementById('popupRoute').textContent = r.stations.join(' → ') + ' · ' + r.km + 'km';

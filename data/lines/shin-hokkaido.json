@@ -1,0 +1,10 @@
+{
+  "id": "shin-hokkaido",
+  "name": "홋카이도 신칸센",
+  "nameJa": "北海道新幹線",
+  "category": "shinkansen",
+  "color": "#E24B4A",
+  "operator": "jr_hokkaido",
+  "dataFile": "data/geojson/shinkansen/shin-hokkaido.json",
+  "allStations": ["신아오모리","신하코다테호쿠토"]
+}

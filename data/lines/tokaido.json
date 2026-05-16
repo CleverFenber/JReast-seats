@@ -1,0 +1,10 @@
+{
+  "id": "tokaido",
+  "name": "도카이도 신칸센",
+  "nameJa": "東海道新幹線",
+  "category": "shinkansen",
+  "color": "#185FA5",
+  "operator": "jr_central",
+  "dataFile": "data/geojson/shinkansen/shin-tokaido.json",
+  "allStations": ["도쿄","신요코하마","나고야","교토","신오사카"]
+}

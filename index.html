@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Metrohopper</title>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #1a1a1a; overflow: hidden; height: 100vh; }
+    .layout { display: flex; height: 100vh; position: relative; }
+    #map { flex: 1; height: 100vh; }
+
+    /* 오른쪽 플로팅 패널 */
+    .panel {
+      width: 320px; flex-shrink: 0; height: 100vh;
+      background: rgba(255,255,255,0.93);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-left: 1px solid rgba(0,0,0,0.08);
+      display: flex; flex-direction: column; overflow: hidden;
+      box-shadow: -4px 0 24px rgba(0,0,0,0.07);
+      z-index: 10;
+    }
+
+    /* 패널 헤더 */
+    .panel-header { padding: 24px 20px 16px; border-bottom: 1px solid #f0f0f0; flex-shrink: 0; }
+    .user-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .user-greeting { font-size: 22px; font-weight: 700; line-height: 1.2; }
+    .user-greeting span { color: #185FA5; }
+    .user-sub { font-size: 12px; color: #888; margin-bottom: 4px; }
+    .user-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: linear-gradient(135deg, #185FA5, #3B9AE1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 700; color: #fff;
+      flex-shrink: 0; cursor: pointer; overflow: hidden;
+    }
+    .user-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .stats-row { display: flex; background: #f8f9fa; border-radius: 10px; overflow: hidden; }
+    .stat { flex: 1; text-align: center; padding: 8px 4px; border-right: 1px solid #eee; }
+    .stat:last-child { border-right: none; }
+    .stat-num { font-size: 17px; font-weight: 700; color: #185FA5; }
+    .stat-label { font-size: 10px; color: #888; margin-top: 1px; }
+
+    /* 패널 바디 */
+    .panel-body { flex: 1; overflow-y: auto; padding-bottom: 16px; }
+    .panel-body::-webkit-scrollbar { width: 3px; }
+    .panel-body::-webkit-scrollbar-thumb { background: #ddd; border-radius: 2px; }
+
+    .section-label {
+      padding: 14px 20px 6px; font-size: 10px; font-weight: 700;
+      color: #aaa; text-transform: uppercase; letter-spacing: .08em;
+      position: sticky; top: 0;
+      background: rgba(255,255,255,0.93); backdrop-filter: blur(8px);
+    }
+
+    /* 노선 아이템 */
+    .route-item {
+      padding: 10px 20px; cursor: pointer;
+      display: flex; align-items: center; gap: 10px;
+      transition: background .12s; border-left: 3px solid transparent;
+    }
+    .route-item:hover { background: #f5f8ff; }
+    .route-item.active { background: #EEF5FF; border-left-color: #185FA5; }
+    .route-item.unridden { opacity: .45; }
+    .r-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+    .r-info { flex: 1; min-width: 0; }
+    .r-name { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .r-route { font-size: 11px; color: #555; margin-top: 2px; }
+    .r-date { font-size: 10px; color: #bbb; margin-top: 1px; }
+    .r-badge { font-size: 10px; padding: 2px 7px; border-radius: 6px; flex-shrink: 0; }
+    .divider { height: 1px; background: #f0f0f0; margin: 4px 20px; }
+
+    /* 지도 팝업 */
+    .popup-box {
+      position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+      z-index: 1000; background: #fff; border: 1px solid #e0e0e0;
+      border-radius: 14px; padding: 14px 16px;
+      min-width: 280px; max-width: 380px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.14); display: none;
+    }
+    .popup-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 4px; }
+    .popup-name { font-size: 15px; font-weight: 700; }
+    .popup-close { cursor: pointer; color: #aaa; font-size: 20px; line-height: 1; background: none; border: none; padding: 0; }
+    .popup-badge { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 8px; margin-bottom: 6px; }
+    .popup-route { font-size: 12px; color: #555; margin-bottom: 4px; }
+    .popup-note { font-size: 12px; color: #888; }
+
+    /* 범례 */
+    .legend-box {
+      position: absolute; bottom: 24px; left: 24px; z-index: 100;
+      background: rgba(255,255,255,0.9); backdrop-filter: blur(8px);
+      border: 1px solid #e0e0e0; border-radius: 10px; padding: 10px 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    }
+    .leg { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #555; margin-bottom: 4px; }
+    .leg:last-child { margin-bottom: 0; }
+    .leg-line { width: 20px; height: 3px; border-radius: 1px; flex-shrink: 0; }
+
+    /* 상단 네비 */
+    .top-nav { position: absolute; top: 16px; left: 16px; z-index: 100; display: flex; gap: 8px; }
+    .nav-btn {
+      background: rgba(255,255,255,0.92); backdrop-filter: blur(8px);
+      border: 1px solid rgba(0,0,0,0.1); border-radius: 20px;
+      padding: 7px 14px; font-size: 13px; font-weight: 500;
+      cursor: pointer; color: #1a1a1a; transition: all .15s;
+      text-decoration: none; display: flex; align-items: center; gap: 5px;
+    }
+    .nav-btn:hover { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+    .nav-btn.active { background: #185FA5; color: #fff; border-color: #185FA5; }
+  </style>
+</head>
+<body>
+<div class="layout">
+  <div style="flex:1;position:relative">
+    <div id="map"></div>
+    <div class="top-nav">
+      <span class="nav-btn active">🗺 지도</span>
+      <a href="seat.html" class="nav-btn">💺 좌석 배치도</a>
+    </div>
+    <div class="popup-box" id="popupBox">
+      <div class="popup-top">
+        <div>
+          <div class="popup-name" id="popupName"></div>
+          <span class="popup-badge" id="popupBadge"></span>
+        </div>
+        <button class="popup-close" onclick="closePopup()">×</button>
+      </div>
+      <div class="popup-route" id="popupRoute"></div>
+      <div class="popup-note" id="popupNote"></div>
+    </div>
+    <div class="legend-box">
+      <div class="leg"><div class="leg-line" style="background:#185FA5"></div>신칸센 (도카이도·산요)</div>
+      <div class="leg"><div class="leg-line" style="background:#E24B4A"></div>신칸센 (도호쿠·아키타)</div>
+      <div class="leg"><div class="leg-line" style="background:#BA7517"></div>신칸센 (조에쓰·호쿠리쿠)</div>
+      <div class="leg"><div class="leg-line" style="background:#3B6D11"></div>특급</div>
+      <div class="leg"><div class="leg-line" style="background:#bbb"></div>미탑승 / 예정</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      <div class="user-row">
+        <div>
+          <div class="user-sub">안녕하세요 👋</div>
+          <div class="user-greeting">Hi, <span id="userName">Guest</span></div>
+        </div>
+        <div class="user-avatar" id="userAvatar">G</div>
+      </div>
+      <div class="stats-row">
+        <div class="stat"><div class="stat-num" id="statTrips">0</div><div class="stat-label">탑승</div></div>
+        <div class="stat"><div class="stat-num" id="statKm">0</div><div class="stat-label">km</div></div>
+        <div class="stat"><div class="stat-num" id="statLines">0</div><div class="stat-label">노선</div></div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="section-label">예정 노선</div>
+      <div id="plannedList"></div>
+      <div class="divider"></div>
+      <div class="section-label">탑승 완료</div>
+      <div id="riddenList"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ★ 여기에 본인 Mapbox 토큰 붙여넣기 ★
+
+
+
+
+
+const USER = { name: 'CleverFenber', avatar: null };
+
+let LINES = {};   // { lineId: lineData }
+let TRIPS = [];   // 탑승 기록 배열
+let map, activeId = null;
+
+async function loadData() {
+  // trips 불러오기
+  const tripsRes = await fetch('data/trips/trips.json');
+  TRIPS = await tripsRes.json();
+
+  // 필요한 lines만 불러오기
+  const lineIds = [...new Set(TRIPS.map(t => t.line))];
+  await Promise.all(lineIds.map(async id => {
+    const res = await fetch(`data/lines/${id}.json`);
+    LINES[id] = await res.json();
+  }));
+}
+
+function init() {
+  // 유저 정보
+  document.getElementById('userName').textContent = USER.name;
+  const avatar = document.getElementById('userAvatar');
+  if (USER.avatar) {
+    avatar.innerHTML = `<img src="${USER.avatar}" alt="${USER.name}">`;
+  } else {
+    avatar.textContent = USER.name.charAt(0).toUpperCase();
+  }
+
+  map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/light-v11',
+    center: [135.0, 38.0],
+    zoom: 5.0
+  });
+  map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+
+  map.on('load', async () => {
+    await loadData();
+
+    // 각 노선별로 레이어 그리기 (같은 line은 한 번만)
+    const drawnLines = new Set();
+    for (const trip of TRIPS) {
+      const line = LINES[trip.line];
+      if (!line || drawnLines.has(line.id)) continue;
+      drawnLines.add(line.id);
+
+      const sourceId = 'src-' + line.id;
+      const layerId  = 'lyr-' + line.id;
+
+      // 탑승 여부: 이 노선에 ridden=true인 trip이 하나라도 있으면
+      const isRidden = TRIPS.some(t => t.line === line.id && t.ridden);
+
+      let geojsonData;
+      if (line.dataFile) {
+        const res = await fetch(line.dataFile);
+        geojsonData = await res.json();
+      } else {
+        geojsonData = { type: 'Feature', geometry: { type: 'LineString', coordinates: line.coords } };
+      }
+
+      map.addSource(sourceId, { type: 'geojson', data: geojsonData });
+      map.addLayer({
+        id: layerId, type: 'line', source: sourceId,
+        layout: { 'line-cap': 'round', 'line-join': 'round' },
+        paint: {
+          'line-color': line.color,
+          'line-width': isRidden ? 4 : 2,
+          'line-opacity': isRidden ? 0.85 : 0.35,
+          'line-dasharray': isRidden ? [1] : [2, 2]
+        }
+      });
+
+      map.on('mouseenter', layerId, () => {
+        map.getCanvas().style.cursor = 'pointer';
+        if (activeId !== line.id) map.setPaintProperty(layerId, 'line-width', isRidden ? 7 : 4);
+      });
+      map.on('mouseleave', layerId, () => {
+        map.getCanvas().style.cursor = '';
+        if (activeId !== line.id) map.setPaintProperty(layerId, 'line-width', isRidden ? 4 : 2);
+      });
+
+      // 노선 클릭 시 해당 노선의 가장 최근 trip 팝업
+      map.on('click', layerId, () => {
+        const latestTrip = TRIPS.filter(t => t.line === line.id)
+          .sort((a, b) => new Date(b.date) - new Date(a.date))[0];
+        if (latestTrip) showPopup(latestTrip, line);
+      });
+
+      // coords 노선 마커
+      if (isRidden && line.coords) {
+        [line.coords[0], line.coords[line.coords.length - 1]].forEach(coord => {
+          const el = document.createElement('div');
+          el.style.cssText = `width:8px;height:8px;border-radius:50%;background:#fff;border:2px solid ${line.color};cursor:pointer`;
+          new mapboxgl.Marker({ element: el }).setLngLat(coord).addTo(map);
+        });
+      }
+    }
+
+    buildPanel();
+    updateStats();
+  });
+}
+
+function buildPanel() {
+  const catLabel = { shinkansen: '신칸센', limited_express: '특급' };
+  const catBg    = { shinkansen: '#E6F1FB', limited_express: '#EAF3DE' };
+  const catColor = { shinkansen: '#0C447C', limited_express: '#27500A' };
+
+  const planned = TRIPS.filter(t => !t.ridden).sort((a, b) => new Date(a.date) - new Date(b.date));
+  const ridden  = TRIPS.filter(t =>  t.ridden).sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  document.getElementById('plannedList').innerHTML = planned.length
+    ? planned.map(t => itemHTML(t, catLabel, catBg, catColor)).join('')
+    : '<div style="padding:10px 20px;font-size:12px;color:#bbb">예정된 노선이 없어요</div>';
+
+  document.getElementById('riddenList').innerHTML =
+    ridden.map(t => itemHTML(t, catLabel, catBg, catColor)).join('');
+}
+
+function itemHTML(trip, catLabel, catBg, catColor) {
+  const line = LINES[trip.line];
+  if (!line) return '';
+  const dateStr = new Date(trip.date).toLocaleDateString('ko-KR', { year:'numeric', month:'short', day:'numeric' });
+  const isRidden = trip.ridden;
+  return `<div class="route-item${isRidden ? '' : ' unridden'}" id="ri-${trip.id}"
+    onclick='showPopupFromPanel("${trip.id}")'>
+    <div class="r-dot" style="background:${line.color}"></div>
+    <div class="r-info">
+      <div class="r-name">${line.name}</div>
+      <div class="r-route">${trip.from} → ${trip.to}</div>
+      <div class="r-date">${isRidden ? '탑승일 ' : '예정일 '}${dateStr}</div>
+    </div>
+    <div class="r-badge" style="background:${catBg[line.category]};color:${catColor[line.category]}">${catLabel[line.category]||line.category}</div>
+  </div>`;
+}
+
+function updateStats() {
+  const ridden = TRIPS.filter(t => t.ridden);
+  document.getElementById('statTrips').textContent = ridden.length;
+  document.getElementById('statKm').textContent = ridden.reduce((s, t) => {
+    const line = LINES[t.line];
+    return s + (line ? line.km || 0 : 0);
+  }, 0).toLocaleString();
+  document.getElementById('statLines').textContent = new Set(ridden.map(t => t.line)).size;
+}
+
+function showPopupFromPanel(tripId) {
+  const trip = TRIPS.find(t => t.id === tripId);
+  if (!trip) return;
+  const line = LINES[trip.line];
+  if (!line) return;
+  showPopup(trip, line);
+}
+
+function showPopup(trip, line) {
+  // 이전 노선 원래대로
+  if (activeId) {
+    const prevLine = LINES[activeId];
+    if (prevLine) {
+      const wasRidden = TRIPS.some(t => t.line === activeId && t.ridden);
+      map.setPaintProperty('lyr-' + activeId, 'line-width', wasRidden ? 4 : 2);
+    }
+  }
+  activeId = line.id;
+  const isRidden = TRIPS.some(t => t.line === line.id && t.ridden);
+  map.setPaintProperty('lyr-' + line.id, 'line-width', isRidden ? 7 : 4);
+
+  // bounds로 지도 이동
+  if (trip.bounds) {
+    map.fitBounds(trip.bounds, { padding: 100, duration: 800 });
+  }
+
+  // 사이드바 활성화
+  document.querySelectorAll('.route-item').forEach(el => el.classList.remove('active'));
+  const ri = document.getElementById('ri-' + trip.id);
+  if (ri) { ri.classList.add('active'); ri.scrollIntoView({ block: 'nearest' }); }
+
+  // 팝업
+  const catLabel   = { shinkansen: '신칸센', limited_express: '특급' };
+  const badgeBg    = { shinkansen: '#E6F1FB', limited_express: '#EAF3DE' };
+  const badgeColor = { shinkansen: '#0C447C', limited_express: '#27500A' };
+  const dateStr    = new Date(trip.date).toLocaleDateString('ko-KR', { year:'numeric', month:'short', day:'numeric' });
+
+  document.getElementById('popupName').textContent  = line.name + '  ' + line.nameJa;
+  document.getElementById('popupBadge').textContent = catLabel[line.category];
+  document.getElementById('popupBadge').style.cssText = `background:${badgeBg[line.category]};color:${badgeColor[line.category]}`;
+  document.getElementById('popupRoute').textContent = `${trip.from} → ${trip.to} · ${dateStr}`;
+  document.getElementById('popupNote').textContent  = trip.note;
+  document.getElementById('popupBox').style.display = 'block';
+}
+
+function closePopup() {
+  if (activeId) {
+    const prevLine = LINES[activeId];
+    if (prevLine) {
+      const wasRidden = TRIPS.some(t => t.line === activeId && t.ridden);
+      map.setPaintProperty('lyr-' + activeId, 'line-width', wasRidden ? 4 : 2);
+    }
+  }
+  activeId = null;
+  document.getElementById('popupBox').style.display = 'none';
+  document.querySelectorAll('.route-item').forEach(el => el.classList.remove('active'));
+}
+
+init();
+</script>
+</body>
+</html>

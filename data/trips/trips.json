@@ -1,0 +1,122 @@
+[
+  {
+    "id": "trip-001",
+    "line": "tokaido",
+    "from": "도쿄",
+    "to": "신오사카",
+    "date": "2024-03-15",
+    "bounds": [[135.7, 34.7], [139.8, 35.7]],
+    "ridden": true,
+    "note": "노조미 탑승. 전 구간."
+  },
+  {
+    "id": "trip-002",
+    "line": "sanyo",
+    "from": "신오사카",
+    "to": "하카타",
+    "date": "2024-03-16",
+    "bounds": [[130.3, 33.5], [135.8, 34.8]],
+    "ridden": true,
+    "note": "노조미 탑승."
+  },
+  {
+    "id": "trip-003",
+    "line": "shin-tohoku",
+    "from": "도쿄",
+    "to": "신아오모리",
+    "date": "2024-05-10",
+    "bounds": [[139.7, 35.6], [141.2, 40.9]],
+    "ridden": true,
+    "note": "하야부사 탑승. E5계 그린차."
+  },
+  {
+    "id": "trip-004",
+    "line": "shin-hokkaido",
+    "from": "신아오모리",
+    "to": "신하코다테호쿠토",
+    "date": "2024-05-11",
+    "bounds": [[140.6, 40.8], [141.5, 41.9]],
+    "ridden": true,
+    "note": "H5계 탑승."
+  },
+  {
+    "id": "trip-005",
+    "line": "shin-joetsu",
+    "from": "도쿄",
+    "to": "니가타",
+    "date": "2024-06-02",
+    "bounds": [[138.9, 35.6], [139.8, 37.9]],
+    "ridden": true,
+    "note": "도키 탑승. E7계."
+  },
+  {
+    "id": "trip-006",
+    "line": "shin-akita",
+    "from": "도쿄",
+    "to": "아키타",
+    "date": "2024-07-08",
+    "bounds": [[139.7, 35.6], [141.2, 39.7]],
+    "ridden": true,
+    "note": "코마치 탑승."
+  },
+  {
+    "id": "trip-007",
+    "line": "odoriko",
+    "from": "도쿄",
+    "to": "이즈큐시모다",
+    "date": "2024-04-03",
+    "bounds": [[138.9, 34.9], [139.8, 35.7]],
+    "ridden": true,
+    "note": "E257계 탑승."
+  },
+  {
+    "id": "trip-008",
+    "line": "hokuto",
+    "from": "하코다테",
+    "to": "삿포로",
+    "date": "2024-05-12",
+    "bounds": [[140.6, 41.9], [141.4, 43.1]],
+    "ridden": true,
+    "note": "키하261계 탑승."
+  },
+  {
+    "id": "trip-009",
+    "line": "sonic",
+    "from": "하카타",
+    "to": "오이타",
+    "date": "2024-03-17",
+    "bounds": [[130.4, 33.2], [131.7, 33.6]],
+    "ridden": true,
+    "note": "885계 탑승."
+  },
+  {
+    "id": "trip-010",
+    "line": "azusa",
+    "from": "신주쿠",
+    "to": "마쓰모토",
+    "date": "2024-08-20",
+    "bounds": [[137.9, 35.6], [139.7, 36.3]],
+    "ridden": true,
+    "note": "E353계 탑승."
+  },
+  {
+    "id": "trip-011",
+    "line": "shin-hokuriku",
+    "from": "도쿄",
+    "to": "쓰루가",
+    "date": "2025-02-20",
+    "bounds": [[135.9, 35.6], [139.8, 36.6]],
+    "ridden": false,
+    "note": "예정."
+  },
+  {
+    "id": "trip-012",
+    "line": "shirasagi",
+    "from": "나고야",
+    "to": "가나자와",
+    "date": "2025-03-10",
+    "bounds": [[136.6, 35.1], [136.9, 36.6]],
+    "ridden": false,
+    "note": "예정."
+  }
+]

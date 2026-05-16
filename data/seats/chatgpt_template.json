@@ -1,0 +1,275 @@
+{
+    "id": "train_id",
+  
+    "series": "vehicle_series",
+  
+    "operator": {
+      "id": "operator_id",
+  
+      "official_name": "原文名称",
+  
+      "name": {
+        "ko": "한국어 명칭",
+        "ja": "日本語名称",
+        "en": "English Name"
+      }
+    },
+  
+    "category": "shinkansen | limited_express | commuter | sleeper | tourist_train",
+  
+    "official_name": "原文列車名",
+  
+    "official_name_kana": "げんぶんかな",
+  
+    "display_name": {
+      "ko": "한국어 열차명",
+      "ja": "日本語列車名",
+      "en": "English Train Name"
+    },
+  
+    "service_info": {
+      "official": "公式説明文",
+  
+      "translations": {
+        "ko": "한국어 설명",
+        "en": "English description"
+      }
+    },
+  
+    "formation": {
+      "standard_cars": 0,
+  
+      "max_cars": 0,
+  
+      "formation_pattern": "예: 6M1T",
+  
+      "note": {
+        "official": "公式編成説明",
+  
+        "translations": {
+          "ko": "한국어 편성 설명",
+          "en": "English formation note"
+        }
+      }
+    },
+  
+    "operation": {
+      "max_speed_kmh": 0,
+  
+      "electrification": "AC/DC/non-electric",
+  
+      "tilting": false,
+  
+      "through_service": false
+    },
+  
+    "direction": {
+      "car_1_toward": {
+        "official": "○○方面",
+  
+        "translations": {
+          "ko": "○○ 방면",
+          "en": "Toward ○○"
+        }
+      },
+  
+      "last_car_toward": {
+        "official": "○○方面",
+  
+        "translations": {
+          "ko": "○○ 방면",
+          "en": "Toward ○○"
+        }
+      }
+    },
+  
+    "routes": [
+      {
+        "line_id": "akita_shinkansen",
+  
+        "official_name": "秋田新幹線",
+  
+        "display_name": {
+          "ko": "아키타 신칸센",
+          "ja": "秋田新幹線",
+          "en": "Akita Shinkansen"
+        }
+      }
+    ],
+  
+    "seat_classes": [
+      {
+        "id": "ordinary",
+  
+        "official_name": "普通車指定席",
+  
+        "display_name": {
+          "ko": "보통차 지정석",
+          "ja": "普通車指定席",
+          "en": "Ordinary Reserved Seat"
+        },
+  
+        "pitch_mm": 0,
+  
+        "layout": "2+2",
+  
+        "seat_type": "reserved | non_reserved | green | granclass | sleeper",
+  
+        "features": [
+          {
+            "official": "公式設備名",
+  
+            "translations": {
+              "ko": "한국어 설비명",
+              "en": "English feature name"
+            }
+          }
+        ]
+      }
+    ],
+  
+    "cars": [
+      {
+        "number": 1,
+  
+        "official_label": "1号車",
+  
+        "display_label": {
+          "ko": "1호차",
+          "ja": "1号車",
+          "en": "Car No.1"
+        },
+  
+        "class_id": "ordinary",
+  
+        "car_type": "motor | trailer | driving_motor | driving_trailer",
+  
+        "seat_rows": 0,
+  
+        "seat_columns": ["A", "B", "C", "D"],
+  
+        "window_columns": ["A", "D"],
+  
+        "capacity": 0,
+  
+        "seat_map": [
+          ["A", "B", "aisle", "C", "D"]
+        ],
+  
+        "facilities": {
+          "toilet": false,
+  
+          "washroom": false,
+  
+          "vending_machine": false,
+  
+          "smoking_room": false,
+  
+          "multi_purpose_room": false,
+  
+          "wheelchair_space": false,
+  
+          "power_outlet": false,
+  
+          "wifi": false,
+  
+          "luggage_area": "none | front | rear | both"
+        },
+  
+        "seat_notes": [
+          {
+            "rows": [1, 2],
+  
+            "cols": ["A", "B"],
+  
+            "type": "recommend | avoid | priority | special | view",
+  
+            "priority": 1,
+  
+            "official_title": "公式タイトル",
+  
+            "title": {
+              "ko": "한국어 제목",
+              "ja": "日本語タイトル",
+              "en": "English Title"
+            },
+  
+            "note": {
+              "official": "公式説明",
+  
+              "translations": {
+                "ko": "한국어 설명",
+                "en": "English description"
+              }
+            },
+  
+            "tags": [
+              "mountain_view",
+              "quiet",
+              "near_exit"
+            ]
+          }
+        ]
+      }
+    ],
+  
+    "seat_recommendations": [
+      {
+        "id": "mount_fuji_view",
+  
+        "title": {
+          "ko": "후지산 전망 추천",
+          "ja": "富士山ビューおすすめ",
+          "en": "Recommended Mt. Fuji View Seats"
+        },
+  
+        "conditions": {
+          "direction": "up",
+  
+          "cars": [1, 2, 3],
+  
+          "columns": ["E"]
+        },
+  
+        "description": {
+          "official": "富士山が見やすい座席",
+  
+          "translations": {
+            "ko": "후지산이 잘 보이는 좌석",
+            "en": "Seats with a good Mt. Fuji view"
+          }
+        }
+      }
+    ],
+  
+    "media": {
+      "thumbnail": "/images/trains/train_id/thumb.jpg",
+  
+      "gallery": [
+        "/images/trains/train_id/1.jpg",
+        "/images/trains/train_id/2.jpg"
+      ]
+    },
+  
+    "external_links": [
+      {
+        "type": "official",
+  
+        "label": {
+          "ko": "공식 사이트",
+          "ja": "公式サイト",
+          "en": "Official Website"
+        },
+  
+        "url": "https://example.com"
+      }
+    ],
+  
+    "metadata": {
+      "created_at": "2026-05-16",
+  
+      "updated_at": "2026-05-16",
+  
+      "data_version": 1
+    }
+  }

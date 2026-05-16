@@ -1,0 +1,10 @@
+{
+  "id": "odoriko",
+  "name": "오도리코",
+  "nameJa": "踊り子",
+  "category": "limited_express",
+  "color": "#3B6D11",
+  "operator": "jr_east",
+  "coords": [[139.7671,35.6812],[138.9312,34.9767]],
+  "allStations": ["도쿄","요코하마","아타미","이즈큐시모다"]
+}

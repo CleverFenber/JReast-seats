@@ -1,0 +1,10 @@
+{
+  "id": "shin-joetsu",
+  "name": "조에쓰 신칸센",
+  "nameJa": "上越新幹線",
+  "category": "shinkansen",
+  "color": "#BA7517",
+  "operator": "jr_east",
+  "dataFile": "data/geojson/shinkansen/shin-joetu.json",
+  "allStations": ["도쿄","오미야","타카사키","니가타"]
+}

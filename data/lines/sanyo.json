@@ -1,0 +1,10 @@
+{
+  "id": "sanyo",
+  "name": "산요 신칸센",
+  "nameJa": "山陽新幹線",
+  "category": "shinkansen",
+  "color": "#185FA5",
+  "operator": "jr_west",
+  "dataFile": "data/geojson/shinkansen/shin-sanyo.json",
+  "allStations": ["신오사카","신고베","히메지","오카야마","히로시마","고쿠라","하카타"]
+}
