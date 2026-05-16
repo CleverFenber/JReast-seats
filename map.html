@@ -94,16 +94,17 @@
 
 <script>
 // ★ 여기에 본인 Mapbox 토큰 붙여넣기 ★
+mapboxgl.accessToken = 'pk.eyJ1IjoiY2xldmVyZmVuYmVyIiwiYSI6ImNtcDM3b2VnNTBvZXIycm9vNXU4Zmhwd2EifQ.-YB8j8f_f1jIH1Pg6jRMlA';
 
 
 const ROUTES = [
   { id:'tokaido', name:'도카이도 신칸센', nameJa:'東海道新幹線', category:'shinkansen', color:'#185FA5', km:552, ridden:true, note:'노조미 탑승. 도쿄~신오사카 전 구간.', dataFile:'data/geojson/shinkansen/shin-tokaido.json', stations:['도쿄','나고야','신오사카'] },
   { id:'sanyo', name:'산요 신칸센', nameJa:'山陽新幹線', category:'shinkansen', color:'#185FA5', km:623, ridden:true, note:'노조미 탑승. 신오사카~하카타.', dataFile:'data/geojson/shinkansen/shin-sanyo.json', stations:['신오사카','히로시마','하카타'] },
-  { id:'tohoku', name:'도호쿠 신칸센', nameJa:'東北新幹線', category:'shinkansen', color:'#E24B4A', km:676, ridden:true, note:'하야부사 탑승. E5계 그린차 경험.', dataFile:'data/geojson/shinkansen/shin-touhoku.json', stations:['도쿄','센다이','신아오모리'] },
-  { id:'hokkaido', name:'홋카이도 신칸센', nameJa:'北海道新幹線', category:'shinkansen', color:'#E24B4A', km:149, ridden:true, note:'H5계 탑승. 신아오모리~신하코다테호쿠토.', dataFile:'data/geojson/shinkansen/shin-hokkaido.json', stations:['신아오모리','신하코다테호쿠토'] },
-  { id:'joetsu', name:'조에쓰 신칸센', nameJa:'上越新幹線', category:'shinkansen', color:'#BA7517', km:270, ridden:true, note:'도키 탑승. E7계.', dataFile:'data/geojson/shinkansen/shin-joetu.json', stations:['도쿄','오미야','니가타'] },
-  { id:'hokuriku', name:'호쿠리쿠 신칸센', nameJa:'北陸新幹線', category:'shinkansen', color:'#BA7517', km:450, ridden:false, note:'미탑승.', dataFile:'data/geojson/shinkansen/shin-hokuriku.json', stations:['도쿄','나가노','가나자와','쓰루가'] },
-  { id:'nex', name:'나리타 익스프레스', nameJa:'成田エクスプレス', category:'limited_express', color:'#3B6D11', km:80, ridden:true, note:'E259계 탑승. 공항 이동.', coords:[[139.7671,35.6812],[140.3863,35.7640]], stations:['도쿄','나리타공항'] },
+  { id:'shin-tohoku', name:'도호쿠 신칸센', nameJa:'東北新幹線', category:'shinkansen', color:'#3B6D11', km:676, ridden:true, note:'하야부사 탑승. E5계 그린차 경험.', dataFile:'data/geojson/shinkansen/shin-tohoku.json', stations:['도쿄','센다이','신아오모리'] },
+  { id:'shin-hokkaido', name:'홋카이도 신칸센', nameJa:'北海道新幹線', category:'shinkansen', color:'#3B6D11', km:149, ridden:true, note:'H5계 탑승. 신아오모리~신하코다테호쿠토.', dataFile:'data/geojson/shinkansen/shin-hokkaido.json', stations:['신아오모리','신하코다테호쿠토'] },
+  { id:'shin-joetsu', name:'조에쓰 신칸센', nameJa:'上越新幹線', category:'shinkansen', color:'#BA7517', km:270, ridden:true, note:'도키 탑승. E7계.', dataFile:'data/geojson/shinkansen/shin-joetu.json', stations:['도쿄','오미야','니가타'] },
+  { id:'shin-hokuriku', name:'호쿠리쿠 신칸센', nameJa:'北陸新幹線', category:'shinkansen', color:'#BA7517', km:450, ridden:false, note:'미탑승.', dataFile:'data/geojson/shinkansen/shin-hokuriku.json', stations:['도쿄','나가노','가나자와','쓰루가'] },
+  { id:'shin-akita', name:'아키타 신칸센', nameJa:'秋田新幹線', category:'shinkansen', color:'#E24B4A', km:999, ridden:true, note:'코마치 탑승.', dataFile:'data/geojson/shinkansen/shin-akita-full.json', stations:['도쿄','센다이','모리오카','아키타'] },
   { id:'odoriko', name:'오도리코', nameJa:'踊り子', category:'limited_express', color:'#3B6D11', km:104, ridden:true, note:'E257계 탑승. 도쿄~이즈.', coords:[[139.7671,35.6812],[138.9312,34.9767]], stations:['도쿄','이즈큐시모다'] },
   { id:'hokuto', name:'호쿠토', nameJa:'北斗', category:'limited_express', color:'#3B6D11', km:319, ridden:true, note:'키하261계 탑승. 하코다테~삿포로.', coords:[[140.6880,41.9025],[141.3544,43.0621]], stations:['하코다테','삿포로'] },
   { id:'sonic', name:'소닉', nameJa:'ソニック', category:'limited_express', color:'#3B6D11', km:132, ridden:true, note:'885계 탑승. 하카타~오이타.', coords:[[130.4203,33.5902],[131.6061,33.2383]], stations:['하카타','오이타'] },
@@ -175,7 +176,31 @@ function init() {
         });
       }
     }
+    await loadStations('shin-tohoku');
   });
+
+  async function loadStations(lineId) {
+    const res = await fetch(`data/stations/${lineId}-stations.json`);
+    const data = await res.json();
+
+    data.stations.forEach(st => {
+      const el = document.createElement('div');
+      el.style.cssText = `width:8px;height:8px;border-radius:50%;background:#fff;border:2px solid #E24B4A;cursor:pointer;z-index:10`;
+
+      el.addEventListener('click', () => {
+        document.getElementById('popupName').textContent = `${st.name_ko}  ${st.name_ja}`;
+        document.getElementById('popupBadge').textContent = data.line_name_ko;
+        document.getElementById('popupBadge').style.cssText = `background:#FFECEC;color:#C0392B`;
+        document.getElementById('popupRoute').textContent = `도호쿠 신칸센 · ${st.order}번째 역`;
+        document.getElementById('popupNote').textContent = st.note || '특이사항 없음';
+        document.getElementById('popupBox').style.display = 'block';
+      });
+
+      new mapboxgl.Marker({ element: el })
+        .setLngLat(st.coords)
+        .addTo(map);
+    });
+  }
 
   buildSidebar();
   updateStats();

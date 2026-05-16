@@ -1,0 +1,31 @@
+{
+    "line_id": "tohoku",
+    "line_name_ko": "도호쿠 신칸센",
+    "line_name_ja": "東北新幹線",
+    "operator": "jr_east",
+    "stations": [
+      { "name_ko": "도쿄", "name_ja": "東京", "coords": [139.7671, 35.6812], "order": 1, "note": "기점. 도카이도·조에쓰·호쿠리쿠 신칸센 환승 가능" },
+      { "name_ko": "우에노", "name_ja": "上野", "coords": [139.7775, 35.7135], "order": 2, "note": "" },
+      { "name_ko": "오미야", "name_ja": "大宮", "coords": [139.6209, 35.9065], "order": 3, "note": "조에쓰·호쿠리쿠 신칸센 분기" },
+      { "name_ko": "고야마", "name_ja": "小山", "coords": [139.7960, 36.3118], "order": 4, "note": "" },
+      { "name_ko": "우츠노미야", "name_ja": "宇都宮", "coords": [139.8836, 36.5614], "order": 5, "note": "" },
+      { "name_ko": "나스시오바라", "name_ja": "那須塩原", "coords": [139.9907, 36.9658], "order": 6, "note": "" },
+      { "name_ko": "신시라카와", "name_ja": "新白河", "coords": [140.1768, 37.1248], "order": 7, "note": "" },
+      { "name_ko": "코리야마", "name_ja": "郡山", "coords": [140.3876, 37.3941], "order": 8, "note": "" },
+      { "name_ko": "후쿠시마", "name_ja": "福島", "coords": [140.4680, 37.7527], "order": 9, "note": "야마가타 신칸센 분기" },
+      { "name_ko": "시로이시자오", "name_ja": "白石蔵王", "coords": [140.6178, 38.0020], "order": 10, "note": "" },
+      { "name_ko": "센다이", "name_ja": "仙台", "coords": [140.8831, 38.2600], "order": 11, "note": "도호쿠 최대 도시. 환승 편리" },
+      { "name_ko": "후루카와", "name_ja": "古川", "coords": [140.9540, 38.5741], "order": 12, "note": "" },
+      { "name_ko": "쿠리코마코겐", "name_ja": "くりこま高原", "coords": [141.1170, 38.7301], "order": 13, "note": "" },
+      { "name_ko": "이치노세키", "name_ja": "一ノ関", "coords": [141.1305, 38.9340], "order": 14, "note": "" },
+      { "name_ko": "미즈사와에사시", "name_ja": "水沢江刺", "coords": [141.1330, 39.1120], "order": 15, "note": "" },
+      { "name_ko": "기타카미", "name_ja": "北上", "coords": [141.1133, 39.2860], "order": 16, "note": "" },
+      { "name_ko": "신하나마키", "name_ja": "新花巻", "coords": [141.1218, 39.4182], "order": 17, "note": "" },
+      { "name_ko": "모리오카", "name_ja": "盛岡", "coords": [141.1364, 39.7014], "order": 18, "note": "아키타 신칸센 분기점. 코마치 분리·연결" },
+      { "name_ko": "이와테누마쿠나이", "name_ja": "いわて沼宮内", "coords": [141.2842, 39.9380], "order": 19, "note": "" },
+      { "name_ko": "니노헤", "name_ja": "二戸", "coords": [141.3051, 40.2699], "order": 20, "note": "" },
+      { "name_ko": "하치노헤", "name_ja": "八戸", "coords": [141.4889, 40.5126], "order": 21, "note": "" },
+      { "name_ko": "시치노헤토와다", "name_ja": "七戸十和田", "coords": [141.1580, 40.7430], "order": 22, "note": "" },
+      { "name_ko": "신아오모리", "name_ja": "新青森", "coords": [140.6933, 40.8241], "order": 23, "note": "종점. 홋카이도 신칸센 직통" }
+    ]
+  }
