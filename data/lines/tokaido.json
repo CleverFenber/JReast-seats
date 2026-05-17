@@ -5,6 +5,7 @@
   "category": "shinkansen",
   "color": "#185FA5",
   "operator": "jr_central",
+  "totalKm": 552.6,
   "dataFile": "data/geojson/shinkansen/shin-tokaido.json",
-  "allStations": ["도쿄","신요코하마","나고야","교토","신오사카"]
+  "stationsFile": "data/stations/tokaido.json"
 }

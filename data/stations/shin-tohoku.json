@@ -1,0 +1,28 @@
+{
+  "line_id": "shin-tohoku",
+  "stations": [
+    { "id": "tokyo",            "name": "도쿄",      "nameJa": "東京",        "coords": [139.7671, 35.6812], "km": 0.0 },
+    { "id": "ueno",             "name": "우에노",    "nameJa": "上野",        "coords": [139.7775, 35.7135], "km": 3.6 },
+    { "id": "omiya",            "name": "오미야",    "nameJa": "大宮",        "coords": [139.6209, 35.9065], "km": 30.3 },
+    { "id": "koyama",           "name": "고야마",    "nameJa": "小山",        "coords": [139.7960, 36.3118], "km": 80.6 },
+    { "id": "utsunomiya",       "name": "우쓰노미야", "nameJa": "宇都宮",      "coords": [139.8836, 36.5614], "km": 109.5 },
+    { "id": "nasu-shiobara",    "name": "나스시오바라","nameJa": "那須塩原",    "coords": [139.9907, 36.9658], "km": 157.8 },
+    { "id": "shin-shirakawa",   "name": "신시라카와", "nameJa": "新白河",      "coords": [140.1768, 37.1248], "km": 185.4 },
+    { "id": "koriyama",         "name": "고리야마",  "nameJa": "郡山",        "coords": [140.3876, 37.3941], "km": 226.7 },
+    { "id": "fukushima",        "name": "후쿠시마",  "nameJa": "福島",        "coords": [140.4680, 37.7527], "km": 272.8 },
+    { "id": "shiroishi-zao",    "name": "시로이시자오","nameJa": "白石蔵王",    "coords": [140.6178, 38.0020], "km": 306.8 },
+    { "id": "sendai",           "name": "센다이",    "nameJa": "仙台",        "coords": [140.8831, 38.2600], "km": 351.8 },
+    { "id": "furukawa",         "name": "후루카와",  "nameJa": "古川",        "coords": [140.9540, 38.5741], "km": 395.0 },
+    { "id": "kurihara-kogen",   "name": "구리코마고원","nameJa": "くりこま高原", "coords": [141.1170, 38.7301], "km": 416.2 },
+    { "id": "ichinoseki",       "name": "이치노세키", "nameJa": "一ノ関",      "coords": [141.1305, 38.9340], "km": 445.2 },
+    { "id": "mizusawa-esashi",  "name": "미즈사와에사시","nameJa": "水沢江刺", "coords": [141.1330, 39.1120], "km": 470.6 },
+    { "id": "kitakami",         "name": "기타카미",  "nameJa": "北上",        "coords": [141.1133, 39.2860], "km": 487.5 },
+    { "id": "shin-hanamaki",    "name": "신하나마키", "nameJa": "新花巻",      "coords": [141.1218, 39.4182], "km": 500.0 },
+    { "id": "morioka",          "name": "모리오카",  "nameJa": "盛岡",        "coords": [141.1364, 39.7014], "km": 535.3 },
+    { "id": "iwate-numakunai",  "name": "이와테누마쿠나이","nameJa": "いわて沼宮内","coords": [141.2842, 39.9380], "km": 566.4 },
+    { "id": "ninohe",           "name": "니노헤",    "nameJa": "二戸",        "coords": [141.3051, 40.2699], "km": 601.0 },
+    { "id": "hachinohe",        "name": "하치노헤",  "nameJa": "八戸",        "coords": [141.4889, 40.5126], "km": 631.9 },
+    { "id": "shichinohe-towada","name": "시치노헤도와다","nameJa": "七戸十和田", "coords": [141.1580, 40.7430], "km": 668.0 },
+    { "id": "shin-aomori",      "name": "신아오모리", "nameJa": "新青森",      "coords": [140.6933, 40.8241], "km": 713.7 }
+  ]
+}

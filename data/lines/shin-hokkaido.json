@@ -5,6 +5,7 @@
   "category": "shinkansen",
   "color": "#E24B4A",
   "operator": "jr_hokkaido",
+  "totalKm": 148.8,
   "dataFile": "data/geojson/shinkansen/shin-hokkaido.json",
-  "allStations": ["신아오모리","신하코다테호쿠토"]
+  "stationsFile": "data/stations/shin-hokkaido.json"
 }

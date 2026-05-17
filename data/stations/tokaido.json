@@ -1,0 +1,21 @@
+{
+  "line_id": "tokaido",
+  "stations": [
+    { "id": "tokyo",         "name": "도쿄",     "nameJa": "東京",    "coords": [139.7671, 35.6812], "km": 0.0 },
+    { "id": "shin-yokohama", "name": "신요코하마", "nameJa": "新横浜",  "coords": [139.6203, 35.5065], "km": 28.8 },
+    { "id": "odawara",       "name": "오다와라",  "nameJa": "小田原",  "coords": [139.1606, 35.2565], "km": 83.9 },
+    { "id": "atami",         "name": "아타미",    "nameJa": "熱海",    "coords": [139.0712, 35.0974], "km": 104.6 },
+    { "id": "mishima",       "name": "미시마",    "nameJa": "三島",    "coords": [138.9190, 35.1249], "km": 120.7 },
+    { "id": "shin-fuji",     "name": "신후지",    "nameJa": "新富士",  "coords": [138.6837, 35.1531], "km": 146.2 },
+    { "id": "shizuoka",      "name": "시즈오카",  "nameJa": "静岡",    "coords": [138.3893, 34.9713], "km": 180.2 },
+    { "id": "kakegawa",      "name": "가케가와",  "nameJa": "掛川",    "coords": [137.9980, 34.7697], "km": 229.3 },
+    { "id": "hamamatsu",     "name": "하마마쓰",  "nameJa": "浜松",    "coords": [137.7241, 34.7033], "km": 257.1 },
+    { "id": "toyohashi",     "name": "도요하시",  "nameJa": "豊橋",    "coords": [137.3896, 34.7653], "km": 293.6 },
+    { "id": "mikawa-anjo",   "name": "미카와안조", "nameJa": "三河安城", "coords": [137.0813, 34.9556], "km": 329.6 },
+    { "id": "nagoya",        "name": "나고야",    "nameJa": "名古屋",  "coords": [136.8816, 35.1706], "km": 366.0 },
+    { "id": "gifu-hashima",  "name": "기후하시마", "nameJa": "岐阜羽島", "coords": [136.6914, 35.3274], "km": 396.3 },
+    { "id": "maibara",       "name": "마이바라",  "nameJa": "米原",    "coords": [136.2880, 35.3195], "km": 445.9 },
+    { "id": "kyoto",         "name": "교토",     "nameJa": "京都",    "coords": [135.7539, 34.9860], "km": 513.6 },
+    { "id": "shin-osaka",    "name": "신오사카",  "nameJa": "新大阪",  "coords": [135.5002, 34.7331], "km": 552.6 }
+  ]
+}

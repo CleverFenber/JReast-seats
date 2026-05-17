@@ -1,0 +1,917 @@
+
+{
+    "id": "shin_komachi",
+    "series": "E6",
+    "operator": {
+      "id": "jr_east",
+      "official_name": "JR東日本",
+      "name": {
+        "ko": "JR동일본",
+        "ja": "JR東日本",
+        "en": "JR EAST"
+      }
+    },
+  
+    "category": "shinkansen",
+    "official_name": "こまち",
+    "official_name_kana": "こまち",
+    "display_name": {
+      "ko": "코마치",
+      "ja": "こまち",
+      "en": "Komachi"
+    },
+  
+    "service_info": {
+      "official": "秋田新幹線　こまち号",
+      "translations": {
+        "ko": "아키타 신칸센 코마치호",
+        "en": "Komachi Superexpress of Akita Shinkansen"
+      }
+    },
+  
+    "voiture_formation": {
+      "standard_cars": 7,
+      "max_cars": 7,
+      "voiture_moter_formation": "5M2T",
+      "note": {
+        "official": "公式編成説明",
+        "translations": {
+          "ko": "한국어 편성 설명",
+          "en": "English formation note"
+        }
+      }
+    },
+  
+    "operation": {
+      "max_speed_kmh": 320,
+      "electrification": "AC",
+      "tilting": true
+    },
+  
+    "direction": {
+      "car_1_toward": {
+        "official": "秋田方面",
+        "translations": {
+          "ko": "아키타 방면",
+          "en": "Towards Akita"
+        }
+      },
+      "last_car_toward": {
+        "official": "東京方面",
+        "translations": {
+          "ko": "도쿄 방면",
+          "en": "Towards Tokyo"
+        }
+      }
+    },
+  
+    "routes": [
+      {
+        "line_id": "akita_shinkansen",
+        "official_name": "秋田新幹線",
+        "display_name": {
+          "ko": "아키타 신칸센",
+          "ja": "秋田新幹線",
+          "en": "Akita Shinkansen"
+        }
+      }
+    ],
+  
+    "seat_classes": [
+        {
+            "id": "ordinary_reserved",
+            "official_name": "普通車指定席",
+            "display_name": {
+            "ko": "일반실 지정석",
+            "ja": "普通車指定席",
+            "en": "Ordinary Reserved Seat"
+        },
+            "pitch_mm": 980,
+            "layout": "2+2",
+            "seat_type": "reserved",
+            "features": [
+            {
+                "official": "コンセントは窓側の席（A,D）のみ",
+                "translations": {
+                "ko": "창측 좌석(A,D) 콘센트",
+                "en": "Power outlet at every window seat"
+                }
+            },
+            {
+                "official": "全席禁煙",
+                "translations": {
+                "ko": "전 좌석 금연",
+                "en": "All seats non-smoking"
+                }
+            }
+            ]
+        },
+        {
+            "id": "green",
+            "official_name": "グリーン車",
+            "display_name": {
+            "ko": "그린카(특실)",
+            "ja": "グリーン車",
+            "en": "Green car"
+            },
+            "pitch_mm": 1160,
+            "layout": "2+2",
+            "seat_type": "reserved",
+            "features": [
+            {
+                "official": "全席コンセント",
+                "translations": {
+                "ko": "전좌석 콘센트",
+                "en": "Power outlet at all seats"
+                }
+            },
+            {
+                "official": "全席禁煙",
+                "translations": {
+                "ko": "전 좌석 금연",
+                "en": "All seats non-smoking"
+                }
+            },
+            {
+                "official": "レッグレスト",
+                "translations": {
+                "ko": "레그레스트 탑재",
+                "en": "Leg Rests"
+                }
+            }
+            ]
+        }
+    ],
+  
+    "cars": [
+      {
+        "number": 11,
+        "official_label": "11号車",
+        "display_label": {
+          "ko": "11호차",
+          "ja": "11号車",
+          "en": "Car No.11"
+        },
+        "class_id": "green",
+        "car_type": "motor",
+        "seat_rows": 6,
+        "seat_columns": ["A", "B", "C", "D"],
+        "window_columns": ["A", "D"],
+        "capacity": 22,
+        "seat_map": [
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "aisle", "aisle", "aisle", "D"]
+        ],
+
+        "facilities": {
+          "toilet": false,
+          "toilet_for_man": false,
+          "washroom": false,
+          "vending_machine": false,
+          "smoking_room": false,
+          "multi_purpose_room": false,
+          "wheelchair_space": true,
+          "power_outlet": true,
+          "wifi": true,
+          "luggage_area": "rear"
+        },
+  
+        "seat_notes": [
+          {
+            "rows": [1, 2, 3, 4, 5, 6],
+            "cols": ["A", "D"],
+            "type": "recommend",
+            "priority": 1,
+            "official_title": "おすすめの席",
+            "title": {
+              "ko": "추천 좌석",
+              "ja": "おすすめの席",
+              "en": "Recommended"
+            },
+            "note": {
+              "official": "窓側の景色の眺めがいい席",
+  
+              "translations": {
+                "ko": "창문 밖 풍경을 감상하기 좋은 좌석",
+                "en": "Enjoyable for sightseeing"
+              }
+            },
+            "tags": [
+              "mountain_view",
+              "quiet",
+              "near_exit"
+            ]
+          }
+        ]
+      },
+      {
+        "number": 12,
+        "official_label": "12号車",
+        "display_label": {
+          "ko": "12호차",
+          "ja": "12号車",
+          "en": "Car No.12"
+        },
+        "class_id": "ordinary_reserved",
+        "car_type": "trailer",
+        "seat_rows": 9,
+        "seat_columns": ["A", "B", "C", "D"],
+        "window_columns": ["A", "D"],
+        "capacity": 35,
+        "seat_map": [
+          ["A", "aisle", "aisle", "aisle", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["aisle", "aisle", "aisle", "C", "D"]
+        ],
+
+        "facilities": {
+          "toilet": false,
+          "toilet_for_man": false,
+          "washroom": false,
+          "vending_machine": false,
+          "smoking_room": false,
+          "multi_purpose_room": false,
+          "wheelchair_space": true,
+          "power_outlet": true,
+          "wifi": true,
+          "luggage_area": "rear",
+          "AED": true,
+          "handwash": true,
+          "conductor_room": true
+        },
+  
+        "seat_notes": [
+          {
+            "rows": [1, 2],
+            "cols": ["A", "B"],
+            "type": "recommend",
+            "priority": 1,
+            "official_title": "公式タイトル",
+            "title": {
+              "ko": "한국어 제목",
+              "ja": "日本語タイトル",
+              "en": "English Title"
+            },
+            "note": {
+              "official": "公式説明",
+              "translations": {
+                "ko": "한국어 설명",
+                "en": "English description"
+              }
+            },
+            "tags": [
+              "mountain_view",
+              "quiet",
+              "near_exit"
+            ]
+          },
+          {
+            "rows": [6,7],
+            "cols": ["A", "B", "C", "D"],
+            "type": "avoid",
+            "official_title": "騒音注意",
+            "title": {
+              "ko": "소음 주의",
+              "ja": "騒音注意",
+              "en": "Possible Noise"
+            },
+            "note": {
+              "official": "デッキに近く騒音の可能性あり。",
+              "translations":{
+                "ko": "출입문과 가까워 승하차 및 화장실 이용객 소음 발생.",
+                "en": "May be noisy due to proximity to the deck area."
+              }
+            },
+            "tags": [
+              "noisy",
+              "near_exit"
+            ]
+          },
+          {
+            "rows": [2,3],
+            "cols": ["A", "D"],
+  
+            "type": "special",
+            "official_title": "乗り心地良好",
+            "title": {
+              "ko": "승차감 우수",
+              "ja": "乗り心地良好",
+              "en": "Smooth Ride"
+            },
+            "note": {
+              "official": "車両中央付近で揺れが少ない。",
+              "translations":{
+                "ko": "차량 중앙부로 흔들림이 적음.",
+                "en": "Less vibration near the center of the car."
+              }
+            }
+          }
+        ]
+      },
+      {
+        "number": 13,
+        "official_label": "13号車",
+        "display_label": {
+          "ko": "13호차",
+          "ja": "13号車",
+          "en": "Car No.13"
+        },
+        "class_id": "ordinary_reserved",
+        "car_type": "moter",
+        "seat_rows": 15,
+        "seat_columns": ["A", "B", "C", "D"],
+        "window_columns": ["A", "D"],
+        "capacity": 58,
+        "seat_map": [
+          ["A", "B", "aisle", "aisle", "aisle"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"]
+        ],
+
+        "facilities": {
+          "toilet": true,
+          "toilet_for_man": true,
+          "washroom": false,
+          "vending_machine": false,
+          "smoking_room": false,
+          "multi_purpose_room": false,
+          "wheelchair_space": false,
+          "power_outlet": true,
+          "wifi": true,
+          "luggage_area": "both",
+          "AED": false,
+          "handwash": true,
+          "conductor_room": false
+        },
+  
+        "seat_notes": [
+          {
+            "rows": [1, 2],
+            "cols": ["A", "B"],
+            "type": "recommend",
+            "priority": 1,
+            "official_title": "公式タイトル",
+            "title": {
+              "ko": "한국어 제목",
+              "ja": "日本語タイトル",
+              "en": "English Title"
+            },
+            "note": {
+              "official": "公式説明",
+              "translations": {
+                "ko": "한국어 설명",
+                "en": "English description"
+              }
+            },
+            "tags": [
+              "mountain_view",
+              "quiet",
+              "near_exit"
+            ]
+          },
+          {
+            "rows": [13, 14, 15],
+            "cols": ["A", "B", "C", "D"],
+            "type": "avoid",
+            "official_title": "騒音注意",
+            "title": {
+              "ko": "소음 주의",
+              "ja": "騒音注意",
+              "en": "Possible Noise"
+            },
+            "note": {
+              "official": "デッキに近く騒音の可能性あり。",
+              "translations":{
+                "ko": "출입문과 가까워 승하차 및 화장실 이용객 소음 발생.",
+                "en": "May be noisy due to proximity to the deck area."
+              }
+            },
+            "tags": [
+              "noisy",
+              "near_exit"
+            ]
+          },
+          {
+            "rows": [7, 8, 9],
+            "cols": ["A", "D"],
+  
+            "type": "special",
+            "official_title": "乗り心地良好",
+            "title": {
+              "ko": "승차감 우수",
+              "ja": "乗り心地良好",
+              "en": "Smooth Ride"
+            },
+            "note": {
+              "official": "車両中央付近で揺れが少ない。",
+              "translations":{
+                "ko": "차량 중앙부로 흔들림이 적음.",
+                "en": "Less vibration near the center of the car."
+              }
+            }
+          }
+        ]
+      },
+      {
+        "number": 14,
+        "official_label": "14号車",
+        "display_label": {
+          "ko": "14호차",
+          "ja": "14号車",
+          "en": "Car No.14"
+        },
+        "class_id": "ordinary_reserved",
+        "car_type": "moter",
+        "seat_rows": 15,
+        "seat_columns": ["A", "B", "C", "D"],
+        "window_columns": ["A", "D"],
+        "capacity": 58,
+        "seat_map": [
+          ["A", "B", "aisle", "aisle", "aisle"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"]
+        ],
+
+        "facilities": {
+          "toilet": true,
+          "toilet_for_man": true,
+          "washroom": false,
+          "vending_machine": false,
+          "smoking_room": false,
+          "multi_purpose_room": false,
+          "wheelchair_space": false,
+          "power_outlet": true,
+          "wifi": true,
+          "luggage_area": "both",
+          "AED": false,
+          "handwash": true,
+          "conductor_room": false
+        },
+  
+        "seat_notes": [
+          {
+            "rows": [1, 2],
+            "cols": ["A", "B"],
+            "type": "recommend",
+            "priority": 1,
+            "official_title": "公式タイトル",
+            "title": {
+              "ko": "한국어 제목",
+              "ja": "日本語タイトル",
+              "en": "English Title"
+            },
+            "note": {
+              "official": "公式説明",
+              "translations": {
+                "ko": "한국어 설명",
+                "en": "English description"
+              }
+            },
+            "tags": [
+              "mountain_view",
+              "quiet",
+              "near_exit"
+            ]
+          },
+          {
+            "rows": [13, 14, 15],
+            "cols": ["A", "B", "C", "D"],
+            "type": "avoid",
+            "official_title": "騒音注意",
+            "title": {
+              "ko": "소음 주의",
+              "ja": "騒音注意",
+              "en": "Possible Noise"
+            },
+            "note": {
+              "official": "デッキに近く騒音の可能性あり。",
+              "translations":{
+                "ko": "출입문과 가까워 승하차 및 화장실 이용객 소음 발생.",
+                "en": "May be noisy due to proximity to the deck area."
+              }
+            },
+            "tags": [
+              "noisy",
+              "near_exit"
+            ]
+          },
+          {
+            "rows": [7, 8, 9],
+            "cols": ["A", "D"],
+  
+            "type": "special",
+            "official_title": "乗り心地良好",
+            "title": {
+              "ko": "승차감 우수",
+              "ja": "乗り心地良好",
+              "en": "Smooth Ride"
+            },
+            "note": {
+              "official": "車両中央付近で揺れが少ない。",
+              "translations":{
+                "ko": "차량 중앙부로 흔들림이 적음.",
+                "en": "Less vibration near the center of the car."
+              }
+            }
+          }
+        ]
+      },
+      {
+        "number": 15,
+        "official_label": "15号車",
+        "display_label": {
+          "ko": "15호차",
+          "ja": "15号車",
+          "en": "Car No.15"
+        },
+        "class_id": "ordinary_reserved",
+        "car_type": "moter",
+        "seat_rows": 17,
+        "seat_columns": ["A", "B", "C", "D"],
+        "window_columns": ["A", "D"],
+        "capacity": 66,
+        "seat_map": [
+          ["A", "B", "aisle", "aisle", "aisle"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"]
+        ],
+
+        "facilities": {
+          "toilet": false,
+          "toilet_for_man": false,
+          "washroom": false,
+          "vending_machine": false,
+          "smoking_room": false,
+          "multi_purpose_room": false,
+          "wheelchair_space": false,
+          "power_outlet": true,
+          "wifi": true,
+          "luggage_area": "front",
+          "AED": false,
+          "handwash": false,
+          "conductor_room": false
+        },
+  
+        "seat_notes": [
+          {
+            "rows": [1, 2],
+            "cols": ["A", "B"],
+            "type": "recommend",
+            "priority": 1,
+            "official_title": "公式タイトル",
+            "title": {
+              "ko": "한국어 제목",
+              "ja": "日本語タイトル",
+              "en": "English Title"
+            },
+            "note": {
+              "official": "公式説明",
+              "translations": {
+                "ko": "한국어 설명",
+                "en": "English description"
+              }
+            },
+            "tags": [
+              "mountain_view",
+              "quiet",
+              "near_exit"
+            ]
+          },
+          {
+            "rows": [15, 16, 17],
+            "cols": ["A", "B", "C", "D"],
+            "type": "avoid",
+            "official_title": "騒音注意",
+            "title": {
+              "ko": "소음 주의",
+              "ja": "騒音注意",
+              "en": "Possible Noise"
+            },
+            "note": {
+              "official": "デッキに近く騒音の可能性あり。",
+              "translations":{
+                "ko": "출입문과 가까워 승하차 및 화장실 이용객 소음 발생.",
+                "en": "May be noisy due to proximity to the deck area."
+              }
+            },
+            "tags": [
+              "noisy",
+              "near_exit"
+            ]
+          },
+          {
+            "rows": [7, 8, 9],
+            "cols": ["A", "D"],
+  
+            "type": "special",
+            "official_title": "乗り心地良好",
+            "title": {
+              "ko": "승차감 우수",
+              "ja": "乗り心地良好",
+              "en": "Smooth Ride"
+            },
+            "note": {
+              "official": "車両中央付近で揺れが少ない。",
+              "translations":{
+                "ko": "차량 중앙부로 흔들림이 적음.",
+                "en": "Less vibration near the center of the car."
+              }
+            }
+          }
+        ]
+      },
+      {
+        "number": 16,
+        "official_label": "16号車",
+        "display_label": {
+          "ko": "16호차",
+          "ja": "16号車",
+          "en": "Car No.16"
+        },
+        "class_id": "ordinary_reserved",
+        "car_type": "trailer",
+        "seat_rows": 15,
+        "seat_columns": ["A", "B", "C", "D"],
+        "window_columns": ["A", "D"],
+        "capacity": 58,
+        "seat_map": [
+          ["A", "B", "aisle", "aisle", "aisle"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"]
+        ],
+
+        "facilities": {
+          "toilet": true,
+          "toilet_for_man": true,
+          "washroom": false,
+          "vending_machine": false,
+          "smoking_room": false,
+          "multi_purpose_room": false,
+          "wheelchair_space": false,
+          "power_outlet": true,
+          "wifi": true,
+          "luggage_area": "front",
+          "AED": false,
+          "handwash": false,
+          "conductor_room": false
+        },
+  
+        "seat_notes": [
+          {
+            "rows": [1, 2],
+            "cols": ["A", "B"],
+            "type": "recommend",
+            "priority": 1,
+            "official_title": "公式タイトル",
+            "title": {
+              "ko": "한국어 제목",
+              "ja": "日本語タイトル",
+              "en": "English Title"
+            },
+            "note": {
+              "official": "公式説明",
+              "translations": {
+                "ko": "한국어 설명",
+                "en": "English description"
+              }
+            },
+            "tags": [
+              "mountain_view",
+              "quiet",
+              "near_exit"
+            ]
+          },
+          {
+            "rows": [13, 14, 15],
+            "cols": ["A", "B", "C", "D"],
+            "type": "avoid",
+            "official_title": "騒音注意",
+            "title": {
+              "ko": "소음 주의",
+              "ja": "騒音注意",
+              "en": "Possible Noise"
+            },
+            "note": {
+              "official": "デッキに近く騒音の可能性あり。",
+              "translations":{
+                "ko": "출입문과 가까워 승하차 및 화장실 이용객 소음 발생.",
+                "en": "May be noisy due to proximity to the deck area."
+              }
+            },
+            "tags": [
+              "noisy",
+              "near_exit"
+            ]
+          },
+          {
+            "rows": [7, 8, 9],
+            "cols": ["A", "D"],
+  
+            "type": "special",
+            "official_title": "乗り心地良好",
+            "title": {
+              "ko": "승차감 우수",
+              "ja": "乗り心地良好",
+              "en": "Smooth Ride"
+            },
+            "note": {
+              "official": "車両中央付近で揺れが少ない。",
+              "translations":{
+                "ko": "차량 중앙부로 흔들림이 적음.",
+                "en": "Less vibration near the center of the car."
+              }
+            }
+          }
+        ]
+      },
+      {
+        "number": 17,
+        "official_label": "17号車",
+        "display_label": {
+          "ko": "17호차",
+          "ja": "17号車",
+          "en": "Car No.17"
+        },
+        "class_id": "ordinary_reserved",
+        "car_type": "moter",
+        "seat_rows": 8,
+        "seat_columns": ["A", "B", "C", "D"],
+        "window_columns": ["A", "D"],
+        "capacity": 30,
+        "seat_map": [
+          ["A", "B", "aisle", "aisle", "aisle"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"],
+          ["A", "B", "aisle", "C", "D"]
+        ],
+
+        "facilities": {
+          "toilet": false,
+          "toilet_for_man": false,
+          "washroom": false,
+          "vending_machine": false,
+          "smoking_room": false,
+          "multi_purpose_room": false,
+          "wheelchair_space": false,
+          "power_outlet": true,
+          "wifi": true,
+          "luggage_area": "front",
+          "AED": false,
+          "handwash": false,
+          "conductor_room": false
+        },
+  
+        "seat_notes": [
+          {
+            "rows": [1, 2],
+            "cols": ["A", "B"],
+            "type": "recommend",
+            "priority": 1,
+            "official_title": "公式タイトル",
+            "title": {
+              "ko": "한국어 제목",
+              "ja": "日本語タイトル",
+              "en": "English Title"
+            },
+            "note": {
+              "official": "公式説明",
+  
+              "translations": {
+                "ko": "한국어 설명",
+                "en": "English description"
+              }
+            },
+            "tags": [
+              "mountain_view",
+              "quiet",
+              "near_exit"
+            ]
+          }
+        ]
+      }
+    ],
+  
+    "seat_recommendations": [
+      {
+        "id": "mount_fuji_view",
+  
+        "title": {
+          "ko": "후지산 전망 추천",
+          "ja": "富士山ビューおすすめ",
+          "en": "Recommended Mt. Fuji View Seats"
+        },
+  
+        "conditions": {
+          "direction": "up",
+  
+          "cars": [1, 2, 3],
+  
+          "columns": ["E"]
+        },
+  
+        "description": {
+          "official": "富士山が見やすい座席",
+  
+          "translations": {
+            "ko": "후지산이 잘 보이는 좌석",
+            "en": "Seats with a good Mt. Fuji view"
+          }
+        }
+      }
+    ],
+  
+    "media": {
+      "thumbnail": "/images/trains/train_id/thumb.jpg",
+  
+      "gallery": [
+        "/images/trains/train_id/1.jpg",
+        "/images/trains/train_id/2.jpg"
+      ]
+    },
+  
+    "external_links": [
+      {
+        "type": "officia_website",
+  
+        "label": {
+          "ko": "공식 사이트",
+          "ja": "公式サイト",
+          "en": "Official Website"
+        },
+  
+        "url": "https://www.jreast.co.jp/multi/routemaps/akitashinkansen.html"
+      }
+    ],
+  
+    "metadata": {
+      "created_at": "2026-05-16",
+  
+      "updated_at": "2026-05-16",
+  
+      "data_version": 1
+    }
+  }

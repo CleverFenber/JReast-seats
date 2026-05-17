@@ -5,6 +5,7 @@
   "category": "shinkansen",
   "color": "#BA7517",
   "operator": "jr_east",
+  "totalKm": 572.8,
   "dataFile": "data/geojson/shinkansen/shin-hokuriku.json",
-  "allStations": ["도쿄","오미야","나가노","도야마","가나자와","쓰루가"]
+  "stationsFile": "data/stations/shin-hokuriku.json"
 }

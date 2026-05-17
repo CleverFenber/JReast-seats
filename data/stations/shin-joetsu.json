@@ -1,0 +1,17 @@
+{
+  "line_id": "shin-joetsu",
+  "stations": [
+    { "id": "tokyo",       "name": "도쿄",    "nameJa": "東京",   "coords": [139.7671, 35.6812], "km": 0.0 },
+    { "id": "ueno",        "name": "우에노",  "nameJa": "上野",   "coords": [139.7775, 35.7135], "km": 3.6 },
+    { "id": "omiya",       "name": "오미야",  "nameJa": "大宮",   "coords": [139.6209, 35.9065], "km": 30.3 },
+    { "id": "kumagaya",    "name": "구마가야", "nameJa": "熊谷",   "coords": [139.3888, 36.1472], "km": 64.7 },
+    { "id": "honjo-waseda","name": "혼조와세다","nameJa": "本庄早稲田","coords": [139.1877, 36.2258], "km": 86.0 },
+    { "id": "takasaki",    "name": "다카사키", "nameJa": "高崎",   "coords": [139.0131, 36.3228], "km": 105.0 },
+    { "id": "jomo-kogen",  "name": "조모고원", "nameJa": "上毛高原", "coords": [138.8128, 36.6483], "km": 139.2 },
+    { "id": "echigo-yuzawa","name": "에치고유자와","nameJa": "越後湯沢","coords": [138.8119, 36.9296], "km": 168.9 },
+    { "id": "urasa",       "name": "우라사",  "nameJa": "浦佐",   "coords": [138.9659, 37.1989], "km": 199.2 },
+    { "id": "nagaoka",     "name": "나가오카", "nameJa": "長岡",   "coords": [138.8512, 37.4483], "km": 229.6 },
+    { "id": "tsubame-sanjo","name": "쓰바메산조","nameJa": "燕三条", "coords": [138.7695, 37.6577], "km": 250.2 },
+    { "id": "niigata",     "name": "니가타",  "nameJa": "新潟",   "coords": [139.0603, 37.9161], "km": 303.6 }
+  ]
+}

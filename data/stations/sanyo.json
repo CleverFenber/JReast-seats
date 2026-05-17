@@ -1,0 +1,24 @@
+{
+  "line_id": "sanyo",
+  "stations": [
+    { "id": "shin-osaka",       "name": "신오사카",    "nameJa": "新大阪",   "coords": [135.5002, 34.7331], "km": 0.0 },
+    { "id": "shin-kobe",        "name": "신고베",     "nameJa": "新神戸",   "coords": [135.1956, 34.7042], "km": 36.9 },
+    { "id": "nishi-akashi",     "name": "니시아카시",  "nameJa": "西明石",   "coords": [134.9868, 34.6572], "km": 57.5 },
+    { "id": "himeji",           "name": "히메지",     "nameJa": "姫路",     "coords": [134.6914, 34.8360], "km": 87.9 },
+    { "id": "aioi",             "name": "아이오이",    "nameJa": "相生",     "coords": [134.4669, 34.8062], "km": 112.8 },
+    { "id": "okayama",          "name": "오카야마",    "nameJa": "岡山",     "coords": [133.9178, 34.6651], "km": 180.3 },
+    { "id": "shin-kurashiki",   "name": "신구라시키",  "nameJa": "新倉敷",   "coords": [133.7649, 34.5850], "km": 199.8 },
+    { "id": "fukuyama",         "name": "후쿠야마",    "nameJa": "福山",     "coords": [133.3625, 34.4852], "km": 238.3 },
+    { "id": "shin-onomichi",    "name": "신오노미치",  "nameJa": "新尾道",   "coords": [133.2007, 34.4296], "km": 258.6 },
+    { "id": "mihara",           "name": "미하라",     "nameJa": "三原",     "coords": [133.0818, 34.3971], "km": 274.8 },
+    { "id": "higashi-hiroshima","name": "히가시히로시마","nameJa": "東広島",  "coords": [132.7427, 34.4254], "km": 312.5 },
+    { "id": "hiroshima",        "name": "히로시마",    "nameJa": "広島",     "coords": [132.4741, 34.3966], "km": 341.6 },
+    { "id": "shin-iwakuni",     "name": "신이와쿠니",  "nameJa": "新岩国",   "coords": [132.2102, 34.1617], "km": 370.8 },
+    { "id": "tokuyama",         "name": "도쿠야마",    "nameJa": "徳山",     "coords": [131.8062, 34.0550], "km": 412.5 },
+    { "id": "shin-yamaguchi",   "name": "신야마구치",  "nameJa": "新山口",   "coords": [131.4731, 34.1731], "km": 451.3 },
+    { "id": "asa",              "name": "아사",       "nameJa": "厚狭",     "coords": [131.1863, 34.0122], "km": 489.5 },
+    { "id": "shin-shimonoseki", "name": "신시모노세키", "nameJa": "新下関",   "coords": [130.9459, 33.9603], "km": 513.1 },
+    { "id": "kokura",           "name": "고쿠라",     "nameJa": "小倉",     "coords": [130.8750, 33.8839], "km": 554.0 },
+    { "id": "hakata",           "name": "하카타",     "nameJa": "博多",     "coords": [130.4203, 33.5902], "km": 622.3 }
+  ]
+}

@@ -5,6 +5,7 @@
   "category": "shinkansen",
   "color": "#BA7517",
   "operator": "jr_east",
+  "totalKm": 303.6,
   "dataFile": "data/geojson/shinkansen/shin-joetu.json",
-  "allStations": ["도쿄","오미야","타카사키","니가타"]
+  "stationsFile": "data/stations/shin-joetsu.json"
 }

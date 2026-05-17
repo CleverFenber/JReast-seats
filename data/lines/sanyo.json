@@ -5,6 +5,7 @@
   "category": "shinkansen",
   "color": "#185FA5",
   "operator": "jr_west",
+  "totalKm": 622.3,
   "dataFile": "data/geojson/shinkansen/shin-sanyo.json",
-  "allStations": ["신오사카","신고베","히메지","오카야마","히로시마","고쿠라","하카타"]
+  "stationsFile": "data/stations/sanyo.json"
 }

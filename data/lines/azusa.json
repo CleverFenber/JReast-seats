@@ -5,6 +5,7 @@
   "category": "limited_express",
   "color": "#3B6D11",
   "operator": "jr_east",
-  "coords": [[139.6917,35.6895],[137.9720,36.2380]],
-  "allStations": ["신주쿠","다치카와","고후","스와","마쓰모토"]
+  "totalKm": 227.0,
+  "coords": [[139.6917, 35.6895], [137.9720, 36.2380]],
+  "stationsFile": "data/stations/azusa.json"
 }

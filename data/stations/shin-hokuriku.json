@@ -1,0 +1,28 @@
+{
+  "line_id": "shin-hokuriku",
+  "stations": [
+    { "id": "tokyo",         "name": "도쿄",     "nameJa": "東京",    "coords": [139.7671, 35.6812], "km": 0.0 },
+    { "id": "ueno",          "name": "우에노",   "nameJa": "上野",    "coords": [139.7775, 35.7135], "km": 3.6 },
+    { "id": "omiya",         "name": "오미야",   "nameJa": "大宮",    "coords": [139.6209, 35.9065], "km": 30.3 },
+    { "id": "kumagaya",      "name": "구마가야",  "nameJa": "熊谷",    "coords": [139.3888, 36.1472], "km": 64.7 },
+    { "id": "honjo-waseda",  "name": "혼조와세다","nameJa": "本庄早稲田","coords": [139.1877, 36.2258], "km": 86.0 },
+    { "id": "takasaki",      "name": "다카사키",  "nameJa": "高崎",    "coords": [139.0131, 36.3228], "km": 105.0 },
+    { "id": "annaka-haruna", "name": "안나카하루나","nameJa": "安中榛名", "coords": [138.8456, 36.3203], "km": 124.4 },
+    { "id": "karuizawa",     "name": "가루이자와", "nameJa": "軽井沢",  "coords": [138.5962, 36.3489], "km": 146.8 },
+    { "id": "sakudaira",     "name": "사쿠다이라", "nameJa": "佐久平",  "coords": [138.4723, 36.2440], "km": 164.4 },
+    { "id": "ueda",          "name": "우에다",   "nameJa": "上田",    "coords": [138.2491, 36.4018], "km": 189.2 },
+    { "id": "nagano",        "name": "나가노",   "nameJa": "長野",    "coords": [138.1817, 36.5440], "km": 222.4 },
+    { "id": "iiyama",        "name": "이이야마",  "nameJa": "飯山",    "coords": [138.3653, 36.8518], "km": 252.8 },
+    { "id": "joetsumyoko",   "name": "조에쓰묘코","nameJa": "上越妙高", "coords": [138.2371, 37.1314], "km": 284.3 },
+    { "id": "itoigawa",      "name": "이토이가와", "nameJa": "糸魚川",  "coords": [137.8622, 37.0378], "km": 318.5 },
+    { "id": "kurobe-unazuki","name": "구로베우나즈키온천","nameJa": "黒部宇奈月温泉","coords": [137.4509, 36.8571], "km": 358.2 },
+    { "id": "toyama",        "name": "도야마",   "nameJa": "富山",    "coords": [137.2115, 36.7002], "km": 391.8 },
+    { "id": "shin-takaoka",  "name": "신다카오카", "nameJa": "新高岡",  "coords": [136.9924, 36.7449], "km": 410.9 },
+    { "id": "kanazawa",      "name": "가나자와",  "nameJa": "金沢",    "coords": [136.6562, 36.5613], "km": 450.5 },
+    { "id": "kaga-onsen",    "name": "가가온천",  "nameJa": "加賀温泉", "coords": [136.3186, 36.3131], "km": 484.8 },
+    { "id": "awara-onsen",   "name": "아와라온천", "nameJa": "芦原温泉", "coords": [136.2250, 36.2250], "km": 498.3 },
+    { "id": "fukui",         "name": "후쿠이",   "nameJa": "福井",    "coords": [136.2197, 36.0641], "km": 516.8 },
+    { "id": "echizen-takefu","name": "에치젠다케후","nameJa": "越前たけふ","coords": [136.1701, 35.8982], "km": 535.6 },
+    { "id": "tsuruga",       "name": "쓰루가",   "nameJa": "敦賀",    "coords": [136.1879, 35.6450], "km": 572.8 }
+  ]
+}

@@ -5,6 +5,7 @@
   "category": "shinkansen",
   "color": "#E24B4A",
   "operator": "jr_east",
+  "totalKm": 713.7,
   "dataFile": "data/geojson/shinkansen/shin-tohoku.json",
-  "allStations": ["도쿄","우에노","오미야","우쓰노미야","고리야마","후쿠시마","센다이","이치노세키","모리오카","하치노헤","신아오모리"]
+  "stationsFile": "data/stations/shin-tohoku.json"
 }

@@ -5,6 +5,7 @@
   "category": "limited_express",
   "color": "#3B6D11",
   "operator": "jr_west",
-  "coords": [[136.8816,35.1706],[136.6562,36.5613]],
-  "allStations": ["나고야","기후","마이바라","후쿠이","가나자와"]
+  "totalKm": 177.0,
+  "coords": [[136.8816, 35.1706], [136.6562, 36.5613]],
+  "stationsFile": "data/stations/shirasagi.json"
 }

@@ -1,0 +1,12 @@
+{
+  "line_id": "azusa",
+  "stations": [
+    { "id": "shinjuku",   "name": "신주쿠",  "nameJa": "新宿",   "coords": [139.6917, 35.6895], "km": 0.0 },
+    { "id": "tachikawa",  "name": "다치카와", "nameJa": "立川",   "coords": [139.4157, 35.6978], "km": 37.1 },
+    { "id": "hachioji",   "name": "하치오지", "nameJa": "八王子",  "coords": [139.3386, 35.6564], "km": 47.4 },
+    { "id": "otsuki",     "name": "오쓰키",  "nameJa": "大月",   "coords": [138.9404, 35.6058], "km": 88.5 },
+    { "id": "kobuchizawa","name": "고부치자와","nameJa": "小淵沢",  "coords": [138.3197, 35.8784], "km": 147.7 },
+    { "id": "suwa",       "name": "스와",    "nameJa": "上諏訪",  "coords": [138.1099, 36.0399], "km": 168.4 },
+    { "id": "matsumoto",  "name": "마쓰모토", "nameJa": "松本",   "coords": [137.9720, 36.2380], "km": 227.0 }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "line_id": "shirasagi",
+  "stations": [
+    { "id": "nagoya",   "name": "나고야",  "nameJa": "名古屋", "coords": [136.8816, 35.1706], "km": 0.0 },
+    { "id": "gifu",     "name": "기후",    "nameJa": "岐阜",   "coords": [136.7223, 35.4234], "km": 30.3 },
+    { "id": "maibara",  "name": "마이바라", "nameJa": "米原",   "coords": [136.2880, 35.3195], "km": 77.5 },
+    { "id": "fukui",    "name": "후쿠이",  "nameJa": "福井",   "coords": [136.2197, 36.0641], "km": 129.8 },
+    { "id": "kanazawa", "name": "가나자와", "nameJa": "金沢",   "coords": [136.6562, 36.5613], "km": 177.0 }
+  ]
+}

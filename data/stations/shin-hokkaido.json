@@ -1,0 +1,9 @@
+{
+  "line_id": "shin-hokkaido",
+  "stations": [
+    { "id": "shin-aomori",          "name": "신아오모리",      "nameJa": "新青森",         "coords": [140.6933, 40.8241], "km": 0.0 },
+    { "id": "okutsu-garu",          "name": "오쿠쓰가루 이마베쓰","nameJa": "奥津軽いまべつ", "coords": [140.4479, 41.1693], "km": 38.5 },
+    { "id": "kikonai",              "name": "기코나이",         "nameJa": "木古内",         "coords": [140.4388, 41.6740], "km": 74.8 },
+    { "id": "shin-hakodate-hokuto", "name": "신하코다테호쿠토",  "nameJa": "新函館北斗",     "coords": [140.6517, 41.8988], "km": 148.8 }
+  ]
+}

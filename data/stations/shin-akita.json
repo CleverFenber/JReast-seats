@@ -1,0 +1,15 @@
+{
+  "line_id": "shin-akita",
+  "stations": [
+    { "id": "tokyo",        "name": "도쿄",     "nameJa": "東京",    "coords": [139.7671, 35.6812], "km": 0.0 },
+    { "id": "ueno",         "name": "우에노",   "nameJa": "上野",    "coords": [139.7775, 35.7135], "km": 3.6 },
+    { "id": "omiya",        "name": "오미야",   "nameJa": "大宮",    "coords": [139.6209, 35.9065], "km": 30.3 },
+    { "id": "sendai",       "name": "센다이",   "nameJa": "仙台",    "coords": [140.8831, 38.2600], "km": 351.8 },
+    { "id": "morioka",      "name": "모리오카",  "nameJa": "盛岡",    "coords": [141.1364, 39.7014], "km": 535.3 },
+    { "id": "shizukuishi",  "name": "시즈쿠이시","nameJa": "雫石",    "coords": [140.9757, 39.6953], "km": 549.8 },
+    { "id": "tazawako",     "name": "다자와코",  "nameJa": "田沢湖",  "coords": [140.7258, 39.6997], "km": 568.8 },
+    { "id": "kakunodate",   "name": "가쿠노다테","nameJa": "角館",    "coords": [140.5640, 39.5967], "km": 585.8 },
+    { "id": "omagari",      "name": "오마가리",  "nameJa": "大曲",    "coords": [140.4778, 39.4612], "km": 602.0 },
+    { "id": "akita",        "name": "아키타",   "nameJa": "秋田",    "coords": [140.1024, 39.7186], "km": 662.6 }
+  ]
+}

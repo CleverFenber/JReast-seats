@@ -1,0 +1,9 @@
+{
+  "line_id": "sonic",
+  "stations": [
+    { "id": "hakata",   "name": "하카타",  "nameJa": "博多",   "coords": [130.4203, 33.5902], "km": 0.0 },
+    { "id": "kokura",   "name": "고쿠라",  "nameJa": "小倉",   "coords": [130.8750, 33.8839], "km": 69.8 },
+    { "id": "beppu",    "name": "벳푸",   "nameJa": "別府",   "coords": [131.4912, 33.2790], "km": 121.4 },
+    { "id": "oita",     "name": "오이타",  "nameJa": "大分",   "coords": [131.6061, 33.2383], "km": 132.0 }
+  ]
+}

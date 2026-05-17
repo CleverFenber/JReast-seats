@@ -5,6 +5,7 @@
   "category": "limited_express",
   "color": "#3B6D11",
   "operator": "jr_east",
-  "coords": [[139.7671,35.6812],[138.9312,34.9767]],
-  "allStations": ["도쿄","요코하마","아타미","이즈큐시모다"]
+  "totalKm": 104.0,
+  "coords": [[139.7671, 35.6812], [139.0712, 35.0974], [138.9312, 34.9767]],
+  "stationsFile": "data/stations/odoriko.json"
 }

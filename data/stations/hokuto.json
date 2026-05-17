@@ -1,0 +1,12 @@
+{
+  "line_id": "hokuto",
+  "stations": [
+    { "id": "hakodate",     "name": "하코다테",  "nameJa": "函館",    "coords": [140.7288, 41.7688], "km": 0.0 },
+    { "id": "oshamambe",    "name": "오샤만베",  "nameJa": "長万部",  "coords": [140.9995, 42.5564], "km": 101.0 },
+    { "id": "toya",         "name": "도야",     "nameJa": "洞爺",    "coords": [140.8175, 42.5622], "km": 142.6 },
+    { "id": "noboribetsu",  "name": "노보리베쓰", "nameJa": "登別",    "coords": [141.1066, 42.4116], "km": 193.5 },
+    { "id": "tomakomai",    "name": "도마코마이", "nameJa": "苫小牧",  "coords": [141.6019, 42.6362], "km": 234.3 },
+    { "id": "minami-chitose","name": "미나미치토세","nameJa": "南千歳", "coords": [141.6697, 42.7893], "km": 252.6 },
+    { "id": "sapporo",      "name": "삿포로",   "nameJa": "札幌",    "coords": [141.3544, 43.0621], "km": 318.7 }
+  ]
+}

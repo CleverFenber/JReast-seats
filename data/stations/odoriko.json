@@ -1,0 +1,12 @@
+{
+  "line_id": "odoriko",
+  "stations": [
+    { "id": "tokyo",          "name": "도쿄",      "nameJa": "東京",       "coords": [139.7671, 35.6812], "km": 0.0 },
+    { "id": "yokohama",       "name": "요코하마",   "nameJa": "横浜",       "coords": [139.6380, 35.4658], "km": 28.8 },
+    { "id": "ofuna",          "name": "오후나",    "nameJa": "大船",       "coords": [139.5353, 35.3487], "km": 40.9 },
+    { "id": "odawara",        "name": "오다와라",   "nameJa": "小田原",     "coords": [139.1606, 35.2565], "km": 77.8 },
+    { "id": "atami",          "name": "아타미",    "nameJa": "熱海",       "coords": [139.0712, 35.0974], "km": 95.0 },
+    { "id": "ito",            "name": "이토",      "nameJa": "伊東",       "coords": [139.1014, 34.9657], "km": 104.0 },
+    { "id": "izukyu-shimoda", "name": "이즈큐시모다","nameJa": "伊豆急下田",  "coords": [138.9312, 34.6767], "km": 157.0 }
+  ]
+}
