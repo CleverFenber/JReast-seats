@@ -51,14 +51,13 @@
 
     .col-labels { display: flex; padding-left: 24px; margin-bottom: 4px; }
     .col-label { width: 32px; text-align: center; font-size: 11px; color: #aaa; margin: 0 2px; }
-    .col-label.empty { background: none; }
     .col-aisle { width: 16px; }
 
     .seat-grid { display: flex; flex-direction: column; gap: 4px; }
     .seat-row { display: flex; align-items: center; }
     .row-num { width: 20px; font-size: 10px; color: #bbb; text-align: right; padding-right: 4px; flex-shrink: 0; }
     .aisle { width: 16px; flex-shrink: 0; }
-    .seat-empty { width: 32px; height: 28px; margin: 0 2px; flex-shrink: 0; }
+    .seat-empty { width: 32px; height: 28px; margin: 0 2px; flex-shrink: 0; background: transparent; }
     .seat { width: 32px; height: 28px; border-radius: 5px; border: 1px solid transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 500; transition: transform .1s; margin: 0 2px; flex-shrink: 0; }
     .seat:hover { transform: scale(1.1); }
     .seat.recommend { background: #EAF3DE; color: #27500A; border-color: #97C459; }
@@ -76,8 +75,9 @@
     .seat-info-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
     .tag { font-size: 10px; padding: 2px 7px; border-radius: 6px; background: #eee; color: #666; }
 
-    .facilities { display: flex; gap: 14px; margin-top: 14px; padding-top: 14px; border-top: 1px solid #eee; flex-wrap: wrap; }
-    .fac { font-size: 12px; color: #666; display: flex; align-items: center; gap: 4px; }
+    /* 편의시설 */
+    .facilities { display: flex; gap: 10px; margin-top: 14px; padding-top: 14px; border-top: 1px solid #eee; flex-wrap: wrap; }
+    .fac { font-size: 12px; color: #666; display: flex; align-items: center; gap: 4px; padding: 3px 8px; background: #f8f9fa; border-radius: 6px; }
 
     .legend { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
     .leg { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #555; }
@@ -184,6 +184,21 @@ function selectCar(num) {
   renderSeatPanel(car);
 }
 
+// seat_map에서 실제 좌석 컬럼 목록 추출 (aisle 제외, 중복 제거, 순서 유지)
+function getUniqueCols(seatMap2d) {
+  const seen = new Set();
+  const cols = [];
+  seatMap2d.forEach(row => {
+    row.forEach(cell => {
+      if (cell !== 'aisle' && cell !== 'empty' && !seen.has(cell)) {
+        seen.add(cell);
+        cols.push(cell);
+      }
+    });
+  });
+  return cols;
+}
+
 function renderSeatPanel(car) {
   const seatMap   = buildSeatMap(car);
   const classId   = car.class_id || 'ordinary_reserved';
@@ -191,24 +206,27 @@ function renderSeatPanel(car) {
   const label     = classInfo.display_name?.ko || classId;
   const pitch     = classInfo.pitch_mm ? classInfo.pitch_mm + 'mm' : '-';
 
-  // seat_map이 있으면 사용, 없으면 기본 2+2 구조로 생성
+  // seat_map이 있으면 사용, 없으면 기본 2+2 생성
   const seatMap2d = car.seat_map && car.seat_map.length > 0
     ? car.seat_map
     : Array(car.seat_rows || 1).fill(['A', 'B', 'aisle', 'C', 'D']);
 
-  // 열 라벨 — 첫 번째 행 기준으로 생성
+  // 열 라벨 — 첫 번째 행 기준
   const firstRow = seatMap2d[0] || [];
   let colLabels = '<div class="col-labels"><div style="width:24px"></div>';
   firstRow.forEach(cell => {
-    if (cell === 'aisle') {
-      colLabels += '<div class="col-aisle"></div>';
-    } else {
-      colLabels += `<div class="col-label">${cell}</div>`;
-    }
-  });
+  if (cell === 'aisle') {
+    colLabels += '<div class="col-aisle"></div>';
+  } else if (cell === 'empty') {
+    // empty는 라벨 없이 빈 공간만
+    colLabels += '<div class="col-label" style="visibility:hidden">-</div>';
+  } else {
+    colLabels += `<div class="col-label">${cell}</div>`;
+  }
+});
   colLabels += '</div>';
 
-  // 좌석 그리드 — seat_map 행마다 렌더링
+  // 좌석 그리드
   let grid = '<div class="seat-grid">';
   seatMap2d.forEach((rowDef, rowIdx) => {
     const r = rowIdx + 1;
@@ -219,7 +237,6 @@ function renderSeatPanel(car) {
       if (cell === 'aisle') {
         grid += '<div class="aisle"></div>';
       } else if (cell === 'empty') {
-        // 빈 공간 (좌석 없음)
         grid += '<div class="seat-empty"></div>';
       } else {
         const key  = `${r}-${cell}`;
@@ -237,24 +254,27 @@ function renderSeatPanel(car) {
   });
   grid += '</div>';
 
-  // 편의시설
+  // 편의시설 — 기본 + 추가 필드 (AED, handwash, conductor_room)
   const f = car.facilities || {};
   const facs = [];
-  if (f.toilet)             facs.push('🚻 화장실');
-  if (f.toilet_for_man)     facs.push('🚹 남성 화장실');
-  if (f.washroom)           facs.push('🪣 세면대');
-  if (f.multi_purpose_room) facs.push('♿ 다목적실');
-  if (f.wheelchair_space)   facs.push('♿ 휠체어 공간');
-  if (f.power_outlet)       facs.push('🔌 콘센트');
-  if (f.wifi)               facs.push('📶 Wi-Fi');
-  if (f.vending_machine)    facs.push('🥤 자판기');
-  if (f.smoking_room)       facs.push('🚬 흡연실');
-  if (f.luggage_area && f.luggage_area !== 'none') facs.push('🧳 짐칸');
+  if (f.toilet)             facs.push({ icon:'🚻', label:'화장실' });
+  if (f.toilet_for_man)     facs.push({ icon:'🚹', label:'남성 화장실' });
+  if (f.washroom)           facs.push({ icon:'🚿', label:'세면대' });
+  if (f.handwash)           facs.push({ icon:'🧴', label:'손세면대' });
+  if (f.multi_purpose_room) facs.push({ icon:'♿', label:'다목적실' });
+  if (f.wheelchair_space)   facs.push({ icon:'♿', label:'휠체어 공간' });
+  if (f.power_outlet)       facs.push({ icon:'🔌', label:'콘센트' });
+  if (f.wifi)               facs.push({ icon:'📶', label:'Wi-Fi' });
+  if (f.vending_machine)    facs.push({ icon:'🥤', label:'자판기' });
+  if (f.smoking_room)       facs.push({ icon:'🚬', label:'흡연실' });
+  if (f.AED)                facs.push({ icon:'❤️‍🩹', label:'AED' });
+  if (f.conductor_room)     facs.push({ icon:'👨‍✈️', label:'차장실' });
+  if (f.luggage_area && f.luggage_area !== 'none') facs.push({ icon:'🧳', label:'짐칸' });
 
   const badgeClass = {
     ordinary_reserved: 'badge-ordinary_reserved',
-    non_reserved: 'badge-non_reserved',
-    green: 'badge-green'
+    non_reserved:      'badge-non_reserved',
+    green:             'badge-green'
   }[classId] || 'badge-ordinary_reserved';
 
   document.getElementById('seatPanel').innerHTML = `
@@ -268,7 +288,7 @@ function renderSeatPanel(car) {
     <div class="seat-info" id="seatInfo">
       <span style="color:#aaa;font-size:13px">좌석을 클릭하면 상세 정보가 표시됩니다</span>
     </div>
-    <div class="facilities">${facs.map(f => `<div class="fac">${f}</div>`).join('')}</div>
+    <div class="facilities">${facs.map(f => `<div class="fac">${f.icon} ${f.label}</div>`).join('')}</div>
   `;
 }
 
@@ -299,7 +319,7 @@ function selectSeat(el) {
   const tagMap = {
     mountain_view:'🏔 산 전망', sea_view:'🌊 바다 전망', quiet:'🔇 조용한 자리',
     near_exit:'🚪 출입구 인접', window:'🪟 창측', aisle:'↔ 통로측',
-    power_outlet:'🔌 콘센트', wheelchair:'♿ 휠체어'
+    power_outlet:'🔌 콘센트', wheelchair:'♿ 휠체어', noisy:'🔊 소음 주의'
   };
   const tagHtml = tags.map(t => `<span class="tag">${tagMap[t] || t}</span>`).join('');
 

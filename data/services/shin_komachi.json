@@ -164,7 +164,7 @@
           ["A", "B", "aisle", "C", "D"],
           ["A", "B", "aisle", "C", "D"],
           ["A", "B", "aisle", "C", "D"],
-          ["A", "aisle", "aisle", "aisle", "D"]
+          ["A", "empty", "aisle", "empty", "D"]
         ],
 
         "facilities": {
@@ -223,7 +223,7 @@
         "window_columns": ["A", "D"],
         "capacity": 35,
         "seat_map": [
-          ["A", "aisle", "aisle", "aisle", "D"],
+          ["A", "empty", "aisle", "empty", "D"],
           ["A", "B", "aisle", "C", "D"],
           ["A", "B", "aisle", "C", "D"],
           ["A", "B", "aisle", "C", "D"],
@@ -231,7 +231,7 @@
           ["A", "B", "aisle", "C", "D"],
           ["A", "B", "aisle", "C", "D"],
           ["A", "B", "aisle", "C", "D"],
-          ["aisle", "aisle", "aisle", "C", "D"]
+          ["empty", "empty", "aisle", "C", "D"]
         ],
 
         "facilities": {
@@ -333,7 +333,7 @@
         "window_columns": ["A", "D"],
         "capacity": 58,
         "seat_map": [
-          ["A", "B", "aisle", "aisle", "aisle"],
+          ["A", "B", "aisle", "empty", "empty"],
           ["A", "B", "aisle", "C", "D"],
           ["A", "B", "aisle", "C", "D"],
           ["A", "B", "aisle", "C", "D"],
@@ -449,7 +449,7 @@
         "window_columns": ["A", "D"],
         "capacity": 58,
         "seat_map": [
-          ["A", "B", "aisle", "aisle", "aisle"],
+          ["A", "B", "aisle", "empty", "empty"],
           ["A", "B", "aisle", "C", "D"],
           ["A", "B", "aisle", "C", "D"],
           ["A", "B", "aisle", "C", "D"],
@@ -565,7 +565,7 @@
         "window_columns": ["A", "D"],
         "capacity": 66,
         "seat_map": [
-          ["A", "B", "aisle", "aisle", "aisle"],
+          ["A", "B", "aisle", "empty", "empty"],
           ["A", "B", "aisle", "C", "D"],
           ["A", "B", "aisle", "C", "D"],
           ["A", "B", "aisle", "C", "D"],
@@ -683,7 +683,7 @@
         "window_columns": ["A", "D"],
         "capacity": 58,
         "seat_map": [
-          ["A", "B", "aisle", "aisle", "aisle"],
+          ["A", "B", "aisle", "empty", "empty"],
           ["A", "B", "aisle", "C", "D"],
           ["A", "B", "aisle", "C", "D"],
           ["A", "B", "aisle", "C", "D"],
@@ -799,7 +799,7 @@
         "window_columns": ["A", "D"],
         "capacity": 30,
         "seat_map": [
-          ["A", "B", "aisle", "aisle", "aisle"],
+          ["A", "B", "aisle", "empty", "empty"],
           ["A", "B", "aisle", "C", "D"],
           ["A", "B", "aisle", "C", "D"],
           ["A", "B", "aisle", "C", "D"],
