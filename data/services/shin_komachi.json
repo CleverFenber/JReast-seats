@@ -67,7 +67,7 @@
   
     "routes": [
       {
-        "line_id": "akita_shinkansen",
+        "line_id": "shin-akita",
         "official_name": "秋田新幹線",
         "display_name": {
           "ko": "아키타 신칸센",

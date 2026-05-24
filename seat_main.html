@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>좌석 배치도 — RailLog</title>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #1a1a1a; overflow: hidden; height: 100vh; }
+
+    /* 지도 */
+    #map { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 0; }
+
+    /* 상단 네비 */
+    .top-nav { position: fixed; top: 16px; left: 16px; z-index: 100; display: flex; gap: 8px; }
+    .nav-btn { background: rgba(255,255,255,0.92); backdrop-filter: blur(8px); border: 1px solid rgba(0,0,0,0.1); border-radius: 20px; padding: 7px 14px; font-size: 13px; font-weight: 500; cursor: pointer; color: #1a1a1a; transition: all .15s; text-decoration: none; display: flex; align-items: center; gap: 5px; }
+    .nav-btn:hover { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+    .nav-btn.active { background: #185FA5; color: #fff; border-color: #185FA5; }
+
+    /* 스크롤 힌트 */
+    .scroll-hint {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      animation: bounce 2s infinite;
+      pointer-events: none;
+    }
+    .scroll-hint-text { font-size: 12px; color: #fff; font-weight: 500; text-shadow: 0 1px 4px rgba(0,0,0,.4); }
+    .scroll-hint-arrow { width: 24px; height: 24px; border-right: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(45deg); filter: drop-shadow(0 1px 4px rgba(0,0,0,.4)); }
+    @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+
+    /* 바텀시트 컨테이너 */
+    .sheet-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      z-index: 200;
+      pointer-events: none;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+    }
+    .sheet-spacer {
+      height: 70vh;
+      scroll-snap-align: start;
+      pointer-events: none;
+      flex-shrink: 0;
+    }
+    .sheet {
+      min-height: 100vh;
+      background: #f5f5f5;
+      border-radius: 20px 20px 0 0;
+      box-shadow: 0 -4px 32px rgba(0,0,0,.12);
+      pointer-events: all;
+      scroll-snap-align: start;
+      position: relative;
+    }
+
+    /* 핸들 */
+    .sheet-handle { width: 36px; height: 4px; background: #ddd; border-radius: 2px; margin: 12px auto 0; }
+
+    /* 검색창 */
+    .search-section { padding: 14px 16px 10px; background: #fff; border-radius: 20px 20px 0 0; position: sticky; top: 0; z-index: 10; box-shadow: 0 1px 0 #f0f0f0; }
+    .search-bar { display: flex; align-items: center; gap: 10px; background: #f5f5f5; border-radius: 12px; padding: 10px 14px; }
+    .search-icon { font-size: 16px; color: #aaa; flex-shrink: 0; }
+    .search-input { flex: 1; border: none; background: none; font-size: 14px; color: #1a1a1a; outline: none; }
+    .search-input::placeholder { color: #bbb; }
+
+    /* 컨텐츠 */
+    .content { padding: 16px; }
+
+    /* 지역 섹션 */
+    .region-section { margin-bottom: 28px; }
+    .region-header { display: flex; align-items: baseline; gap: 8px; margin-bottom: 12px; }
+    .region-title { font-size: 15px; font-weight: 700; }
+    .region-sub { font-size: 12px; color: #888; }
+
+    /* 열차 카드 그리드 */
+    .train-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+
+    /* 열차 카드 */
+    .train-card { background: #fff; border-radius: 12px; overflow: hidden; cursor: pointer; transition: transform .15s, box-shadow .15s; text-decoration: none; color: inherit; display: block; }
+    .train-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,.1); }
+    .train-card-image { width: 100%; aspect-ratio: 16/9; background: #f0f0f0; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .train-card-image-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, #e8e8e8 0%, #f5f5f5 100%); display: flex; align-items: center; justify-content: center; }
+    .train-card-image-icon { font-size: 28px; opacity: .3; }
+    .train-card-badge { position: absolute; top: 8px; left: 8px; font-size: 10px; padding: 2px 7px; border-radius: 6px; font-weight: 500; }
+    .badge-shinkansen { background: rgba(24,95,165,.9); color: #fff; }
+    .badge-limited_express { background: rgba(59,109,17,.9); color: #fff; }
+    .train-card-info { padding: 10px 12px 12px; }
+    .train-card-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+    .train-card-series { font-size: 11px; color: #888; margin-bottom: 6px; }
+    .train-card-meta { display: flex; align-items: center; gap: 6px; }
+    .train-card-operator { font-size: 10px; color: #aaa; }
+    .train-card-popularity { display: flex; align-items: center; gap: 2px; font-size: 10px; color: #f5a623; }
+
+    /* 인기 배지 */
+    .hot-badge { position: absolute; top: 8px; right: 8px; background: #FF3B30; color: #fff; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+
+<!-- 지도 -->
+<div id="map"></div>
+
+<!-- 상단 네비 -->
+<div class="top-nav">
+  <a href="index.html" class="nav-btn">← 지도로</a>
+  <span class="nav-btn active">💺 좌석 배치도</span>
+</div>
+
+<!-- 스크롤 힌트 -->
+<div class="scroll-hint" id="scrollHint">
+  <div class="scroll-hint-text">스크롤해서 열차 보기</div>
+  <div class="scroll-hint-arrow"></div>
+</div>
+
+<!-- 바텀시트 -->
+<div class="sheet-container" id="sheetContainer">
+  <div class="sheet-spacer"></div>
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+
+    <!-- 검색창 -->
+    <div class="search-section">
+      <div class="search-bar">
+        <span class="search-icon">🔍</span>
+        <input class="search-input" type="text" placeholder="열차 이름 검색 (준비 중)..." disabled>
+      </div>
+    </div>
+
+    <!-- 컨텐츠 -->
+    <div class="content">
+
+      <!-- 인기 열차 -->
+      <div class="region-section">
+        <div class="region-header">
+          <div class="region-title">🔥 인기 열차</div>
+          <div class="region-sub">많이 찾는 순</div>
+        </div>
+        <div class="train-grid">
+          <a href="seat.html?id=shin_komachi" class="train-card">
+            <div class="train-card-image">
+              <div class="train-card-image-placeholder"><div class="train-card-image-icon">🚄</div></div>
+              <span class="train-card-badge badge-shinkansen">신칸센</span>
+              <span class="hot-badge">HOT</span>
+            </div>
+            <div class="train-card-info">
+              <div class="train-card-name">코마치</div>
+              <div class="train-card-series">E6계 · 7량</div>
+              <div class="train-card-meta">
+                <span class="train-card-operator">JR 동일본</span>
+                <span class="train-card-popularity">★★★★★</span>
+              </div>
+            </div>
+          </a>
+          <a href="seat.html?id=hayabusa" class="train-card">
+            <div class="train-card-image">
+              <div class="train-card-image-placeholder"><div class="train-card-image-icon">🚄</div></div>
+              <span class="train-card-badge badge-shinkansen">신칸센</span>
+              <span class="hot-badge">HOT</span>
+            </div>
+            <div class="train-card-info">
+              <div class="train-card-name">하야부사</div>
+              <div class="train-card-series">E5계 · 10량</div>
+              <div class="train-card-meta">
+                <span class="train-card-operator">JR 동일본</span>
+                <span class="train-card-popularity">★★★★★</span>
+              </div>
+            </div>
+          </a>
+          <a href="seat.html?id=nozomi" class="train-card">
+            <div class="train-card-image">
+              <div class="train-card-image-placeholder"><div class="train-card-image-icon">🚄</div></div>
+              <span class="train-card-badge badge-shinkansen">신칸센</span>
+            </div>
+            <div class="train-card-info">
+              <div class="train-card-name">노조미</div>
+              <div class="train-card-series">N700S계 · 16량</div>
+              <div class="train-card-meta">
+                <span class="train-card-operator">JR 도카이</span>
+                <span class="train-card-popularity">★★★★☆</span>
+              </div>
+            </div>
+          </a>
+          <a href="seat.html?id=nex" class="train-card">
+            <div class="train-card-image">
+              <div class="train-card-image-placeholder"><div class="train-card-image-icon">🚃</div></div>
+              <span class="train-card-badge badge-limited_express">특급</span>
+            </div>
+            <div class="train-card-info">
+              <div class="train-card-name">나리타 익스프레스</div>
+              <div class="train-card-series">E259계 · 6량</div>
+              <div class="train-card-meta">
+                <span class="train-card-operator">JR 동일본</span>
+                <span class="train-card-popularity">★★★★☆</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- JR 동일본 신칸센 -->
+      <div class="region-section">
+        <div class="region-header">
+          <div class="region-title">🗾 JR 동일본 — 신칸센</div>
+        </div>
+        <div class="train-grid">
+          <a href="seat.html?id=shin_komachi" class="train-card">
+            <div class="train-card-image">
+              <div class="train-card-image-placeholder"><div class="train-card-image-icon">🚄</div></div>
+              <span class="train-card-badge badge-shinkansen">신칸센</span>
+            </div>
+            <div class="train-card-info">
+              <div class="train-card-name">코마치</div>
+              <div class="train-card-series">E6계 · 7량</div>
+              <div class="train-card-meta"><span class="train-card-operator">아키타 신칸센</span></div>
+            </div>
+          </a>
+          <a href="seat.html?id=hayabusa" class="train-card">
+            <div class="train-card-image">
+              <div class="train-card-image-placeholder"><div class="train-card-image-icon">🚄</div></div>
+              <span class="train-card-badge badge-shinkansen">신칸센</span>
+            </div>
+            <div class="train-card-info">
+              <div class="train-card-name">하야부사</div>
+              <div class="train-card-series">E5계 · 10량</div>
+              <div class="train-card-meta"><span class="train-card-operator">도호쿠 신칸센</span></div>
+            </div>
+          </a>
+          <a href="seat.html?id=toki" class="train-card">
+            <div class="train-card-image">
+              <div class="train-card-image-placeholder"><div class="train-card-image-icon">🚄</div></div>
+              <span class="train-card-badge badge-shinkansen">신칸센</span>
+            </div>
+            <div class="train-card-info">
+              <div class="train-card-name">도키</div>
+              <div class="train-card-series">E7계 · 12량</div>
+              <div class="train-card-meta"><span class="train-card-operator">조에쓰 신칸센</span></div>
+            </div>
+          </a>
+          <a href="seat.html?id=kagayaki" class="train-card">
+            <div class="train-card-image">
+              <div class="train-card-image-placeholder"><div class="train-card-image-icon">🚄</div></div>
+              <span class="train-card-badge badge-shinkansen">신칸센</span>
+            </div>
+            <div class="train-card-info">
+              <div class="train-card-name">카가야키</div>
+              <div class="train-card-series">W7계 · 12량</div>
+              <div class="train-card-meta"><span class="train-card-operator">호쿠리쿠 신칸센</span></div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- JR 동일본 특급 -->
+      <div class="region-section">
+        <div class="region-header">
+          <div class="region-title">🗾 JR 동일본 — 특급</div>
+        </div>
+        <div class="train-grid">
+          <a href="seat.html?id=nex" class="train-card">
+            <div class="train-card-image">
+              <div class="train-card-image-placeholder"><div class="train-card-image-icon">🚃</div></div>
+              <span class="train-card-badge badge-limited_express">특급</span>
+            </div>
+            <div class="train-card-info">
+              <div class="train-card-name">나리타 익스프레스</div>
+              <div class="train-card-series">E259계 · 6량</div>
+              <div class="train-card-meta"><span class="train-card-operator">나리타공항 ↔ 도쿄</span></div>
+            </div>
+          </a>
+          <a href="seat.html?id=azusa" class="train-card">
+            <div class="train-card-image">
+              <div class="train-card-image-placeholder"><div class="train-card-image-icon">🚃</div></div>
+              <span class="train-card-badge badge-limited_express">특급</span>
+            </div>
+            <div class="train-card-info">
+              <div class="train-card-name">아즈사</div>
+              <div class="train-card-series">E353계 · 12량</div>
+              <div class="train-card-meta"><span class="train-card-operator">신주쿠 ↔ 마쓰모토</span></div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- JR 도카이 -->
+      <div class="region-section">
+        <div class="region-header">
+          <div class="region-title">🗻 JR 도카이 — 신칸센</div>
+        </div>
+        <div class="train-grid">
+          <a href="seat.html?id=nozomi" class="train-card">
+            <div class="train-card-image">
+              <div class="train-card-image-placeholder"><div class="train-card-image-icon">🚄</div></div>
+              <span class="train-card-badge badge-shinkansen">신칸센</span>
+            </div>
+            <div class="train-card-info">
+              <div class="train-card-name">노조미</div>
+              <div class="train-card-series">N700S계 · 16량</div>
+              <div class="train-card-meta"><span class="train-card-operator">도카이도·산요 신칸센</span></div>
+            </div>
+          </a>
+          <a href="seat.html?id=hikari" class="train-card">
+            <div class="train-card-image">
+              <div class="train-card-image-placeholder"><div class="train-card-image-icon">🚄</div></div>
+              <span class="train-card-badge badge-shinkansen">신칸센</span>
+            </div>
+            <div class="train-card-info">
+              <div class="train-card-name">히카리</div>
+              <div class="train-card-series">N700S계 · 16량</div>
+              <div class="train-card-meta"><span class="train-card-operator">도카이도·산요 신칸센</span></div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- JR 규슈 -->
+      <div class="region-section">
+        <div class="region-header">
+          <div class="region-title">🌋 JR 규슈</div>
+        </div>
+        <div class="train-grid">
+          <a href="seat.html?id=sonic" class="train-card">
+            <div class="train-card-image">
+              <div class="train-card-image-placeholder"><div class="train-card-image-icon">🚃</div></div>
+              <span class="train-card-badge badge-limited_express">특급</span>
+            </div>
+            <div class="train-card-info">
+              <div class="train-card-name">소닉</div>
+              <div class="train-card-series">885계 · 6량</div>
+              <div class="train-card-meta"><span class="train-card-operator">하카타 ↔ 오이타</span></div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- JR 홋카이도 -->
+      <div class="region-section">
+        <div class="region-header">
+          <div class="region-title">🐻 JR 홋카이도</div>
+        </div>
+        <div class="train-grid">
+          <a href="seat.html?id=hokuto" class="train-card">
+            <div class="train-card-image">
+              <div class="train-card-image-placeholder"><div class="train-card-image-icon">🚃</div></div>
+              <span class="train-card-badge badge-limited_express">특급</span>
+            </div>
+            <div class="train-card-info">
+              <div class="train-card-name">호쿠토</div>
+              <div class="train-card-series">키하261계 · 6량</div>
+              <div class="train-card-meta"><span class="train-card-operator">하코다테 ↔ 삿포로</span></div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div style="height:32px"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+
+
+
+// ★ 여기에 본인 Mapbox 토큰 붙여넣기 ★
+
+mapboxgl.accessToken = 'pk.eyJ1IjoiY2xldmVyZmVuYmVyIiwiYSI6ImNtcDM3b2VnNTBvZXIycm9vNXU4Zmhwd2EifQ.-YB8j8f_f1jIH1Pg6jRMlA';
+
+
+
+
+
+
+// 지도 초기화
+const map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mapbox/light-v11',
+  center: [136.0, 37.5],
+  zoom: 4.8
+});
+map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+
+// 스크롤 시 힌트 숨기기
+const container = document.getElementById('sheetContainer');
+const hint = document.getElementById('scrollHint');
+container.addEventListener('scroll', () => {
+  if (container.scrollTop > 20) {
+    hint.style.opacity = '0';
+    hint.style.transition = 'opacity .3s';
+  } else {
+    hint.style.opacity = '1';
+  }
+});
+</script>
+</body>
+</html>
