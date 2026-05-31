@@ -10,367 +10,341 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #1a1a1a; overflow: hidden; height: 100vh; }
 
-    /* 지도 */
-    #map { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 0; }
+    /* ── 레이아웃 ── */
+    .layout { display: flex; height: 100vh; position: relative; }
 
-    /* 상단 네비 */
-    .top-nav { position: fixed; top: 16px; left: 16px; z-index: 100; display: flex; gap: 8px; }
+    /* 지도 */
+    .map-wrap { flex: 1; position: relative; transition: flex .4s cubic-bezier(.4,0,.2,1); }
+    #map { width: 100%; height: 100vh; }
+
+    /* ── 상단 네비 ── */
+    .top-nav { position: absolute; top: 16px; left: 16px; z-index: 100; display: flex; gap: 8px; }
     .nav-btn { background: rgba(255,255,255,0.92); backdrop-filter: blur(8px); border: 1px solid rgba(0,0,0,0.1); border-radius: 20px; padding: 7px 14px; font-size: 13px; font-weight: 500; cursor: pointer; color: #1a1a1a; transition: all .15s; text-decoration: none; display: flex; align-items: center; gap: 5px; }
     .nav-btn:hover { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
     .nav-btn.active { background: #185FA5; color: #fff; border-color: #185FA5; }
 
-    /* 스크롤 힌트 */
-    .scroll-hint {
-      position: fixed;
-      bottom: 32px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 50;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      animation: bounce 2s infinite;
-      pointer-events: none;
-    }
+    /* ── 스크롤 힌트 ── */
+    .scroll-hint { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 50; display: flex; flex-direction: column; align-items: center; gap: 6px; animation: bounce 2s infinite; pointer-events: none; transition: opacity .3s; }
     .scroll-hint-text { font-size: 12px; color: #fff; font-weight: 500; text-shadow: 0 1px 4px rgba(0,0,0,.4); }
     .scroll-hint-arrow { width: 24px; height: 24px; border-right: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(45deg); filter: drop-shadow(0 1px 4px rgba(0,0,0,.4)); }
     @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
 
-    /* 바텀시트 컨테이너 */
-    .sheet-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      z-index: 200;
-      pointer-events: none;
-      overflow-y: scroll;
-      scroll-snap-type: y mandatory;
-    }
-    .sheet-spacer {
-      height: 70vh;
-      scroll-snap-align: start;
-      pointer-events: none;
-      flex-shrink: 0;
-    }
-    .sheet {
-      min-height: 100vh;
-      background: #f5f5f5;
-      border-radius: 20px 20px 0 0;
-      box-shadow: 0 -4px 32px rgba(0,0,0,.12);
-      pointer-events: all;
-      scroll-snap-align: start;
-      position: relative;
-    }
+    /* ── 검색 결과 팝업 ── */
+    .search-popup { position: absolute; top: 70px; left: 50%; transform: translateX(-50%); z-index: 300; width: min(480px, calc(100vw - 32px)); background: #fff; border-radius: 14px; box-shadow: 0 8px 32px rgba(0,0,0,.15); display: none; overflow: hidden; }
+    .search-popup.visible { display: block; }
+    .search-popup-header { padding: 12px 16px; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between; }
+    .search-popup-title { font-size: 13px; font-weight: 600; color: #888; }
+    .search-popup-close { background: none; border: none; font-size: 18px; color: #aaa; cursor: pointer; padding: 0; line-height: 1; }
+    .search-result-list { max-height: 360px; overflow-y: auto; }
+    .search-result-item { padding: 12px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: background .12s; }
+    .search-result-item:hover { background: #f5f8ff; }
+    .search-result-icon { width: 40px; height: 40px; border-radius: 10px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+    .search-result-info { flex: 1; min-width: 0; }
+    .search-result-name { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+    .search-result-sub { font-size: 12px; color: #888; }
+    .search-result-badge { font-size: 10px; padding: 2px 7px; border-radius: 6px; flex-shrink: 0; }
+    .badge-shinkansen { background: #E6F1FB; color: #0C447C; }
+    .badge-limited_express { background: #EAF3DE; color: #27500A; }
+    .search-no-result { padding: 24px 16px; text-align: center; color: #bbb; font-size: 13px; }
 
-    /* 핸들 */
+    /* ── 바텀시트 ── */
+    .sheet-container { position: absolute; top: 0; left: 0; width: 100%; height: 100vh; z-index: 200; pointer-events: none; overflow-y: scroll; scroll-snap-type: y mandatory; }
+    .sheet-spacer { height: 70vh; scroll-snap-align: start; pointer-events: none; }
+    .sheet { min-height: 100vh; background: #f5f5f5; border-radius: 20px 20px 0 0; box-shadow: 0 -4px 32px rgba(0,0,0,.12); pointer-events: all; scroll-snap-align: start; }
     .sheet-handle { width: 36px; height: 4px; background: #ddd; border-radius: 2px; margin: 12px auto 0; }
-
-    /* 검색창 */
     .search-section { padding: 14px 16px 10px; background: #fff; border-radius: 20px 20px 0 0; position: sticky; top: 0; z-index: 10; box-shadow: 0 1px 0 #f0f0f0; }
-    .search-bar { display: flex; align-items: center; gap: 10px; background: #f5f5f5; border-radius: 12px; padding: 10px 14px; }
+    .search-bar { display: flex; align-items: center; gap: 10px; background: #f5f5f5; border-radius: 12px; padding: 10px 14px; transition: background .15s; }
+    .search-bar:focus-within { background: #eef4ff; }
     .search-icon { font-size: 16px; color: #aaa; flex-shrink: 0; }
     .search-input { flex: 1; border: none; background: none; font-size: 14px; color: #1a1a1a; outline: none; }
     .search-input::placeholder { color: #bbb; }
 
-    /* 컨텐츠 */
+    /* ── 열차 목록 ── */
     .content { padding: 16px; }
-
-    /* 지역 섹션 */
     .region-section { margin-bottom: 28px; }
     .region-header { display: flex; align-items: baseline; gap: 8px; margin-bottom: 12px; }
     .region-title { font-size: 15px; font-weight: 700; }
     .region-sub { font-size: 12px; color: #888; }
-
-    /* 열차 카드 그리드 */
     .train-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-
-    /* 열차 카드 */
-    .train-card { background: #fff; border-radius: 12px; overflow: hidden; cursor: pointer; transition: transform .15s, box-shadow .15s; text-decoration: none; color: inherit; display: block; }
+    .train-card { background: #fff; border-radius: 12px; overflow: hidden; cursor: pointer; transition: transform .15s, box-shadow .15s; border: none; text-align: left; width: 100%; }
     .train-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,.1); }
-    .train-card-image { width: 100%; aspect-ratio: 16/9; background: #f0f0f0; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
-    .train-card-image-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, #e8e8e8 0%, #f5f5f5 100%); display: flex; align-items: center; justify-content: center; }
+    .train-card-image { width: 100%; aspect-ratio: 16/9; background: #f0f0f0; display: flex; align-items: center; justify-content: center; position: relative; }
+    .train-card-image-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, #e8e8e8, #f5f5f5); display: flex; align-items: center; justify-content: center; }
     .train-card-image-icon { font-size: 28px; opacity: .3; }
     .train-card-badge { position: absolute; top: 8px; left: 8px; font-size: 10px; padding: 2px 7px; border-radius: 6px; font-weight: 500; }
-    .badge-shinkansen { background: rgba(24,95,165,.9); color: #fff; }
-    .badge-limited_express { background: rgba(59,109,17,.9); color: #fff; }
+    .badge-shinkansen-card { background: rgba(24,95,165,.9); color: #fff; }
+    .badge-limited_express-card { background: rgba(59,109,17,.9); color: #fff; }
     .train-card-info { padding: 10px 12px 12px; }
     .train-card-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
     .train-card-series { font-size: 11px; color: #888; margin-bottom: 6px; }
     .train-card-meta { display: flex; align-items: center; gap: 6px; }
     .train-card-operator { font-size: 10px; color: #aaa; }
-    .train-card-popularity { display: flex; align-items: center; gap: 2px; font-size: 10px; color: #f5a623; }
-
-    /* 인기 배지 */
+    .train-card-popularity { font-size: 10px; color: #f5a623; }
     .hot-badge { position: absolute; top: 8px; right: 8px; background: #FF3B30; color: #fff; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 6px; }
+
+    /* ── 좌석 배치도 패널 ── */
+    .seat-panel-wrap {
+      width: 0;
+      flex-shrink: 0;
+      height: 100vh;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(16px);
+      border-left: 1px solid rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: -4px 0 24px rgba(0,0,0,.07);
+      transition: width .4s cubic-bezier(.4,0,.2,1);
+      z-index: 10;
+    }
+    .seat-panel-wrap.open { width: 380px; }
+    .seat-panel-inner { width: 380px; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+
+    /* 패널 헤더 */
+    .panel-header { padding: 14px 16px 10px; border-bottom: 1px solid #f0f0f0; flex-shrink: 0; }
+    .panel-header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+    .panel-close { background: none; border: none; font-size: 20px; color: #aaa; cursor: pointer; padding: 0; line-height: 1; }
+    .panel-train-name { font-size: 16px; font-weight: 700; }
+    .panel-train-sub { font-size: 11px; color: #888; margin-bottom: 6px; }
+    .panel-badge { font-size: 11px; padding: 2px 8px; border-radius: 8px; background: #E6F1FB; color: #0C447C; }
+
+    /* 차량 선택 */
+    .cars-scroll { display: flex; gap: 5px; overflow-x: auto; padding: 8px 16px; border-bottom: 1px solid #f0f0f0; flex-shrink: 0; }
+    .cars-scroll::-webkit-scrollbar { height: 3px; }
+    .cars-scroll::-webkit-scrollbar-thumb { background: #ddd; border-radius: 2px; }
+    .car-btn { flex-shrink: 0; min-width: 54px; padding: 6px 8px; border: 1px solid #ddd; border-radius: 8px; background: #fff; cursor: pointer; text-align: center; font-size: 11px; transition: all .15s; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+    .car-btn:hover { border-color: #185FA5; }
+    .car-btn.active { border-color: #185FA5; background: #E6F1FB; font-weight: 500; }
+    .car-btn.active.green-car { border-color: #3B6D11; background: #EAF3DE; }
+    .car-btn-num { font-weight: 600; font-size: 12px; }
+    .car-btn-type { font-size: 10px; color: #888; }
+    .car-btn.active .car-btn-type { color: #185FA5; }
+    .car-btn.active.green-car .car-btn-type { color: #3B6D11; }
+    .car-dots { display: flex; gap: 1px; flex-wrap: wrap; justify-content: center; max-width: 36px; }
+    .car-dot { width: 4px; height: 3px; border-radius: 1px; }
+    .car-dot.g { background: #97C459; }
+    .car-dot.p { background: #AFA9EC; }
+    .car-dot.b { background: #F09595; }
+    .car-dot.n { background: #c8d8f0; }
+
+    /* 방향 */
+    .direction-bar { display: flex; justify-content: space-between; font-size: 10px; color: #bbb; padding: 5px 16px 0; }
+
+    /* 좌석 */
+    .panel-body { flex: 1; overflow-y: auto; padding: 8px 16px 12px; }
+    .panel-body::-webkit-scrollbar { width: 3px; }
+    .panel-body::-webkit-scrollbar-thumb { background: #ddd; border-radius: 2px; }
+    .car-info-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; }
+    .car-title { font-size: 14px; font-weight: 600; }
+    .class-badge { font-size: 10px; padding: 2px 7px; border-radius: 8px; }
+    .badge-ordinary_reserved { background: #E6F1FB; color: #0C447C; }
+    .badge-non_reserved { background: #FFF3E0; color: #7A4000; }
+    .badge-green { background: #EAF3DE; color: #27500A; }
+    .car-meta { font-size: 11px; color: #888; margin-bottom: 10px; }
+    .col-labels { display: flex; padding-left: 20px; margin-bottom: 3px; }
+    .col-label { width: 26px; text-align: center; font-size: 10px; color: #bbb; margin: 0 2px; }
+    .col-aisle { width: 10px; }
+    .seat-grid { display: flex; flex-direction: column; gap: 3px; }
+    .seat-row { display: flex; align-items: center; }
+    .row-num { width: 16px; font-size: 9px; color: #ccc; text-align: right; padding-right: 2px; flex-shrink: 0; }
+    .aisle { width: 10px; flex-shrink: 0; }
+    .seat-empty { width: 26px; height: 22px; margin: 0 2px; flex-shrink: 0; }
+    .seat { width: 26px; height: 22px; border-radius: 4px; border: 1px solid transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 7px; font-weight: 500; transition: transform .1s; margin: 0 2px; flex-shrink: 0; }
+    .seat:hover { transform: scale(1.12); }
+    .seat.recommend { background: #EAF3DE; color: #27500A; border-color: #97C459; }
+    .seat.avoid     { background: #FCEBEB; color: #791F1F; border-color: #F09595; }
+    .seat.priority  { background: #EEEDFE; color: #3C3489; border-color: #AFA9EC; }
+    .seat.special   { background: #E0F4FF; color: #0C4A6E; border-color: #7DD3FC; }
+    .seat.view      { background: #FFF8E1; color: #7A5800; border-color: #FFD54F; }
+    .seat.normal    { background: #F5F5F5; color: #888;    border-color: #E0E0E0; }
+    .seat.selected  { outline: 2px solid #185FA5; outline-offset: 1px; }
+    .seat-info { margin-top: 10px; padding: 10px 12px; background: #F8F9FA; border-radius: 8px; min-height: 52px; }
+    .seat-info-title { font-size: 13px; font-weight: 600; color: #1a1a1a; margin-bottom: 3px; display: flex; align-items: center; gap: 6px; }
+    .seat-info-badge { font-size: 10px; padding: 1px 6px; border-radius: 6px; }
+    .seat-info-note { font-size: 12px; color: #555; line-height: 1.6; }
+    .seat-info-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 6px; }
+    .tag { font-size: 10px; padding: 2px 6px; border-radius: 5px; background: #eee; color: #666; }
+    .facilities { display: flex; gap: 5px; margin-top: 10px; padding-top: 10px; border-top: 1px solid #eee; flex-wrap: wrap; }
+    .fac { font-size: 11px; color: #666; display: flex; align-items: center; gap: 3px; padding: 2px 7px; background: #f8f9fa; border-radius: 5px; border: 1px solid #eee; }
+
+    /* 범례 */
+    .legend { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 16px; border-top: 1px solid #f0f0f0; flex-shrink: 0; }
+    .leg { display: flex; align-items: center; gap: 4px; font-size: 10px; color: #666; }
+    .leg-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+
+    .loading { text-align: center; padding: 40px 0; color: #888; font-size: 13px; }
   </style>
 </head>
 <body>
+<div class="layout">
 
-<!-- 지도 -->
-<div id="map"></div>
+  <!-- 지도 -->
+  <div class="map-wrap" id="mapWrap">
+    <div id="map"></div>
 
-<!-- 상단 네비 -->
-<div class="top-nav">
-  <a href="index.html" class="nav-btn">← 지도로</a>
-  <span class="nav-btn active">💺 좌석 배치도</span>
-</div>
-
-<!-- 스크롤 힌트 -->
-<div class="scroll-hint" id="scrollHint">
-  <div class="scroll-hint-text">스크롤해서 열차 보기</div>
-  <div class="scroll-hint-arrow"></div>
-</div>
-
-<!-- 바텀시트 -->
-<div class="sheet-container" id="sheetContainer">
-  <div class="sheet-spacer"></div>
-  <div class="sheet">
-    <div class="sheet-handle"></div>
-
-    <!-- 검색창 -->
-    <div class="search-section">
-      <div class="search-bar">
-        <span class="search-icon">🔍</span>
-        <input class="search-input" type="text" placeholder="열차 이름 검색 (준비 중)..." disabled>
-      </div>
+    <div class="top-nav">
+      <a href="index.html" class="nav-btn">← 지도로</a>
+      <span class="nav-btn active">💺 좌석 배치도</span>
     </div>
 
-    <!-- 컨텐츠 -->
-    <div class="content">
+    <div class="scroll-hint" id="scrollHint">
+      <div class="scroll-hint-text">스크롤해서 열차 보기</div>
+      <div class="scroll-hint-arrow"></div>
+    </div>
 
-      <!-- 인기 열차 -->
-      <div class="region-section">
-        <div class="region-header">
-          <div class="region-title">🔥 인기 열차</div>
-          <div class="region-sub">많이 찾는 순</div>
+    <!-- 검색 결과 팝업 -->
+    <div class="search-popup" id="searchPopup">
+      <div class="search-popup-header">
+        <span class="search-popup-title" id="searchPopupTitle">검색 결과</span>
+        <button class="search-popup-close" onclick="closeSearchPopup()">×</button>
+      </div>
+      <div class="search-result-list" id="searchResultList"></div>
+    </div>
+
+    <!-- 바텀시트 -->
+    <div class="sheet-container" id="sheetContainer">
+      <div class="sheet-spacer"></div>
+      <div class="sheet">
+        <div class="sheet-handle"></div>
+        <div class="search-section">
+          <div class="search-bar">
+            <span class="search-icon">🔍</span>
+            <input class="search-input" id="searchInput" type="text" placeholder="열차명, 노선명, 계열번호 검색..." autocomplete="off">
+          </div>
         </div>
-        <div class="train-grid">
-          <a href="seat.html?id=shin_komachi" class="train-card">
-            <div class="train-card-image">
-              <div class="train-card-image-placeholder"><div class="train-card-image-icon">🚄</div></div>
-              <span class="train-card-badge badge-shinkansen">신칸센</span>
-              <span class="hot-badge">HOT</span>
+        <div class="content">
+
+          <div class="region-section">
+            <div class="region-header"><div class="region-title">🔥 인기 열차</div><div class="region-sub">많이 찾는 순</div></div>
+            <div class="train-grid">
+              <button class="train-card" onclick="openSeatPanel('shin_komachi')">
+                <div class="train-card-image"><div class="train-card-image-placeholder"><div class="train-card-image-icon">🚄</div></div><span class="train-card-badge badge-shinkansen-card">신칸센</span><span class="hot-badge">HOT</span></div>
+                <div class="train-card-info"><div class="train-card-name">코마치</div><div class="train-card-series">E6계 · 7량</div><div class="train-card-meta"><span class="train-card-operator">JR 동일본</span><span class="train-card-popularity">★★★★★</span></div></div>
+              </button>
+              <button class="train-card" onclick="openSeatPanel('hayabusa')">
+                <div class="train-card-image"><div class="train-card-image-placeholder"><div class="train-card-image-icon">🚄</div></div><span class="train-card-badge badge-shinkansen-card">신칸센</span><span class="hot-badge">HOT</span></div>
+                <div class="train-card-info"><div class="train-card-name">하야부사</div><div class="train-card-series">E5계 · 10량</div><div class="train-card-meta"><span class="train-card-operator">JR 동일본</span><span class="train-card-popularity">★★★★★</span></div></div>
+              </button>
+              <button class="train-card" onclick="openSeatPanel('nozomi')">
+                <div class="train-card-image"><div class="train-card-image-placeholder"><div class="train-card-image-icon">🚄</div></div><span class="train-card-badge badge-shinkansen-card">신칸센</span></div>
+                <div class="train-card-info"><div class="train-card-name">노조미</div><div class="train-card-series">N700S계 · 16량</div><div class="train-card-meta"><span class="train-card-operator">JR 도카이</span><span class="train-card-popularity">★★★★☆</span></div></div>
+              </button>
+              <button class="train-card" onclick="openSeatPanel('nex')">
+                <div class="train-card-image"><div class="train-card-image-placeholder"><div class="train-card-image-icon">🚃</div></div><span class="train-card-badge badge-limited_express-card">특급</span></div>
+                <div class="train-card-info"><div class="train-card-name">나리타 익스프레스</div><div class="train-card-series">E259계 · 6량</div><div class="train-card-meta"><span class="train-card-operator">JR 동일본</span><span class="train-card-popularity">★★★★☆</span></div></div>
+              </button>
             </div>
-            <div class="train-card-info">
-              <div class="train-card-name">코마치</div>
-              <div class="train-card-series">E6계 · 7량</div>
-              <div class="train-card-meta">
-                <span class="train-card-operator">JR 동일본</span>
-                <span class="train-card-popularity">★★★★★</span>
-              </div>
+          </div>
+
+          <div class="region-section">
+            <div class="region-header"><div class="region-title">🗾 JR 동일본 — 신칸센</div></div>
+            <div class="train-grid">
+              <button class="train-card" onclick="openSeatPanel('shin_komachi')">
+                <div class="train-card-image"><div class="train-card-image-placeholder"><div class="train-card-image-icon">🚄</div></div><span class="train-card-badge badge-shinkansen-card">신칸센</span></div>
+                <div class="train-card-info"><div class="train-card-name">코마치</div><div class="train-card-series">E6계 · 7량</div><div class="train-card-meta"><span class="train-card-operator">아키타 신칸센</span></div></div>
+              </button>
+              <button class="train-card" onclick="openSeatPanel('hayabusa')">
+                <div class="train-card-image"><div class="train-card-image-placeholder"><div class="train-card-image-icon">🚄</div></div><span class="train-card-badge badge-shinkansen-card">신칸센</span></div>
+                <div class="train-card-info"><div class="train-card-name">하야부사</div><div class="train-card-series">E5계 · 10량</div><div class="train-card-meta"><span class="train-card-operator">도호쿠 신칸센</span></div></div>
+              </button>
+              <button class="train-card" onclick="openSeatPanel('toki')">
+                <div class="train-card-image"><div class="train-card-image-placeholder"><div class="train-card-image-icon">🚄</div></div><span class="train-card-badge badge-shinkansen-card">신칸센</span></div>
+                <div class="train-card-info"><div class="train-card-name">도키</div><div class="train-card-series">E7계 · 12량</div><div class="train-card-meta"><span class="train-card-operator">조에쓰 신칸센</span></div></div>
+              </button>
+              <button class="train-card" onclick="openSeatPanel('kagayaki')">
+                <div class="train-card-image"><div class="train-card-image-placeholder"><div class="train-card-image-icon">🚄</div></div><span class="train-card-badge badge-shinkansen-card">신칸센</span></div>
+                <div class="train-card-info"><div class="train-card-name">카가야키</div><div class="train-card-series">W7계 · 12량</div><div class="train-card-meta"><span class="train-card-operator">호쿠리쿠 신칸센</span></div></div>
+              </button>
             </div>
-          </a>
-          <a href="seat.html?id=hayabusa" class="train-card">
-            <div class="train-card-image">
-              <div class="train-card-image-placeholder"><div class="train-card-image-icon">🚄</div></div>
-              <span class="train-card-badge badge-shinkansen">신칸센</span>
-              <span class="hot-badge">HOT</span>
+          </div>
+
+          <div class="region-section">
+            <div class="region-header"><div class="region-title">🗾 JR 동일본 — 특급</div></div>
+            <div class="train-grid">
+              <button class="train-card" onclick="openSeatPanel('nex')">
+                <div class="train-card-image"><div class="train-card-image-placeholder"><div class="train-card-image-icon">🚃</div></div><span class="train-card-badge badge-limited_express-card">특급</span></div>
+                <div class="train-card-info"><div class="train-card-name">나리타 익스프레스</div><div class="train-card-series">E259계 · 6량</div><div class="train-card-meta"><span class="train-card-operator">나리타공항 ↔ 도쿄</span></div></div>
+              </button>
+              <button class="train-card" onclick="openSeatPanel('azusa')">
+                <div class="train-card-image"><div class="train-card-image-placeholder"><div class="train-card-image-icon">🚃</div></div><span class="train-card-badge badge-limited_express-card">특급</span></div>
+                <div class="train-card-info"><div class="train-card-name">아즈사</div><div class="train-card-series">E353계 · 12량</div><div class="train-card-meta"><span class="train-card-operator">신주쿠 ↔ 마쓰모토</span></div></div>
+              </button>
             </div>
-            <div class="train-card-info">
-              <div class="train-card-name">하야부사</div>
-              <div class="train-card-series">E5계 · 10량</div>
-              <div class="train-card-meta">
-                <span class="train-card-operator">JR 동일본</span>
-                <span class="train-card-popularity">★★★★★</span>
-              </div>
+          </div>
+
+          <div class="region-section">
+            <div class="region-header"><div class="region-title">🗻 JR 도카이 — 신칸센</div></div>
+            <div class="train-grid">
+              <button class="train-card" onclick="openSeatPanel('nozomi')">
+                <div class="train-card-image"><div class="train-card-image-placeholder"><div class="train-card-image-icon">🚄</div></div><span class="train-card-badge badge-shinkansen-card">신칸센</span></div>
+                <div class="train-card-info"><div class="train-card-name">노조미</div><div class="train-card-series">N700S계 · 16량</div><div class="train-card-meta"><span class="train-card-operator">도카이도·산요 신칸센</span></div></div>
+              </button>
+              <button class="train-card" onclick="openSeatPanel('hikari')">
+                <div class="train-card-image"><div class="train-card-image-placeholder"><div class="train-card-image-icon">🚄</div></div><span class="train-card-badge badge-shinkansen-card">신칸센</span></div>
+                <div class="train-card-info"><div class="train-card-name">히카리</div><div class="train-card-series">N700S계 · 16량</div><div class="train-card-meta"><span class="train-card-operator">도카이도·산요 신칸센</span></div></div>
+              </button>
             </div>
-          </a>
-          <a href="seat.html?id=nozomi" class="train-card">
-            <div class="train-card-image">
-              <div class="train-card-image-placeholder"><div class="train-card-image-icon">🚄</div></div>
-              <span class="train-card-badge badge-shinkansen">신칸센</span>
+          </div>
+
+          <div class="region-section">
+            <div class="region-header"><div class="region-title">🌋 JR 규슈</div></div>
+            <div class="train-grid">
+              <button class="train-card" onclick="openSeatPanel('sonic')">
+                <div class="train-card-image"><div class="train-card-image-placeholder"><div class="train-card-image-icon">🚃</div></div><span class="train-card-badge badge-limited_express-card">특급</span></div>
+                <div class="train-card-info"><div class="train-card-name">소닉</div><div class="train-card-series">885계 · 6량</div><div class="train-card-meta"><span class="train-card-operator">하카타 ↔ 오이타</span></div></div>
+              </button>
             </div>
-            <div class="train-card-info">
-              <div class="train-card-name">노조미</div>
-              <div class="train-card-series">N700S계 · 16량</div>
-              <div class="train-card-meta">
-                <span class="train-card-operator">JR 도카이</span>
-                <span class="train-card-popularity">★★★★☆</span>
-              </div>
+          </div>
+
+          <div class="region-section">
+            <div class="region-header"><div class="region-title">🐻 JR 홋카이도</div></div>
+            <div class="train-grid">
+              <button class="train-card" onclick="openSeatPanel('hokuto')">
+                <div class="train-card-image"><div class="train-card-image-placeholder"><div class="train-card-image-icon">🚃</div></div><span class="train-card-badge badge-limited_express-card">특급</span></div>
+                <div class="train-card-info"><div class="train-card-name">호쿠토</div><div class="train-card-series">키하261계 · 6량</div><div class="train-card-meta"><span class="train-card-operator">하코다테 ↔ 삿포로</span></div></div>
+              </button>
             </div>
-          </a>
-          <a href="seat.html?id=nex" class="train-card">
-            <div class="train-card-image">
-              <div class="train-card-image-placeholder"><div class="train-card-image-icon">🚃</div></div>
-              <span class="train-card-badge badge-limited_express">특급</span>
-            </div>
-            <div class="train-card-info">
-              <div class="train-card-name">나리타 익스프레스</div>
-              <div class="train-card-series">E259계 · 6량</div>
-              <div class="train-card-meta">
-                <span class="train-card-operator">JR 동일본</span>
-                <span class="train-card-popularity">★★★★☆</span>
-              </div>
-            </div>
-          </a>
+          </div>
+
+          <div style="height:32px"></div>
         </div>
       </div>
-
-      <!-- JR 동일본 신칸센 -->
-      <div class="region-section">
-        <div class="region-header">
-          <div class="region-title">🗾 JR 동일본 — 신칸센</div>
-        </div>
-        <div class="train-grid">
-          <a href="seat.html?id=shin_komachi" class="train-card">
-            <div class="train-card-image">
-              <div class="train-card-image-placeholder"><div class="train-card-image-icon">🚄</div></div>
-              <span class="train-card-badge badge-shinkansen">신칸센</span>
-            </div>
-            <div class="train-card-info">
-              <div class="train-card-name">코마치</div>
-              <div class="train-card-series">E6계 · 7량</div>
-              <div class="train-card-meta"><span class="train-card-operator">아키타 신칸센</span></div>
-            </div>
-          </a>
-          <a href="seat.html?id=hayabusa" class="train-card">
-            <div class="train-card-image">
-              <div class="train-card-image-placeholder"><div class="train-card-image-icon">🚄</div></div>
-              <span class="train-card-badge badge-shinkansen">신칸센</span>
-            </div>
-            <div class="train-card-info">
-              <div class="train-card-name">하야부사</div>
-              <div class="train-card-series">E5계 · 10량</div>
-              <div class="train-card-meta"><span class="train-card-operator">도호쿠 신칸센</span></div>
-            </div>
-          </a>
-          <a href="seat.html?id=toki" class="train-card">
-            <div class="train-card-image">
-              <div class="train-card-image-placeholder"><div class="train-card-image-icon">🚄</div></div>
-              <span class="train-card-badge badge-shinkansen">신칸센</span>
-            </div>
-            <div class="train-card-info">
-              <div class="train-card-name">도키</div>
-              <div class="train-card-series">E7계 · 12량</div>
-              <div class="train-card-meta"><span class="train-card-operator">조에쓰 신칸센</span></div>
-            </div>
-          </a>
-          <a href="seat.html?id=kagayaki" class="train-card">
-            <div class="train-card-image">
-              <div class="train-card-image-placeholder"><div class="train-card-image-icon">🚄</div></div>
-              <span class="train-card-badge badge-shinkansen">신칸센</span>
-            </div>
-            <div class="train-card-info">
-              <div class="train-card-name">카가야키</div>
-              <div class="train-card-series">W7계 · 12량</div>
-              <div class="train-card-meta"><span class="train-card-operator">호쿠리쿠 신칸센</span></div>
-            </div>
-          </a>
-        </div>
-      </div>
-
-      <!-- JR 동일본 특급 -->
-      <div class="region-section">
-        <div class="region-header">
-          <div class="region-title">🗾 JR 동일본 — 특급</div>
-        </div>
-        <div class="train-grid">
-          <a href="seat.html?id=nex" class="train-card">
-            <div class="train-card-image">
-              <div class="train-card-image-placeholder"><div class="train-card-image-icon">🚃</div></div>
-              <span class="train-card-badge badge-limited_express">특급</span>
-            </div>
-            <div class="train-card-info">
-              <div class="train-card-name">나리타 익스프레스</div>
-              <div class="train-card-series">E259계 · 6량</div>
-              <div class="train-card-meta"><span class="train-card-operator">나리타공항 ↔ 도쿄</span></div>
-            </div>
-          </a>
-          <a href="seat.html?id=azusa" class="train-card">
-            <div class="train-card-image">
-              <div class="train-card-image-placeholder"><div class="train-card-image-icon">🚃</div></div>
-              <span class="train-card-badge badge-limited_express">특급</span>
-            </div>
-            <div class="train-card-info">
-              <div class="train-card-name">아즈사</div>
-              <div class="train-card-series">E353계 · 12량</div>
-              <div class="train-card-meta"><span class="train-card-operator">신주쿠 ↔ 마쓰모토</span></div>
-            </div>
-          </a>
-        </div>
-      </div>
-
-      <!-- JR 도카이 -->
-      <div class="region-section">
-        <div class="region-header">
-          <div class="region-title">🗻 JR 도카이 — 신칸센</div>
-        </div>
-        <div class="train-grid">
-          <a href="seat.html?id=nozomi" class="train-card">
-            <div class="train-card-image">
-              <div class="train-card-image-placeholder"><div class="train-card-image-icon">🚄</div></div>
-              <span class="train-card-badge badge-shinkansen">신칸센</span>
-            </div>
-            <div class="train-card-info">
-              <div class="train-card-name">노조미</div>
-              <div class="train-card-series">N700S계 · 16량</div>
-              <div class="train-card-meta"><span class="train-card-operator">도카이도·산요 신칸센</span></div>
-            </div>
-          </a>
-          <a href="seat.html?id=hikari" class="train-card">
-            <div class="train-card-image">
-              <div class="train-card-image-placeholder"><div class="train-card-image-icon">🚄</div></div>
-              <span class="train-card-badge badge-shinkansen">신칸센</span>
-            </div>
-            <div class="train-card-info">
-              <div class="train-card-name">히카리</div>
-              <div class="train-card-series">N700S계 · 16량</div>
-              <div class="train-card-meta"><span class="train-card-operator">도카이도·산요 신칸센</span></div>
-            </div>
-          </a>
-        </div>
-      </div>
-
-      <!-- JR 규슈 -->
-      <div class="region-section">
-        <div class="region-header">
-          <div class="region-title">🌋 JR 규슈</div>
-        </div>
-        <div class="train-grid">
-          <a href="seat.html?id=sonic" class="train-card">
-            <div class="train-card-image">
-              <div class="train-card-image-placeholder"><div class="train-card-image-icon">🚃</div></div>
-              <span class="train-card-badge badge-limited_express">특급</span>
-            </div>
-            <div class="train-card-info">
-              <div class="train-card-name">소닉</div>
-              <div class="train-card-series">885계 · 6량</div>
-              <div class="train-card-meta"><span class="train-card-operator">하카타 ↔ 오이타</span></div>
-            </div>
-          </a>
-        </div>
-      </div>
-
-      <!-- JR 홋카이도 -->
-      <div class="region-section">
-        <div class="region-header">
-          <div class="region-title">🐻 JR 홋카이도</div>
-        </div>
-        <div class="train-grid">
-          <a href="seat.html?id=hokuto" class="train-card">
-            <div class="train-card-image">
-              <div class="train-card-image-placeholder"><div class="train-card-image-icon">🚃</div></div>
-              <span class="train-card-badge badge-limited_express">특급</span>
-            </div>
-            <div class="train-card-info">
-              <div class="train-card-name">호쿠토</div>
-              <div class="train-card-series">키하261계 · 6량</div>
-              <div class="train-card-meta"><span class="train-card-operator">하코다테 ↔ 삿포로</span></div>
-            </div>
-          </a>
-        </div>
-      </div>
-
-      <div style="height:32px"></div>
     </div>
   </div>
+
+  <!-- 좌석 배치도 패널 -->
+  <div class="seat-panel-wrap" id="seatPanelWrap">
+    <div class="seat-panel-inner">
+      <div class="panel-header">
+        <div class="panel-header-top">
+          <div class="panel-train-name" id="panelTrainName">-</div>
+          <button class="panel-close" onclick="closeSeatPanel()">×</button>
+        </div>
+        <div class="panel-train-sub" id="panelTrainSub"></div>
+        <span class="panel-badge" id="panelBadge"></span>
+      </div>
+      <div class="cars-scroll" id="carsScroll"></div>
+      <div class="direction-bar">
+        <span id="dirLeft">←</span>
+        <span id="dirRight">→</span>
+      </div>
+      <div class="panel-body">
+        <div id="seatPanel"><div class="loading">열차를 선택해주세요</div></div>
+      </div>
+      <div class="legend">
+        <div class="leg"><div class="leg-dot" style="background:#EAF3DE;border:1px solid #97C459"></div>추천</div>
+        <div class="leg"><div class="leg-dot" style="background:#FCEBEB;border:1px solid #F09595"></div>비추천</div>
+        <div class="leg"><div class="leg-dot" style="background:#EEEDFE;border:1px solid #AFA9EC"></div>우선석</div>
+        <div class="leg"><div class="leg-dot" style="background:#E0F4FF;border:1px solid #7DD3FC"></div>특수석</div>
+        <div class="leg"><div class="leg-dot" style="background:#FFF8E1;border:1px solid #FFD54F"></div>전망석</div>
+        <div class="leg"><div class="leg-dot" style="background:#F5F5F5;border:1px solid #E0E0E0"></div>일반석</div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <script>
-
 
 
 
@@ -383,7 +357,21 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiY2xldmVyZmVuYmVyIiwiYSI6ImNtcDM3b2VnNTBvZXIyc
 
 
 
-// 지도 초기화
+// ── 검색 데이터 ──
+const TRAIN_INDEX = [
+  { id:'shin_komachi', name:'코마치', nameJa:'こまち', nameEn:'Komachi', series:'E6', operator:'JR 동일본', line:'아키타 신칸센', category:'shinkansen', icon:'🚄', coords:[140.1024,39.7186] },
+  { id:'hayabusa',     name:'하야부사', nameJa:'はやぶさ', nameEn:'Hayabusa', series:'E5', operator:'JR 동일본', line:'도호쿠 신칸센', category:'shinkansen', icon:'🚄', coords:[141.1364,39.7014] },
+  { id:'toki',         name:'도키', nameJa:'とき', nameEn:'Toki', series:'E7', operator:'JR 동일본', line:'조에쓰 신칸센', category:'shinkansen', icon:'🚄', coords:[139.0364,37.9161] },
+  { id:'kagayaki',     name:'카가야키', nameJa:'かがやき', nameEn:'Kagayaki', series:'W7', operator:'JR 동일본', line:'호쿠리쿠 신칸센', category:'shinkansen', icon:'🚄', coords:[136.6562,36.5613] },
+  { id:'nozomi',       name:'노조미', nameJa:'のぞみ', nameEn:'Nozomi', series:'N700S', operator:'JR 도카이', line:'도카이도 신칸센', category:'shinkansen', icon:'🚄', coords:[135.5002,34.7331] },
+  { id:'hikari',       name:'히카리', nameJa:'ひかり', nameEn:'Hikari', series:'N700S', operator:'JR 도카이', line:'도카이도 신칸센', category:'shinkansen', icon:'🚄', coords:[136.8816,35.1706] },
+  { id:'nex',          name:'나리타 익스프레스', nameJa:'成田エクスプレス', nameEn:'Narita Express', series:'E259', operator:'JR 동일본', line:'나리타 공항선', category:'limited_express', icon:'🚃', coords:[140.3863,35.7640] },
+  { id:'azusa',        name:'아즈사', nameJa:'あずさ', nameEn:'Azusa', series:'E353', operator:'JR 동일본', line:'주오 본선', category:'limited_express', icon:'🚃', coords:[137.9720,36.2380] },
+  { id:'sonic',        name:'소닉', nameJa:'ソニック', nameEn:'Sonic', series:'885', operator:'JR 규슈', line:'닛포 본선', category:'limited_express', icon:'🚃', coords:[131.6061,33.2383] },
+  { id:'hokuto',       name:'호쿠토', nameJa:'北斗', nameEn:'Hokuto', series:'키하261', operator:'JR 홋카이도', line:'하코다테 본선', category:'limited_express', icon:'🚃', coords:[141.3544,43.0621] },
+];
+
+// ── 지도 ──
 const map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/mapbox/light-v11',
@@ -392,16 +380,285 @@ const map = new mapboxgl.Map({
 });
 map.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
-// 스크롤 시 힌트 숨기기
-const container = document.getElementById('sheetContainer');
-const hint = document.getElementById('scrollHint');
-container.addEventListener('scroll', () => {
-  if (container.scrollTop > 20) {
-    hint.style.opacity = '0';
-    hint.style.transition = 'opacity .3s';
-  } else {
-    hint.style.opacity = '1';
+let routeLoaded = false;
+let searchMarker = null;
+let trainData = null;
+let selectedEl = null;
+
+// ── 검색 ──
+const searchInput = document.getElementById('searchInput');
+const searchPopup = document.getElementById('searchPopup');
+
+searchInput.addEventListener('input', () => {
+  const q = searchInput.value.trim().toLowerCase();
+  if (!q) { closeSearchPopup(); return; }
+  const results = TRAIN_INDEX.filter(t =>
+    [t.name, t.nameJa, t.nameEn, t.series, t.operator, t.line].some(v => v.toLowerCase().includes(q))
+  );
+  showSearchResults(results);
+});
+
+searchInput.addEventListener('focus', () => {
+  if (searchInput.value.trim()) searchInput.dispatchEvent(new Event('input'));
+});
+
+function showSearchResults(results) {
+  document.getElementById('searchPopupTitle').textContent = `검색 결과 ${results.length}건`;
+  document.getElementById('searchResultList').innerHTML = results.length
+    ? results.map(t => {
+        const catLabel = { shinkansen:'신칸센', limited_express:'특급' }[t.category];
+        const badgeCls = t.category === 'shinkansen' ? 'badge-shinkansen' : 'badge-limited_express';
+        return `<div class="search-result-item" onclick="openSeatPanel('${t.id}');closeSearchPopup()">
+          <div class="search-result-icon">${t.icon}</div>
+          <div class="search-result-info">
+            <div class="search-result-name">${t.name} <span style="font-weight:400;color:#aaa">${t.nameJa}</span></div>
+            <div class="search-result-sub">${t.series}계 · ${t.operator} · ${t.line}</div>
+          </div>
+          <span class="search-result-badge ${badgeCls}">${catLabel}</span>
+        </div>`;
+      }).join('')
+    : `<div class="search-no-result">검색 결과가 없어요</div>`;
+  searchPopup.classList.add('visible');
+}
+
+function closeSearchPopup() { searchPopup.classList.remove('visible'); }
+
+document.addEventListener('click', e => {
+  if (!searchPopup.contains(e.target) && e.target !== searchInput) closeSearchPopup();
+});
+
+// ── 좌석 패널 열기 ──
+async function openSeatPanel(id) {
+  closeSearchPopup();
+
+  // 패널 열기 애니메이션
+  document.getElementById('seatPanelWrap').classList.add('open');
+  map.resize();
+
+  // 로딩 표시
+  document.getElementById('seatPanel').innerHTML = '<div class="loading">불러오는 중...</div>';
+  document.getElementById('carsScroll').innerHTML = '';
+
+  try {
+    const res = await fetch(`data/services/${id}.json`);
+    trainData = await res.json();
+
+    // 헤더
+    document.getElementById('panelTrainName').textContent = trainData.display_name?.ko || id;
+    document.getElementById('panelTrainSub').textContent =
+      `${trainData.series} · ${trainData.voiture_formation?.standard_cars || '-'}량 · ${trainData.service_info?.translations?.ko || ''}`;
+    document.getElementById('panelBadge').textContent =
+      trainData.category === 'shinkansen' ? '신칸센' : '특급';
+    document.getElementById('dirLeft').textContent  = `← ${trainData.direction?.car_1_toward?.translations?.ko || ''}`;
+    document.getElementById('dirRight').textContent = `${trainData.direction?.last_car_toward?.translations?.ko || ''} →`;
+
+    // 노선 지도 표시
+    if (trainData.routes?.length > 0) drawRoute(trainData.routes[0].line_id);
+
+    // 좌석 배치도
+    renderCars(trainData.cars, trainData.cars[0].number);
+    renderSeatPanel(trainData.cars[0]);
+
+  } catch(e) {
+    document.getElementById('seatPanel').innerHTML =
+      `<div class="loading">데이터를 불러오지 못했어요<br><small style="color:#bbb">${e.message}</small></div>`;
   }
+}
+
+function closeSeatPanel() {
+  document.getElementById('seatPanelWrap').classList.remove('open');
+  setTimeout(() => map.resize(), 420);
+  // 노선 레이어 제거
+  if (map.getLayer('route-layer')) map.removeLayer('route-layer');
+  if (map.getSource('route-src')) map.removeSource('route-src');
+  if (searchMarker) { searchMarker.remove(); searchMarker = null; }
+  trainData = null;
+  selectedEl = null;
+}
+
+// ── 노선 지도 ──
+async function drawRoute(lineId) {
+  try {
+    if (map.getLayer('route-layer')) map.removeLayer('route-layer');
+    if (map.getSource('route-src')) map.removeSource('route-src');
+
+    const lineRes = await fetch(`data/lines/${lineId}.json`);
+    const lineData = await lineRes.json();
+    if (!lineData.dataFile) return;
+
+    const geoRes = await fetch(lineData.dataFile);
+    const geojson = await geoRes.json();
+
+    const addLayers = () => {
+      if (map.getSource('route-src')) return;
+      map.addSource('route-src', { type: 'geojson', data: geojson });
+      map.addLayer({
+        id: 'route-layer', type: 'line', source: 'route-src',
+        layout: { 'line-cap': 'round', 'line-join': 'round' },
+        paint: { 'line-color': lineData.color || '#185FA5', 'line-width': 4, 'line-opacity': 0.85 }
+      });
+
+      // 역 마커 + 지도 이동
+      if (lineData.stationsFile) {
+        fetch(lineData.stationsFile).then(r => r.json()).then(stData => {
+          if (!stData.stations?.length) return;
+          const coords = stData.stations.map(s => s.coords);
+          const bounds = coords.reduce((b,c) => b.extend(c), new mapboxgl.LngLatBounds(coords[0], coords[0]));
+          map.fitBounds(bounds, { padding: { top:60, bottom:60, left:60, right:420 }, duration: 800 });
+          stData.stations.forEach(st => {
+            const el = document.createElement('div');
+            el.style.cssText = `width:6px;height:6px;border-radius:50%;background:#fff;border:2px solid ${lineData.color||'#185FA5'};cursor:pointer`;
+            new mapboxgl.Marker({ element: el }).setLngLat(st.coords)
+              .setPopup(new mapboxgl.Popup({ offset:10 }).setHTML(
+                `<div style="font-size:12px;font-weight:600">${st.name}</div>
+                 <div style="font-size:11px;color:#888">${st.nameJa} · ${st.km}km</div>`
+              )).addTo(map);
+          });
+        });
+      }
+    };
+
+    map.isStyleLoaded() ? addLayers() : map.on('load', addLayers);
+  } catch(e) { console.warn('노선 로드 실패:', e); }
+}
+
+// ── 좌석 배치도 렌더링 ──
+function buildSeatMap(car) {
+  const m = {};
+  (car.seat_notes || []).forEach(note => {
+    note.rows.forEach(r => note.cols.forEach(c => {
+      m[`${r}-${c}`] = { type: note.type, title: note.title?.ko||'', note: note.note?.translations?.ko||'', tags: note.tags||[] };
+    }));
+  });
+  return m;
+}
+
+function dotClass(t) { return {recommend:'g',avoid:'b',priority:'p',special:'p',view:'g',normal:'n'}[t]||'n'; }
+
+function getColStructure(layout) {
+  return {'2+2':['A','B','aisle','C','D'],'2+3':['A','B','aisle','C','D','E'],'1+2':['A','aisle','B','C'],'2+1':['A','B','aisle','C'],'3+2':['A','B','C','aisle','D','E'],'1+1':['A','aisle','B']}[layout]||null;
+}
+
+function renderCars(cars, activeNum) {
+  document.getElementById('carsScroll').innerHTML = cars.map(car => {
+    const classId = car.class_id||'ordinary_reserved';
+    const isGreen = classId==='green';
+    const label = {ordinary_reserved:'지정석',non_reserved:'자유석',green:'그린카'}[classId]||classId;
+    const sm = buildSeatMap(car);
+    const dots = [];
+    for (let r=1; r<=Math.min(car.seat_rows,3); r++) {
+      (car.seat_columns||['A','B','C','D']).forEach(c => {
+        const info = sm[`${r}-${c}`];
+        dots.push(`<div class="car-dot ${info?dotClass(info.type):'n'}"></div>`);
+      });
+    }
+    return `<button class="car-btn${isGreen?' green-car':''}${car.number===activeNum?' active':''}" onclick="selectCar(${car.number})">
+      <div class="car-btn-num">${car.number}호차</div>
+      <div class="car-dots">${dots.join('')}</div>
+      <div class="car-btn-type">${label}</div>
+    </button>`;
+  }).join('');
+}
+
+function selectCar(num) {
+  const car = trainData.cars.find(c => c.number===num);
+  if (!car) return;
+  renderCars(trainData.cars, num);
+  renderSeatPanel(car);
+}
+
+function renderSeatPanel(car) {
+  selectedEl = null;
+  const sm = buildSeatMap(car);
+  const classId = car.class_id||'ordinary_reserved';
+  const classInfo = (trainData.seat_classes||[]).find(sc => sc.id===classId)||{};
+  const label = classInfo.display_name?.ko||classId;
+  const pitch = classInfo.pitch_mm ? classInfo.pitch_mm+'mm' : '-';
+  const sm2d = car.seat_map?.length ? car.seat_map : Array(car.seat_rows||1).fill(['A','B','aisle','C','D']);
+
+  const layoutCols = getColStructure(classInfo.layout);
+  const labelRow = layoutCols || sm2d.reduce((best,row) => {
+    return row.filter(c=>c!=='aisle'&&c!=='empty').length > best.filter(c=>c!=='aisle'&&c!=='empty').length ? row : best;
+  }, sm2d[0]);
+
+  let colLabels = '<div class="col-labels"><div style="width:20px"></div>';
+  labelRow.forEach(cell => {
+    colLabels += cell==='aisle' ? '<div class="col-aisle"></div>' :
+                 cell==='empty' ? '<div class="col-label"></div>' :
+                 `<div class="col-label">${cell}</div>`;
+  });
+  colLabels += '</div>';
+
+  let grid = '<div class="seat-grid">';
+  sm2d.forEach((rowDef, rowIdx) => {
+    const r = rowIdx+1;
+    grid += `<div class="seat-row"><div class="row-num">${r}</div>`;
+    rowDef.forEach(cell => {
+      if (cell==='aisle') { grid += '<div class="aisle"></div>'; }
+      else if (cell==='empty') { grid += '<div class="seat-empty"></div>'; }
+      else {
+        const info = sm[`${r}-${cell}`]||{type:'normal',title:'',note:'',tags:[]};
+        grid += `<div class="seat ${info.type}" data-row="${r}" data-col="${cell}" data-type="${info.type}"
+          data-title="${(info.title||'').replace(/"/g,'&quot;')}"
+          data-note="${(info.note||'').replace(/"/g,'&quot;')}"
+          data-tags="${JSON.stringify(info.tags||[]).replace(/"/g,'&quot;')}"
+          onclick="selectSeat(this)">${r}${cell}</div>`;
+      }
+    });
+    grid += '</div>';
+  });
+  grid += '</div>';
+
+  const f = car.facilities||{};
+  const facs = [
+    f.toilet&&{icon:'🚻',label:'화장실'}, f.toilet_for_man&&{icon:'🚹',label:'남성화장실'},
+    f.washroom&&{icon:'🚿',label:'세면대'}, f.handwash&&{icon:'🧴',label:'손세면대'},
+    f.multi_purpose_room&&{icon:'♿',label:'다목적실'}, f.wheelchair_space&&{icon:'♿',label:'휠체어'},
+    f.power_outlet&&{icon:'🔌',label:'콘센트'}, f.wifi&&{icon:'📶',label:'Wi-Fi'},
+    f.AED&&{icon:'❤️‍🩹',label:'AED'}, f.conductor_room&&{icon:'👨‍✈️',label:'차장실'},
+    f.luggage_area&&f.luggage_area!=='none'&&{icon:'🧳',label:'짐칸'}
+  ].filter(Boolean);
+
+  const badgeCls = {ordinary_reserved:'badge-ordinary_reserved',non_reserved:'badge-non_reserved',green:'badge-green'}[classId]||'badge-ordinary_reserved';
+
+  document.getElementById('seatPanel').innerHTML = `
+    <div class="car-info-bar">
+      <span class="car-title">${car.number}호차</span>
+      <span class="class-badge ${badgeCls}">${label}</span>
+    </div>
+    <div class="car-meta">좌석 피치 ${pitch} · ${car.capacity||'-'}석</div>
+    ${colLabels}${grid}
+    <div class="seat-info" id="seatInfo">
+      <span style="color:#bbb;font-size:12px">좌석을 클릭하면 상세 정보가 표시됩니다</span>
+    </div>
+    <div class="facilities">${facs.map(f=>`<div class="fac">${f.icon} ${f.label}</div>`).join('')}</div>
+  `;
+}
+
+function selectSeat(el) {
+  if (selectedEl) selectedEl.classList.remove('selected');
+  selectedEl = el;
+  el.classList.add('selected');
+  const {row,col,type,title,note} = el.dataset;
+  let tags = [];
+  try { tags = JSON.parse(el.dataset.tags.replace(/&quot;/g,'"')); } catch(e){}
+  const typeLabel = {recommend:'추천석',avoid:'비추천석',priority:'우선석',special:'특수석',view:'전망석',normal:'일반석'};
+  const typeBg = {recommend:['#EAF3DE','#27500A'],avoid:['#FCEBEB','#791F1F'],priority:['#EEEDFE','#3C3489'],special:['#E0F4FF','#0C4A6E'],view:['#FFF8E1','#7A5800'],normal:['#F5F5F5','#888']};
+  const [bg,color] = typeBg[type]||['#F5F5F5','#888'];
+  const tagMap = {mountain_view:'🏔 산 전망',sea_view:'🌊 바다 전망',quiet:'🔇 조용',near_exit:'🚪 출입구',window:'🪟 창측',aisle:'↔ 통로측',power_outlet:'🔌 콘센트',noisy:'🔊 소음 주의'};
+  document.getElementById('seatInfo').innerHTML = `
+    <div class="seat-info-title">${row}열 ${col}석
+      <span class="seat-info-badge" style="background:${bg};color:${color}">${typeLabel[type]||type}</span>
+    </div>
+    <div class="seat-info-note">${title?`<strong>${title}</strong><br>`:''}${note||'특이사항 없는 일반 지정석입니다.'}</div>
+    ${tags.length?`<div class="seat-info-tags">${tags.map(t=>`<span class="tag">${tagMap[t]||t}</span>`).join('')}</div>`:''}
+  `;
+}
+
+// 스크롤 힌트
+const container = document.getElementById('sheetContainer');
+container.addEventListener('scroll', () => {
+  document.getElementById('scrollHint').style.opacity = container.scrollTop > 20 ? '0' : '1';
 });
 </script>
 </body>

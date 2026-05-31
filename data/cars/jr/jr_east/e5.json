@@ -1,0 +1,103 @@
+[
+    {
+            "id": "ordinary_reserved",
+            "official_name": "普通車指定席",
+            "display_name": {
+            "ko": "일반실 지정석",
+            "ja": "普通車指定席",
+            "en": "Ordinary Reserved Seat"
+            },
+            "pitch_mm": 980,
+            "layout": "2+2",
+            "seat_type": "reserved",
+            "features": 
+            [
+                {
+                    "official": "コンセントは窓側の席（A,D）のみ",
+                    "translations": {
+                    "ko": "창측 좌석(A,D) 콘센트",
+                    "en": "Power outlet at every window seat"
+                    }
+                },
+                {
+                    "official": "全席禁煙",
+                    "translations": {
+                    "ko": "전 좌석 금연",
+                    "en": "All seats non-smoking"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "green",
+            "official_name": "グリーン車",
+            "display_name": {
+            "ko": "그린카(특실)",
+            "ja": "グリーン車",
+            "en": "Green car"
+            },
+            "pitch_mm": 1160,
+            "layout": "2+2",
+            "seat_type": "reserved",
+            "features": 
+            [
+                {
+                    "official": "全席コンセント",
+                    "translations": {
+                    "ko": "전좌석 콘센트",
+                    "en": "Power outlet at all seats"
+                    }
+                },
+                {
+                    "official": "全席禁煙",
+                    "translations": {
+                    "ko": "전 좌석 금연",
+                    "en": "All seats non-smoking"
+                    }
+                },
+                {
+                    "official": "レッグレスト",
+                    "translations": {
+                    "ko": "레그레스트 탑재",
+                    "en": "Leg Rests"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "gran_class",
+            "official_name": "グランクラス",
+            "display_name": {
+            "ko": "그란클래스",
+            "ja": "グランクラス",
+            "en": "Gran Class"
+            },
+            "pitch_mm": 1160,
+            "layout": "1+2",
+            "seat_type": "reserved",
+            "features": 
+            [
+                {
+                    "official": "全席コンセント",
+                    "translations": {
+                    "ko": "전좌석 콘센트",
+                    "en": "Power outlet at all seats"
+                    }
+                },
+                {
+                    "official": "全席禁煙",
+                    "translations": {
+                    "ko": "전 좌석 금연",
+                    "en": "All seats non-smoking"
+                    }
+                },
+                {
+                    "official": "レッグレスト",
+                    "translations": {
+                    "ko": "레그레스트 탑재",
+                    "en": "Leg Rests"
+                    }
+                }
+            ]
+        }
+]

@@ -1,0 +1,548 @@
+{
+  "id": "tsubasa_e8",
+  "series": "E8",
+  "operator_id": "jr_east",
+
+  "category": "shinkansen",
+
+  "official_name": "つばさ",
+
+  "official_name_kana": "つばさ",
+
+  "display_name": {
+    "ko": "츠바사",
+    "ja": "つばさ",
+    "en": "Tsubasa"
+  },
+
+  "service_info": {
+    "official": "山形新幹線　つばさ号",
+
+    "translations": {
+      "ko": "야마가타 신칸센 츠바사호",
+      "en": "Tsubasa Superexpress of Yamagata Shinkansen"
+    }
+  },
+
+  "voiture_formation": {
+    "standard_cars": 7,
+
+    "max_cars": 7,
+
+    "voiture_moter_formation": "5M2T",
+
+    "note": {
+      "official": "E8系7両固定編成",
+
+      "translations": {
+        "ko": "E8계 7량 고정편성",
+        "en": "7-car fixed E8 series formation"
+      }
+    }
+  },
+
+  "operation": {
+    "max_speed_kmh": 300,
+
+    "electrification": "AC",
+
+    "tilting": false
+  },
+
+  "direction": {
+    "car_1_toward": {
+      "official": "上り　東京方面",
+
+      "translations": {
+        "ko": "도쿄 방면",
+        "en": "Towards Tokyo"
+      }
+    },
+
+    "last_car_toward": {
+      "official": "下り　山形・新庄方面",
+
+      "translations": {
+        "ko": "야마가타·신조 방면",
+        "en": "Towards Yamagata / Shinjo"
+      }
+    }
+  },
+
+  "routes": [
+    {
+      "line_id": "tohoku_shinkansen",
+
+      "official_name": "東北新幹線",
+
+      "display_name": {
+        "ko": "도호쿠 신칸센",
+        "ja": "東北新幹線",
+        "en": "Tohoku Shinkansen"
+      }
+    },
+
+    {
+      "line_id": "yamagata_shinkansen",
+
+      "official_name": "山形新幹線",
+
+      "display_name": {
+        "ko": "야마가타 신칸센",
+        "ja": "山形新幹線",
+        "en": "Yamagata Shinkansen"
+      }
+    }
+  ],
+
+  "cars": [
+    {
+      "number": 11,
+
+      "official_label": "11号車",
+
+      "display_label": {
+        "ko": "11호차",
+        "ja": "11号車",
+        "en": "Car No.11"
+      },
+
+      "class_id": "green",
+
+      "car_type": "trailer",
+
+      "seat_rows": 5,
+
+      "seat_columns": ["A", "B", "C", "D"],
+
+      "window_columns": ["A", "D"],
+
+      "capacity": 26,
+
+      "facilities": {
+        "toilet": false,
+        "toilet_for_man": false,
+        "washroom": false,
+        "vending_machine": false,
+        "smoking_room": false,
+        "multi_purpose_room": false,
+        "wheelchair_space": true,
+        "power_outlet": true,
+        "wifi": true,
+        "luggage_area": "rear"
+      },
+
+      "seat_notes": [
+        {
+          "rows": [1, 2],
+
+          "cols": ["A", "D"],
+
+          "type": "recommend",
+
+          "priority": 1,
+
+          "official_title": "眺望良好",
+
+          "title": {
+            "ko": "전망 우수",
+            "ja": "眺望良好",
+            "en": "Great View"
+          },
+
+          "note": {
+            "official": "窓側から景色を楽しめる座席",
+
+            "translations": {
+              "ko": "창가 풍경 감상에 적합한 좌석",
+              "en": "Good window-side scenic seats"
+            }
+          },
+
+          "tags": [
+            "window_view",
+            "quiet"
+          ]
+        }
+      ]
+    },
+
+    {
+      "number": 12,
+
+      "official_label": "12号車",
+
+      "display_label": {
+        "ko": "12호차",
+        "ja": "12号車",
+        "en": "Car No.12"
+      },
+
+      "class_id": "ordinary_reserved",
+
+      "car_type": "motor",
+
+      "seat_rows": 15,
+
+      "seat_columns": ["A", "B", "C", "D"],
+
+      "window_columns": ["A", "D"],
+
+      "capacity": 58,
+
+      "facilities": {
+        "toilet": true,
+        "toilet_for_man": true,
+        "washroom": true,
+        "vending_machine": false,
+        "smoking_room": false,
+        "multi_purpose_room": false,
+        "wheelchair_space": false,
+        "power_outlet": true,
+        "wifi": true,
+        "luggage_area": "both"
+      },
+
+      "seat_notes": [
+        {
+          "rows": [7, 8, 9],
+
+          "cols": ["A", "D"],
+
+          "type": "special",
+
+          "official_title": "乗り心地良好",
+
+          "title": {
+            "ko": "승차감 우수",
+            "ja": "乗り心地良好",
+            "en": "Smooth Ride"
+          },
+
+          "note": {
+            "official": "車両中央付近で揺れが少ない",
+
+            "translations": {
+              "ko": "차량 중앙부로 흔들림이 적음",
+              "en": "Less vibration near the center of the car"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "number": 13,
+
+      "official_label": "13号車",
+
+      "display_label": {
+        "ko": "13호차",
+        "ja": "13号車",
+        "en": "Car No.13"
+      },
+
+      "class_id": "ordinary_reserved",
+
+      "car_type": "motor",
+
+      "seat_rows": 17,
+
+      "seat_columns": ["A", "B", "C", "D"],
+
+      "window_columns": ["A", "D"],
+
+      "capacity": 68,
+
+      "facilities": {
+        "toilet": false,
+        "toilet_for_man": false,
+        "washroom": false,
+        "vending_machine": false,
+        "smoking_room": false,
+        "multi_purpose_room": false,
+        "wheelchair_space": false,
+        "power_outlet": true,
+        "wifi": true,
+        "luggage_area": "front"
+      },
+
+      "seat_notes": [
+        {
+          "rows": [15, 16, 17],
+
+          "cols": ["A", "B", "C", "D"],
+
+          "type": "avoid",
+
+          "official_title": "騒音注意",
+
+          "title": {
+            "ko": "소음 주의",
+            "ja": "騒音注意",
+            "en": "Possible Noise"
+          },
+
+          "note": {
+            "official": "デッキ付近で騒音が発生する場合あり",
+
+            "translations": {
+              "ko": "출입문 근처로 소음 발생 가능",
+              "en": "May be noisy near the deck area"
+            }
+          },
+
+          "tags": [
+            "noisy",
+            "near_exit"
+          ]
+        }
+      ]
+    },
+
+    {
+      "number": 14,
+
+      "official_label": "14号車",
+
+      "display_label": {
+        "ko": "14호차",
+        "ja": "14号車",
+        "en": "Car No.14"
+      },
+
+      "class_id": "ordinary_reserved",
+
+      "car_type": "trailer",
+
+      "seat_rows": 17,
+
+      "seat_columns": ["A", "B", "C", "D"],
+
+      "window_columns": ["A", "D"],
+
+      "capacity": 68,
+
+      "facilities": {
+        "toilet": true,
+        "toilet_for_man": true,
+        "washroom": true,
+        "vending_machine": false,
+        "smoking_room": false,
+        "multi_purpose_room": true,
+        "wheelchair_space": true,
+        "power_outlet": true,
+        "wifi": true,
+        "luggage_area": "both"
+      },
+
+      "seat_notes": [
+        {
+          "rows": [1, 2],
+
+          "cols": ["A", "D"],
+
+          "type": "recommend",
+
+          "official_title": "静かな席",
+
+          "title": {
+            "ko": "조용한 좌석",
+            "ja": "静かな席",
+            "en": "Quiet Seats"
+          },
+
+          "note": {
+            "official": "比較的静かなエリア",
+
+            "translations": {
+              "ko": "비교적 조용한 구역",
+              "en": "Relatively quiet area"
+            }
+          },
+
+          "tags": [
+            "quiet"
+          ]
+        }
+      ]
+    },
+
+    {
+      "number": 15,
+
+      "official_label": "15号車",
+
+      "display_label": {
+        "ko": "15호차",
+        "ja": "15号車",
+        "en": "Car No.15"
+      },
+
+      "class_id": "ordinary_reserved",
+
+      "car_type": "motor",
+
+      "seat_rows": 17,
+
+      "seat_columns": ["A", "B", "C", "D"],
+
+      "window_columns": ["A", "D"],
+
+      "capacity": 68,
+
+      "facilities": {
+        "toilet": false,
+        "toilet_for_man": false,
+        "washroom": false,
+        "vending_machine": false,
+        "smoking_room": false,
+        "multi_purpose_room": false,
+        "wheelchair_space": false,
+        "power_outlet": true,
+        "wifi": true,
+        "luggage_area": "rear"
+      },
+
+      "seat_notes": []
+    },
+
+    {
+      "number": 16,
+
+      "official_label": "16号車",
+
+      "display_label": {
+        "ko": "16호차",
+        "ja": "16号車",
+        "en": "Car No.16"
+      },
+
+      "class_id": "ordinary_reserved",
+
+      "car_type": "motor",
+
+      "seat_rows": 15,
+
+      "seat_columns": ["A", "B", "C", "D"],
+
+      "window_columns": ["A", "D"],
+
+      "capacity": 60,
+
+      "facilities": {
+        "toilet": true,
+        "toilet_for_man": true,
+        "washroom": true,
+        "vending_machine": false,
+        "smoking_room": false,
+        "multi_purpose_room": false,
+        "wheelchair_space": false,
+        "power_outlet": true,
+        "wifi": true,
+        "luggage_area": "rear"
+      },
+
+      "seat_notes": []
+    },
+
+    {
+      "number": 17,
+
+      "official_label": "17号車",
+
+      "display_label": {
+        "ko": "17호차",
+        "ja": "17号車",
+        "en": "Car No.17"
+      },
+
+      "class_id": "ordinary_reserved",
+
+      "car_type": "trailer",
+
+      "seat_rows": 8,
+
+      "seat_columns": ["A", "B", "C", "D"],
+
+      "window_columns": ["A", "D"],
+
+      "capacity": 32,
+
+      "facilities": {
+        "toilet": false,
+        "toilet_for_man": false,
+        "washroom": false,
+        "vending_machine": false,
+        "smoking_room": false,
+        "multi_purpose_room": false,
+        "wheelchair_space": false,
+        "power_outlet": true,
+        "wifi": true,
+        "luggage_area": "front"
+      },
+
+      "seat_notes": []
+    }
+  ],
+
+  "seat_recommendations": [
+    {
+      "id": "mountain_view",
+
+      "title": {
+        "ko": "산악 풍경 추천 좌석",
+        "ja": "山岳景観おすすめ席",
+        "en": "Mountain View Seats"
+      },
+
+      "conditions": {
+        "direction": "down",
+
+        "cars": [11, 12, 13],
+
+        "columns": ["D"]
+      },
+
+      "description": {
+        "official": "山形県内の景色を楽しめる座席",
+
+        "translations": {
+          "ko": "야마가타 지역 풍경 감상에 적합",
+          "en": "Seats suitable for enjoying Yamagata scenery"
+        }
+      }
+    }
+  ],
+
+  "media": {
+    "thumbnail": "/images/trains/tsubasa_e8/thumb.jpg",
+
+    "gallery": [
+      "/images/trains/tsubasa_e8/1.jpg",
+      "/images/trains/tsubasa_e8/2.jpg"
+    ]
+  },
+
+  "external_links": [
+    {
+      "type": "official_website",
+
+      "label": {
+        "ko": "공식 사이트",
+        "ja": "公式サイト",
+        "en": "Official Website"
+      },
+
+      "url": "https://www.jreast.co.jp/train/shinkan/e8.html"
+    }
+  ],
+
+  "metadata": {
+    "created_at": "2026-05-25",
+
+    "updated_at": "2026-05-25",
+
+    "data_version": 1
+  }
+}
